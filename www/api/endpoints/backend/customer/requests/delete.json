@@ -1,0 +1,9 @@
+{
+    "Delete": {
+        "IdCustomer": true
+    },
+    "Address": {
+        "IdCustomer": true,
+        "IdCustomerAddress": true
+    }
+}

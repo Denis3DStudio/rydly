@@ -1,0 +1,32 @@
+{
+    "Default": {
+        "IsDefault": true,
+        "Head": [
+            "/../includes/head.html"
+        ],
+        "Pages": [
+            "/../includes/nav.php",
+            "/../includes/templates.php"
+        ],
+        "Foot": [
+            "/../includes/modals.php",
+            "/../includes/foot.html"
+        ]
+    },
+    "Login": {
+        "Head": [
+            "/../includes/head.html"
+        ],
+        "Foot": [
+            "/../includes/foot.html"
+        ]
+    },
+    "Error": {
+        "Head": [
+            "/../includes/head.html"
+        ],
+        "Foot": [
+            "/../includes/foot.html"
+        ]
+    }
+}

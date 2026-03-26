@@ -1,0 +1,9 @@
+{
+    "Login": {
+        "Username": true,
+        "Password": true
+    },
+    "Impersonate": {
+        "IdAccount": true
+    }
+}

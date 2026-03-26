@@ -1,0 +1,14 @@
+{
+    "Files": {
+        "IdRow": true,
+        "Macro": true,
+        "Type": true,
+        "Extras": {
+            "Path": "post",
+            "Class": "Test"
+        }
+    },
+    "Test": {
+        "Language": false
+    }
+}

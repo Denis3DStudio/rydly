@@ -1,0 +1,18 @@
+{
+    "Delete": {
+        "IdNews": true
+    },
+    "Content": {
+        "IdNews": true,
+        "ContentRefId": true,
+        "ContentType": true
+    },
+    "Link": {
+        "IdNews": true,
+        "IdLink": true
+    },
+    "Attachment": {
+        "IdNews": true,
+        "IdAttachment": true
+    }
+}

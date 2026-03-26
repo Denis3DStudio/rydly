@@ -1,0 +1,63 @@
+{
+    "Duplicate": {
+        "IdTranslation": false,
+        "IdsTranslations": false,
+        "SaveAlways": false,
+        "Page": false
+    },
+    "Import": {
+        "Overwrite": false
+    },
+    "Deepl": {
+        "ToTranslate": {
+            "Mandatory": true,
+            "Array": {
+                "Path": "post",
+                "Class": "TranslationRequest"
+            }
+        },
+        "LanguagesTo": {
+            "Mandatory": true,
+            "Array": "*"
+        },
+        "LanguageFrom": true
+    },
+    "TranslateAll": {
+        "LanguagesTo": {
+            "Mandatory": true,
+            "Array": "*"
+        },
+        "LanguageFrom": true
+    },
+    "TranslationRequest": {
+        "Name": true,
+        "TextFormat": true,
+        "Text": false
+    },
+    "File": {
+        "Files": {
+            "Mandatory": true,
+            "Array": {
+                "Path": "post",
+                "Class": "FileObj"
+            }
+        },
+        "Languages": {
+            "Mandatory": true,
+            "Path": "post",
+            "Class": "LanguagesObj"
+        }
+    },
+    "FileObj": {
+        "Path": true,
+        "Section": true,
+        "Page": true
+    },
+    "LanguagesObj": {
+        "LanguageFrom": true,
+        "LanguagesTo": {
+            "Mandatory": true,
+            "Array": "*"
+        }
+    }
+}

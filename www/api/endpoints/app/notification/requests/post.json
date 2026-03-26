@@ -1,0 +1,6 @@
+{
+    "NotificationToken": {
+        "Token": true,
+        "DeviceId": false
+    }
+}

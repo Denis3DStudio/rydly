@@ -1,0 +1,15 @@
+{
+    "Get": {
+        "IdAccount": true,
+        "IsValid": {
+            "Default": 0
+        }
+    },
+    "Crypt": {
+        "Username": true,
+        "Password": true
+    },
+    "Decrypt": {
+        "Crypted_string": true
+    }
+}

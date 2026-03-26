@@ -1,0 +1,10 @@
+{
+    "Login": {
+        "Username": true,
+        "Password": true
+    },
+    "Address": {
+        "IdCustomer": true,
+        "Type": true
+    }
+}

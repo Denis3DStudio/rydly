@@ -1,0 +1,24 @@
+{
+    "Update": {
+        "IdCoupon": true,
+        "Code": true,
+        "Type": true,
+        "Value": true,
+        "MinOrder": {
+            "Default": 0
+        },
+        "TotalUses": true,
+        "TotalUserUses": false,
+        "StartDate": true,
+        "EndDate": true,
+        "IdsProducts": {
+            "Array": "*"
+        },
+        "IdsCustomers": {
+            "Array": "*"
+        }
+    },
+    "EnableDisable": {
+        "IdCoupon": true
+    }
+}

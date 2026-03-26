@@ -1,0 +1,57 @@
+.k-select .btn {
+  background-color: #fff;
+  font-weight: normal;
+  text-transform: none;
+}
+.k-select .btn:hover {
+  color: #111;
+}
+
+.k-select .k-header-select {
+  padding: 0 10px 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 5px;
+}
+
+.k-select .dropdown-header {
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.k-select .dropdown-group {
+  color: var(--gray);
+}
+
+.k-select .k-header-search {
+  padding: 0 10px 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 5px;
+}
+
+.k-select .no-results {
+  padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
+  text-align: center;
+}
+
+.k-select .tokens-container {
+  padding: 5px 0;
+}
+.k-select .tokens-container .token {
+  background-color: #fff;
+  border-radius: 3px;
+  color: #333;
+  display: inline-block;
+  font-size: 12px;
+  margin: 0 5px 5px 0;
+  padding: 5px 30px 5px 10px;
+  position: relative;
+}
+
+.k-select .tokens-container .token .btn-close {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translate(0, -50%);
+}

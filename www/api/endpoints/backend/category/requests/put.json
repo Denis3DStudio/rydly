@@ -1,0 +1,30 @@
+{
+    "Update": {
+        "IdCategory": true,
+        "Languages": {
+            "mandatory": true,
+            "Array": {
+                "Path": "put",
+                "Class": "Language"
+            }
+        },
+        "Color": true
+    },
+    "Language": {
+        "IdLanguage": true,
+        "Title": true,
+        "Description": false
+    },
+    "ImagesOrder": {
+        "IdCategory": true,
+        "Order": {
+            "Mandatory": true,
+            "Array": {
+                "Object": {
+                    "id": true,
+                    "order_number": true
+                }
+            }
+        }
+    }
+}

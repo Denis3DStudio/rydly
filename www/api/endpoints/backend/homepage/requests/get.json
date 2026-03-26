@@ -1,0 +1,11 @@
+{
+    "Banner": {
+        "IdBanner": true
+    },
+    "Banners": {
+        "Type": true
+    },
+    "BannerImages": {
+        "IdBanner": true
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "Get": {
+        "IdCustomer": true
+    },
+    "Addresses": {
+        "IdCustomer": true,
+        "Type": true
+    },
+    "Address": {
+        "IdCustomer": true,
+        "IdAddress": true
+    }
+}

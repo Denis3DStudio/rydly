@@ -1,0 +1,15 @@
+{
+    "Backend_Session": "Backend True Local Session",
+    "Frontend_Session": "Frontend True Local Session",
+    "Api_Folder": "/api",
+    "Prod": false,
+    "Sandbox": false,
+    "Dev": false,
+    "History_Call_Enabled": false,
+    "Verbose_Logs": false,
+    "Style_Script_Cache_Enabled": true,
+    "Shared_API": [
+        "common"
+    ],
+    "Admin_Email": "denis.valeo@valeo.it"
+}

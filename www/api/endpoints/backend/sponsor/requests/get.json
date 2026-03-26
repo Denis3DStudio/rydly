@@ -1,0 +1,17 @@
+{
+    "Get": {
+        "IdSponsor": true,
+        "IsValid": {
+            "Default": 0
+        }
+    },
+    "All": {
+        "IdsCategories": false
+    },
+    "Contents": {
+        "IdSponsor": true
+    },
+    "News": {
+        "IdSponsor": true
+    }
+}

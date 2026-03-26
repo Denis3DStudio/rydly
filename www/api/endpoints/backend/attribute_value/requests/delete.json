@@ -1,0 +1,9 @@
+{
+    "Delete": {
+        "IdAttribute": true,
+        "IdAttributeValue": true
+    },
+    "Color": {
+        "IdAttributeValueColor": true
+    }
+}

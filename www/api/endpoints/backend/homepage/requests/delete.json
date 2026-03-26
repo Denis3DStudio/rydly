@@ -1,0 +1,8 @@
+{
+    "Banner": {
+        "IdBanner": true
+    },
+    "BannerImage": {
+        "IdHomepageBannerImage": true
+    }
+}

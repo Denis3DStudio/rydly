@@ -1,0 +1,12 @@
+{
+    "Get": {
+        "IdAttribute": true,
+        "IdAttributeValue": true
+    },
+    "All": {
+        "IdAttribute": true
+    },
+    "Colors": {
+        "IdAttributeValue": true
+    }
+}

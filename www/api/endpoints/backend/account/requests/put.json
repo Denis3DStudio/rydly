@@ -1,0 +1,10 @@
+{
+    "Update": {
+        "IdAccount": true,
+        "Name": true,
+        "Surname": true,
+        "Username": true,
+        "Password": false,
+        "IdRole": true
+    }
+}

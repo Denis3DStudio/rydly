@@ -1,0 +1,10 @@
+{
+    "Update": {
+        "IdCustomer": true,
+        "Name": true,
+        "Surname": true,
+        "IsActive": true,
+        "Email": true,
+        "Password": false
+    }
+}

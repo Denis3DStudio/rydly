@@ -1,0 +1,30 @@
+{
+    "Get": {
+        "IdNews": true,
+        "IsValid": {
+            "Default": 0
+        }
+    },
+    "All": {
+        "IdsCategories": {
+            "Mandatory": false,
+            "Array": "*"
+        }
+    },
+    "Contents": {
+        "IdNews": true
+    },
+    "Links": {
+        "IdNews": true,
+        "IdLanguage": true
+    },
+    "Attachments": {
+        "IdNews": true,
+        "IdLanguage": true
+    },
+    "Caption": {
+        "IdNews": true,
+        "ContentRefId": true,
+        "ContentType": true
+    }
+}

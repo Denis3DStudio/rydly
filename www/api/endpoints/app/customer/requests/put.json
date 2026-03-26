@@ -1,0 +1,16 @@
+{
+    "Update": {
+        "Name": true,
+        "Surname": true,
+        "Email": true,
+        "Password": false
+    },
+    "ChangePassword": {
+        "OldPassword": true,
+        "Password": true,
+        "PasswordConfirm": true
+    },
+    "Language": {
+        "IdLanguage": true
+    }
+}

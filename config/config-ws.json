@@ -1,0 +1,11 @@
+{
+    "Url": "https://ws06-true-local.valeositi.com",
+    "Sandbox": true,
+    "Mail_Gestione": "andreac@valeo.it;marcoderetti@valeo.it",
+    "Database": {
+        "User": "webusercom",
+        "Password": "FshgXkw40m5XAi5",
+        "Host": "localhost",
+        "Name": "ws06_true_local_com"
+    }
+}

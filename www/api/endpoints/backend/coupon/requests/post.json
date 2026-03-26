@@ -1,0 +1,6 @@
+{
+    "Login": {
+        "Username": true,
+        "Password": true
+    }
+}

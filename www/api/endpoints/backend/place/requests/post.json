@@ -1,0 +1,18 @@
+{
+    "Link": {
+        "IdPlace": true,
+        "IdLanguage": true,
+        "Link": true
+    },
+    "Attachments": {
+        "IdPlace": true,
+        "IdLanguage": true
+    },
+    "Images": {
+        "IdPlace": true
+    },
+    "TravelerPath": {
+        "IdPlace": true,
+        "IdSurveyQuestionAnswer": true
+    }
+}

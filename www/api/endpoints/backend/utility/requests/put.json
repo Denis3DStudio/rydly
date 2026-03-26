@@ -1,0 +1,24 @@
+{
+    "Country": {
+        "Country": true
+    },
+    "File": {
+        "IdRow": true,
+        "Macro": true,
+        "Type": true,
+        "Data": true
+    },
+    "ReorderFiles": {
+        "IdRow": true,
+        "Macro": true,
+        "Type": false,
+        "Data": true
+    },
+    "Caption": {
+        "IdFile": true,
+        "Macro": true,
+        "Type": false,
+        "IdRow": true,
+        "Data": true
+    }
+}

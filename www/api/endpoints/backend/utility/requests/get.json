@@ -1,0 +1,28 @@
+{
+    "Get": {
+        "IdDocument": true,
+        "IsValid": {
+            "Default": 0
+        }
+    },
+    "File": {
+        "IdRow": true,
+        "Macro": true,
+        "Type": true
+    },
+    "Files": {
+        "IdRow": true,
+        "Macro": true,
+        "Type": true,
+        "Extras": {
+            "Default": []
+        }
+    },
+    "Caption": {
+        "IdFile": true,
+        "IdRow": true,
+        "Macro": true,
+        "Type": true,
+        "Format": true
+    }
+}

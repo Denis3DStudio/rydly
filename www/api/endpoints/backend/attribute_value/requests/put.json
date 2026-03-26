@@ -1,0 +1,15 @@
+{
+    "Update": {
+        "IdAttribute": true,
+        "IdAttributeValue": true,
+        "Languages": {
+            "Mandatory": true,
+            "Array": {
+                "Object": {
+                    "IdLanguage": true,
+                    "Text": true
+                }
+            }
+        }
+    }
+}

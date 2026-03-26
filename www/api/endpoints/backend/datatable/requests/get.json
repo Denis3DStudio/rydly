@@ -1,0 +1,10 @@
+{
+    "ServerSide": {
+        "draw": false,
+        "columns": false,
+        "order": false,
+        "start": false,
+        "length": false,
+        "search": false
+    }
+}

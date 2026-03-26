@@ -1,0 +1,18 @@
+{
+    "Link": {
+        "IdSponsor": true,
+        "IdLanguage": true,
+        "Link": true
+    },
+    "Attachments": {
+        "IdSponsor": true,
+        "IdLanguage": true
+    },
+    "Images": {
+        "IdSponsor": true
+    },
+    "TravelerPath": {
+        "IdSponsor": true,
+        "IdSurveyQuestionAnswer": true
+    }
+}

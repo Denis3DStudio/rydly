@@ -1,0 +1,11 @@
+{
+    "Url": "https://rydly.test",
+    "Dev": true,
+    "Mail_Gestione": "denis.bejan@valeo.it",
+    "Database": {
+        "User": "root",
+        "Password": "root",
+        "Host": "phpmyadmin",
+        "Name": "rydly"
+    }
+}

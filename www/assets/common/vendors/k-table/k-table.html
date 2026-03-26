@@ -1,0 +1,180 @@
+<k-table-templates>
+
+    <script type="text/template" k-table-template id="k-table-main-template">
+
+        <div class="k-table-container">
+            <!-- K-Table Actions Top -->
+            <div class="k-table-actions-top">
+                <div class="k-table-actions-left">
+
+                    <div class="action-column-visibility dropdown" data-bs-toggle="tooltip" style="display: none;">
+                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-table column"></i>
+                        </button>
+                        <ul class="dropdown-menu" k-table-column-visibility-dropdown></ul>
+                    </div>
+
+                </div>
+                <div class="k-table-search"></div>
+            </div>
+
+            <!-- K-Table Table -->
+            <div class="k-table-table-container"></div>
+
+            <!-- K-Table Actions Bottom -->
+            <div class="k-table-actions-bottom">
+
+                <div class="k-table-paging"></div>
+
+                <div class="k-table-pagination"></div>
+
+            </div>
+        </div>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-table">
+
+        <table k-table-template-initial>
+            <tbody></tbody>
+        </table>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-header-select-filter">
+
+        <select k-table-filter-select="$1" class="form-select form-select-sm"></select>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-search">
+
+        <input type="text" class="form-control form-control-sm" k-table-search-input placeholder="[TRANSLATION.SEARCH.PLACEHOLDER]" />
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-loading-row">
+
+        <tr>
+            <td class="text-center" k-table-loading-row-td>[TRANSLATION.FULL_ROW.LOADING]</td>
+        </tr>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-empty-row">
+
+        <tr>
+            <td class="text-center" k-table-empty-row-td>[TRANSLATION.FULL_ROW.NO_RESULTS]</td>
+        </tr>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-error-row">
+
+        <tr>
+            <td class="text-center" k-table-error-row-td>[TRANSLATION.FULL_ROW.ERROR]</td>
+        </tr>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-paging-template">
+
+        <div class="paging">
+            <select class="form-select form-select-sm"></select>
+            <div class="paging-text text-secondary">
+                [TRANSLATION.PAGING.PER]<br />
+                [TRANSLATION.PAGING.PAGE]
+            </div>
+        </div>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-total-items-template">
+
+        <div class="visible-elements">
+            <span class="text-secondary d-block">[TRANSLATION.TOTAL_ITEMS.SHOWING]</span>
+            <div class="value">
+                <div class="value-text-actual" k-table-filtered-items-container style="display:none;">
+                    <span k-table-filtered-items></span> <span class="text-secondary">[TRANSLATION.TOTAL_ITEMS.OF]</span>
+                </div>
+                <div class="value-text-all" k-table-total-items></div>
+            </div>
+        </div>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-pagination-template">
+
+        <button class="btn btn-outline-secondary btn-sm" type="button" k-table-pagination-button-first disabled>
+            <i class="fa fa-fw fa-backward"></i>
+        </button>
+        <button class="btn btn-outline-secondary btn-sm" type="button" k-table-pagination-button-prev disabled>
+            <i class="fa fa-fw fa-backward-step"></i>
+        </button>
+
+        <select class="form-select form-select-sm"></select>
+
+        <button class="btn btn-outline-secondary btn-sm" type="button" k-table-pagination-button-next disabled>
+            <i class="fa fa-fw fa-forward-step"></i>
+        </button>
+        <button class="btn btn-outline-secondary btn-sm" type="button" k-table-pagination-button-last disabled>
+            <i class="fa fa-fw fa-forward"></i>
+        </button>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-selected-items-template">
+
+        <div class="selected-rows-count" style="display: none;">
+            <span class="text-secondary d-block">[TRANSLATION.SELECTED.SELECTED]</span>
+            <span k-table-selected-items>0</span>
+        </div>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-checkbox-selectable-all">
+
+        <div class="k-table-select-all">
+            <input type="checkbox" class="form-check-input">
+        </div>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-checkbox-selectable">
+
+        <input type="checkbox" class="form-check-input">
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-icon-sortable">
+
+        <i class="fa fa-fw fa-grip-vertical" k-table-sortable-grip></i>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-k-box-image">
+
+        <a href="$1" k-box>
+            <img class='table-img-preview' src="$1" />
+        </a>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-export-csv-template">
+
+        <button class="btn btn-outline-secondary btn-sm" type="button" k-table-export-csv-button>
+            <i class="fa fa-fw fa-file-csv"></i> [TRANSLATION.EXPORT.CSV]
+        </button>
+
+    </script>
+
+    <script type="text/template" k-table-template id="k-table-export-excel-template">
+
+        <button class="btn btn-outline-secondary btn-sm" type="button" k-table-export-excel-button>
+            <i class="fa fa-fw fa-file-excel"></i> [TRANSLATION.EXPORT.EXCEL]
+        </button>
+
+    </script>
+
+</k-table-templates>

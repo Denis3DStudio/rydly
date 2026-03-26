@@ -1,0 +1,19 @@
+{
+    "Put": {
+        "IdTranslation": true,
+        "Section": true,
+        "Page": true,
+        "Label": true,
+        "TextFormat": true,
+        "Note": false,
+        "Languages": {
+            "Mandatory": true,
+            "Array": {
+                "Object": {
+                    "IdLanguage": true,
+                    "Translation": true
+                }
+            }
+        }
+    }
+}

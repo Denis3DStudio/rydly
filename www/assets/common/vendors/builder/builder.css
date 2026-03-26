@@ -1,0 +1,226 @@
+:root {
+    --editor-accent: #0d6efd;
+    --editor-muted: #6c757d;
+    --page-bg: #f5f6f8;
+    --page-max: 1040px;
+    --hover-outline: 2px;
+}
+
+/* Sfondo app + “foglio” pagina */
+body {
+    background: var(--page-bg);
+}
+
+.page-frame {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    background: #fff;
+    border-radius: .75rem;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, .06);
+    padding: 24px;
+}
+
+/* Palette pulita */
+.palette .item {
+    user-select: none;
+    cursor: grab;
+    border: 1px solid #eceff3;
+    border-radius: .5rem;
+    background: #fff;
+    transition: transform .08s ease, box-shadow .12s ease;
+}
+
+.palette .item:active {
+    transform: scale(.98);
+}
+
+.palette .item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
+}
+
+/* Canvas come pagina reale */
+.canvas {
+    min-height: 320px;
+}
+
+/* RIGHE come sezioni pagina */
+.row-slot {
+    position: relative;
+    margin-bottom: 24px;
+    border-radius: .5rem;
+}
+
+.row-slot:hover {
+    outline: var(--hover-outline) solid rgba(13, 110, 253, .14);
+    outline-offset: 2px;
+}
+
+/* Overlay griglia 12 colonne, visibile solo in hover */
+.row-slot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(to right,
+            rgba(13, 110, 253, .18) 0, rgba(13, 110, 253, .18) 1px,
+            transparent 1px, transparent 100%);
+    background-size: calc(100%/12) 100%;
+    background-repeat: repeat-x;
+    opacity: 0;
+    transition: opacity .15s ease;
+    pointer-events: none;
+    z-index: 1;
+    /* sotto la toolbar, sopra lo sfondo */
+}
+
+.row-slot:hover::after {
+    opacity: .6;
+}
+
+/* Toolbar riga: fluttuante sopra (non copre contenuto) */
+.row-toolbar {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: -34px;
+    /* fuori dal box */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, .92);
+    border: 1px solid #e7ebf0;
+    border-bottom: none;
+    padding: .25rem .5rem;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, .04);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s ease;
+    z-index: 2;
+}
+
+.row-slot:hover .row-toolbar {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.row-handle {
+    cursor: grab;
+    user-select: none;
+    color: var(--editor-muted);
+    font-size: .9rem;
+}
+
+.row-toolbar .btn {
+    padding: .15rem .5rem;
+}
+
+/* Corpo riga: solo gutter Bootstrap */
+.row-body {
+    padding: 0;
+}
+
+.row-body.g-2,
+.row-body.g-3 {
+    --bs-gutter-x: 1rem;
+    --bs-gutter-y: 1rem;
+}
+
+/* Divider sottili tra colonne solo in hover riga */
+.row-slot:hover .row-body>[class*="col-"] {
+    box-shadow: inset 1px 0 0 rgba(13, 110, 253, .10);
+}
+
+.row-slot:hover .row-body>[class*="col-"]:first-child {
+    box-shadow: none;
+}
+
+/* SLOT colonna: niente bordi, solo placeholder quando vuota */
+.col-slot {
+    min-height: 28px;
+    background: transparent;
+    border: none;
+    border-radius: .375rem;
+    padding: 0;
+    position: relative;
+    z-index: 3;
+    /* sopra l’overlay griglia */
+}
+
+/* Placeholder elegante solo se la colonna è vuota */
+.col-slot.is-empty::before {
+    content: "Trascina qui";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: .9rem;
+    color: #6c757d;
+    background: rgba(13, 110, 253, .04);
+    border: 1px solid rgba(13, 110, 253, .12);
+    border-radius: .375rem;
+    opacity: 0;
+    transition: opacity .12s ease;
+}
+
+.row-slot:hover .col-slot.is-empty::before {
+    opacity: 1;
+}
+
+/* Blocchi: contenuto reale, con hover soft */
+.block {
+    cursor: move;
+    border: none;
+    background: transparent;
+    border-radius: .375rem;
+    padding: 0;
+    margin-bottom: 12px;
+    transition: box-shadow .12s ease, background-color .12s ease;
+}
+
+.block:last-child {
+    margin-bottom: 0;
+}
+
+.block:hover {
+    background: rgba(13, 110, 253, .03);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .04);
+}
+
+.block h1,
+.block h2,
+.block h3 {
+    margin: 0 0 .5rem 0;
+    line-height: 1.25;
+}
+
+.block p {
+    margin: 0 0 .75rem 0;
+    color: #1e293b;
+}
+
+.block img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: .5rem;
+}
+
+.block input.form-control {
+    height: 44px;
+}
+
+/* Stati drag Sortable */
+.sortable-ghost {
+    opacity: .5;
+}
+
+.sortable-chosen {
+    transform: scale(.995);
+}
+
+/* Pulsanti layout */
+.btn-layout {
+    margin-right: .25rem;
+    margin-bottom: .25rem;
+}

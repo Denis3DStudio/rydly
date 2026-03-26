@@ -1,0 +1,11 @@
+{
+    "Get": {
+        "IdTranslation": true
+    },
+    "Export": {
+        "IdsTranslations": false
+    },
+    "FileAll": {
+        "Folder": true
+    }
+}

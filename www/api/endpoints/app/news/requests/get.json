@@ -1,0 +1,12 @@
+{
+    "All": {
+        "IdsCategories": {
+            "Mandatory": false,
+            "Array": "*"
+        },
+        "search": false
+    },
+    "Get": {
+        "IdNews": true
+    }
+}

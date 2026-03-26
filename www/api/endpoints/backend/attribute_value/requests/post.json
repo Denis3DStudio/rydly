@@ -1,0 +1,9 @@
+{
+    "Create": {
+        "IdAttribute": true
+    },
+    "Color": {
+        "IdAttributeValue": true,
+        "Color": true
+    }
+}

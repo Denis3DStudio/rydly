@@ -1,0 +1,9 @@
+{
+    "Delete": {
+        "IdCategory": true
+    },
+    "Image": {
+        "IdCategory": true,
+        "IdImage": true
+    }
+}

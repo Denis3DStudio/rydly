@@ -1,0 +1,9 @@
+{
+    "Delete": {
+        "IdPlace": true
+    },
+    "Content": {
+        "IdPlace": true,
+        "ContentRefId": true
+    }
+}

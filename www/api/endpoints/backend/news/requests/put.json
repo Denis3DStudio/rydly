@@ -1,0 +1,77 @@
+{
+    "Put": {
+        "IdNews": true,
+        "Author": true,
+        "Date": true,
+        "Status": true,
+        "Category": true,
+        "Place": {
+            "Mandatory": false,
+            "Array": "*"
+        },
+        "Languages": {
+            "Mandatory": true,
+            "Array": {
+                "Object": {
+                    "IdLanguage": true,
+                    "Description": true,
+                    "Title": true,
+                    "Subtitle": false
+                }
+            }
+        }
+    },
+    "ContentsOrder": {
+        "IdNews": true,
+        "Order": {
+            "Mandatory": true,
+            "Array": {
+                "Object": {
+                    "Id": true,
+                    "OrderNumber": true,
+                    "Type": true
+                }
+            }
+        }
+    },
+    "LinksOrder": {
+        "IdNews": true,
+        "IdLanguage": true,
+        "Order": {
+            "Mandatory": true,
+            "Array": {
+                "Object": {
+                    "IdLink": true,
+                    "OrderNumber": true
+                }
+            }
+        }
+    },
+    "AttachmentsOrder": {
+        "IdNews": true,
+        "IdLanguage": true,
+        "Order": {
+            "Mandatory": true,
+            "Array": {
+                "Object": {
+                    "IdAttachment": true,
+                    "OrderNumber": true
+                }
+            }
+        }
+    },
+    "Caption": {
+        "IdNews": true,
+        "ContentRefId": true,
+        "ContentType": true,
+        "Languages": {
+            "Mandatory": true,
+            "Array": {
+                "Object": {
+                    "IdLanguage": true,
+                    "Caption": true
+                }
+            }
+        }
+    }
+}

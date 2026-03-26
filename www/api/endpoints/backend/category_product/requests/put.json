@@ -1,0 +1,18 @@
+{
+    "Put": {
+        "IdCategory": true,
+        "Languages": {
+            "Mandatory": true,
+            "Array": {
+                "Object": {
+                    "IdLanguage": true,
+                    "Name": true,
+                    "Description": true
+                }
+            }
+        },
+        "Duplicates":{
+            "Name" : true
+        }
+    }
+}

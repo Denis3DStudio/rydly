@@ -1,0 +1,1437 @@
+{
+    "Account": {
+        "GET": {
+            "All": {
+                "Auth": true,
+                "Method": "getAll"
+            },
+            "": {
+                "Auth": true,
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "Active": {
+                "Auth": true,
+                "Method": "checkActive"
+            },
+            "Tutorial": {
+                "Auth": true,
+                "Method": "checkTutorial",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Tutorial"
+                }
+            },
+            "Crypt": {
+                "Method": "getEncrypted",
+                "Auth": true,
+                "Request": {
+                    "Path": "get",
+                    "Class": "Crypt"
+                }
+            },
+            "Decrypt": {
+                "Method": "getDecrypted",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Decrypt"
+                }
+            }
+        },
+        "POST": {
+            "Login": {
+                "Method": "login",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Login"
+                }
+            },
+            "Logout": {
+                "Auth": true,
+                "Method": "logout"
+            },
+            "Impersonate": {
+                "Auth": true,
+                "Method": "impersonate",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Impersonate"
+                }
+            },
+            "": {
+                "Auth": true,
+                "Method": "create"
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Update"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            }
+        }
+    },
+    "Customer": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll"
+            },
+            "Addresses": {
+                "Auth": true,
+                "Method": "getAddresses",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Addresses"
+                }
+            },
+            "Address": {
+                "Auth": true,
+                "Method": "getAddress",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Address"
+                }
+            },
+            "Newsletter": {
+                "Auth": true,
+                "Method": "getNewsletter"
+            }
+        },
+        "POST": {
+            "": {
+                "Auth": true,
+                "Method": "create"
+            },
+            "Address": {
+                "Auth": true,
+                "Method": "createAddress",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Address"
+                }
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Update"
+                }
+            },
+            "Address": {
+                "Auth": true,
+                "Method": "updateAddress",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Address"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            },
+            "Address": {
+                "Auth": true,
+                "Method": "deleteAddress",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Address"
+                }
+            }
+        }
+    },
+    "Translation": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll"
+            },
+            "AllJs": {
+                "Auth": true,
+                "Method": "getAllJs"
+            },
+            "Section": {
+                "Auth": true,
+                "Method": "getSections"
+            },
+            "Page": {
+                "Auth": true,
+                "Method": "getPages"
+            },
+            "Label": {
+                "Auth": true,
+                "Method": "getLabels"
+            },
+            "Export": {
+                "Auth": true,
+                "Method": "export",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Export"
+                }
+            },
+            "DeeplLimit": {
+                "Auth": true,
+                "Method": "getDeeplLimit"
+            },
+            "Html": {
+                "Auth": false,
+                "Method": "html"
+            },
+            "FileAll": {
+                "Auth": true,
+                "Method": "getFileAll",
+                "Request": {
+                    "Path": "get",
+                    "Class": "FileAll"
+                }
+            }
+        },
+        "POST": {
+            "": {
+                "Auth": true,
+                "Method": "create"
+            },
+            "Duplicate": {
+                "Auth": true,
+                "Method": "duplicate",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Duplicate"
+                }
+            },
+            "Cache": {
+                "Auth": false,
+                "Method": "cache"
+            },
+            "Import": {
+                "Auth": true,
+                "Method": "import",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Import"
+                }
+            },
+            "Deepl": {
+                "Auth": true,
+                "Method": "getTranslationDeepl",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Deepl"
+                }
+            },
+            "TranslateAll": {
+                "Auth": true,
+                "Method": "translateAll",
+                "Request": {
+                    "Path": "post",
+                    "Class": "TranslateAll"
+                }
+            },
+            "CostDeepl": {
+                "Auth": true,
+                "Method": "getCostDeepl",
+                "Request": {
+                    "Path": "post",
+                    "Class": "DeeplCost"
+                }
+            },
+            "File": {
+                "Auth": false,
+                "Method": "translateFile",
+                "Request": {
+                    "Path": "post",
+                    "Class": "File"
+                }
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Put"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            },
+            "Cache": {
+                "Auth": true,
+                "Method": "deleteCache"
+            }
+        }
+    },
+    "News": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll",
+                "Request": {
+                    "Path": "get",
+                    "Class": "All"
+                }
+            },
+            "Contents": {
+                "Auth": true,
+                "Method": "getContents",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Contents"
+                }
+            },
+            "Caption": {
+                "Auth": true,
+                "Method": "getCaption",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Caption"
+                }
+            },
+            "Links": {
+                "Auth": true,
+                "Method": "getLinks",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Links"
+                }
+            },
+            "Attachments": {
+                "Auth": true,
+                "Method": "getAttachments",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Attachments"
+                }
+            }
+        },
+        "POST": {
+            "": {
+                "Auth": true,
+                "Method": "create"
+            },
+            "Link": {
+                "Auth": true,
+                "Method": "saveLink",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Link"
+                }
+            },
+            "Attachments": {
+                "Auth": true,
+                "Method": "saveAttachments",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Attachments"
+                }
+            },
+            "Images": {
+                "Auth": true,
+                "Method": "saveImages",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Images"
+                }
+            },
+            "Video": {
+                "Auth": true,
+                "Method": "saveVideo",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Video"
+                }
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Put"
+                }
+            },
+            "Caption": {
+                "Auth": true,
+                "Method": "saveCaption",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Caption"
+                }
+            },
+            "ContentsOrder": {
+                "Auth": true,
+                "Method": "updateContentsOrder",
+                "Request": {
+                    "Path": "put",
+                    "Class": "ContentsOrder"
+                }
+            },
+            "LinksOrder": {
+                "Auth": true,
+                "Method": "updateLinksOrder",
+                "Request": {
+                    "Path": "put",
+                    "Class": "LinksOrder"
+                }
+            },
+            "AttachmentsOrder": {
+                "Auth": true,
+                "Method": "updateAttachmentsOrder",
+                "Request": {
+                    "Path": "put",
+                    "Class": "AttachmentsOrder"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            },
+            "Content": {
+                "Auth": true,
+                "Method": "deleteContent",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Content"
+                }
+            },
+            "Link": {
+                "Auth": true,
+                "Method": "deleteLink",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Link"
+                }
+            },
+            "Attachment": {
+                "Auth": true,
+                "Method": "deleteAttachment",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Attachment"
+                }
+            }
+        }
+    },
+    "Category": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll"
+            },
+            "Images": {
+                "Auth": true,
+                "Method": "getImages",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Images"
+                }
+            }
+        },
+        "POST": {
+            "": {
+                "Auth": true,
+                "Method": "create"
+            },
+            "Images": {
+                "Auth": true,
+                "Method": "uploadImages",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Images"
+                }
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Update"
+                }
+            },
+            "ImagesOrder": {
+                "Auth": true,
+                "Method": "updateImagesOrder",
+                "Request": {
+                    "Path": "put",
+                    "Class": "ImagesOrder"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            },
+            "Image": {
+                "Auth": true,
+                "Method": "deleteImage",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Image"
+                }
+            }
+        }
+    },
+    "Category_Product": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll"
+            },
+            "Select": {
+                "Auth": true,
+                "Method": "getSelect"
+            }
+        },
+        "POST": {
+            "": {
+                "Auth": true,
+                "Method": "create",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Create"
+                }
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Put"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            }
+        }
+    },
+    "Attribute": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll"
+            }
+        },
+        "POST": {
+            "": {
+                "Auth": true,
+                "Method": "create"
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Update"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            }
+        }
+    },
+    "Attribute_Value": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll",
+                "Request": {
+                    "Path": "get",
+                    "Class": "All"
+                }
+            },
+            "Colors": {
+                "Auth": true,
+                "Method": "getColors",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Colors"
+                }
+            }
+        },
+        "POST": {
+            "": {
+                "Auth": true,
+                "Method": "create",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Create"
+                }
+            },
+            "Color": {
+                "Auth": true,
+                "Method": "insertColor",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Color"
+                }
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Update"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            },
+            "Color": {
+                "Auth": true,
+                "Method": "deleteColor",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Color"
+                }
+            }
+        }
+    },
+    "Coupon": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll"
+            }
+        },
+        "POST": {
+            "": {
+                "Auth": true,
+                "Method": "create"
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Update"
+                }
+            },
+            "EnableDisable": {
+                "Auth": true,
+                "Method": "enableDisable",
+                "Request": {
+                    "Path": "put",
+                    "Class": "EnableDisable"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            }
+        }
+    },
+    "Homepage": {
+        "GET": {
+            "Banner": {
+                "Auth": true,
+                "Method": "getBanner",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Banner"
+                }
+            },
+            "Banners": {
+                "Auth": true,
+                "Method": "getBanners",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Banners"
+                }
+            },
+            "BannerImages": {
+                "Auth": true,
+                "Method": "getBannerImages",
+                "Request": {
+                    "Path": "get",
+                    "Class": "BannerImages"
+                }
+            }
+        },
+        "POST": {
+            "Banner": {
+                "Auth": true,
+                "Method": "createBanner",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Banner"
+                }
+            },
+            "BannerImage": {
+                "Auth": true,
+                "Method": "saveBannerImage",
+                "Request": {
+                    "Path": "post",
+                    "Class": "BannerImage"
+                }
+            }
+        },
+        "PUT": {
+            "Banner": {
+                "Auth": true,
+                "Method": "updateBanner",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Banner"
+                }
+            },
+            "SliderOrder": {
+                "Auth": true,
+                "Method": "reorderSlider",
+                "Request": {
+                    "Path": "put",
+                    "Class": "SliderOrder"
+                }
+            }
+        },
+        "DELETE": {
+            "Banner": {
+                "Auth": true,
+                "Method": "deleteBanner",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Banner"
+                }
+            },
+            "BannerImage": {
+                "Auth": true,
+                "Method": "deleteBannerImage",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "BannerImage"
+                }
+            }
+        }
+    },
+    "Job": {
+        "GET": {
+            "DeleteInvalidRows": {
+                "Auth": false,
+                "Method": "deleteInvalidRows"
+            },
+            "DeleteFilesAfter30Days": {
+                "Auth": false,
+                "Method": "deleteFilesAfter365days"
+            },
+            "SendMails": {
+                "Auth": false,
+                "Method": "sendMails"
+            }
+        }
+    },
+    "Utility": {
+        "GET": {
+            "Places": {
+                "Auth": true,
+                "Method": "getPlaces"
+            },
+            "File": {
+                "Auth": true,
+                "Method": "getFile",
+                "Request": {
+                    "Path": "get",
+                    "Class": "File"
+                }
+            },
+            "Files": {
+                "Auth": true,
+                "Method": "getFiles",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Files"
+                }
+            },
+            "Caption": {
+                "Auth": true,
+                "Method": "getFileCaptions",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Caption"
+                }
+            }
+        },
+        "POST": {
+            "Files": {
+                "Auth": true,
+                "Method": "uploadFiles",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Files"
+                }
+            }
+        },
+        "PUT": {
+            "File": {
+                "Auth": true,
+                "Method": "updateFile",
+                "Request": {
+                    "Path": "put",
+                    "Class": "File"
+                }
+            },
+            "FileCaption": {
+                "Auth": true,
+                "Method": "updateFileCaptions",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Caption"
+                }
+            },
+            "ReorderFiles": {
+                "Auth": true,
+                "Method": "reorderFiles",
+                "Request": {
+                    "Path": "put",
+                    "Class": "ReorderFiles"
+                }
+            }
+        },
+        "DELETE": {
+            "Cache": {
+                "Auth": true,
+                "Method": "deleteCache"
+            },
+            "File": {
+                "Auth": true,
+                "Method": "deleteFile",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "File"
+                }
+            }
+        }
+    },
+    "Api_History": {
+        "GET": {
+            "": {
+                "Auth": false,
+                "Method": "index"
+            }
+        }
+    },
+    "Email": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll"
+            }
+        }
+    },
+    "Chunk": {
+        "POST": {
+            "": {
+                "Method": "upload",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Upload"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            }
+        }
+    },
+    "Category_Place": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll"
+            },
+            "Image": {
+                "Auth": true,
+                "Method": "getImage",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Image"
+                }
+            }
+        },
+        "POST": {
+            "": {
+                "Auth": true,
+                "Method": "create"
+            },
+            "Image": {
+                "Auth": true,
+                "Method": "uploadImage",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Image"
+                }
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Update"
+                }
+            },
+            "ImagesOrder": {
+                "Auth": true,
+                "Method": "updateImagesOrder",
+                "Request": {
+                    "Path": "put",
+                    "Class": "ImagesOrder"
+                }
+            },
+            "CategoriesOrder": {
+                "Auth": true,
+                "Method": "updateCategoriesOrder",
+                "Request": {
+                    "Path": "put",
+                    "Class": "CategoriesOrder"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            },
+            "Image": {
+                "Auth": true,
+                "Method": "deleteImage",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Image"
+                }
+            }
+        }
+    },
+    "Place": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll",
+                "Request": {
+                    "Path": "get",
+                    "Class": "All"
+                }
+            },
+            "Contents": {
+                "Auth": true,
+                "Method": "getContents",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Contents"
+                }
+            },
+            "News": {
+                "Auth": true,
+                "Method": "getNews",
+                "Request": {
+                    "Path": "get",
+                    "Class": "News"
+                }
+            },
+            "AllNews": {
+                "Auth": true,
+                "Method": "getAllNews"
+            }
+        },
+        "POST": {
+            "": {
+                "Auth": true,
+                "Method": "create"
+            },
+            "Images": {
+                "Auth": true,
+                "Method": "saveImages",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Images"
+                }
+            },
+            "News": {
+                "Auth": true,
+                "Method": "saveNews",
+                "Request": {
+                    "Path": "post",
+                    "Class": "News"
+                }
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Put"
+                }
+            },
+            "ContentsOrder": {
+                "Auth": true,
+                "Method": "updateContentsOrder",
+                "Request": {
+                    "Path": "put",
+                    "Class": "ContentsOrder"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            },
+            "Content": {
+                "Auth": true,
+                "Method": "deleteContent",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Content"
+                }
+            },
+            "News" : {
+                "Auth": true,
+                "Method": "deleteNews",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "News"
+                }
+            }
+        }
+    },
+    "Sponsor": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll",
+                "Request": {
+                    "Path": "get",
+                    "Class": "All"
+                }
+            },
+            "Contents": {
+                "Auth": true,
+                "Method": "getContents",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Contents"
+                }
+            },
+            "News": {
+                "Auth": true,
+                "Method": "getNews",
+                "Request": {
+                    "Path": "get",
+                    "Class": "News"
+                }
+            },
+            "AllNews": {
+                "Auth": true,
+                "Method": "getAllNews"
+            }
+        },
+        "POST": {
+            "": {
+                "Auth": true,
+                "Method": "create"
+            },
+            "Images": {
+                "Auth": true,
+                "Method": "saveImages",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Images"
+                }
+            },
+            "News": {
+                "Auth": true,
+                "Method": "saveNews",
+                "Request": {
+                    "Path": "post",
+                    "Class": "News"
+                }
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Put"
+                }
+            },
+            "ContentsOrder": {
+                "Auth": true,
+                "Method": "updateContentsOrder",
+                "Request": {
+                    "Path": "put",
+                    "Class": "ContentsOrder"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            },
+            "Content": {
+                "Auth": true,
+                "Method": "deleteContent",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Content"
+                }
+            },
+            "News" : {
+                "Auth": true,
+                "Method": "deleteNews",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "News"
+                }
+            }
+        }
+    },
+    "Survey": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll"
+            },
+            "AllForSelect": {
+                "Auth": true,
+                "Method": "getAllForSelect"
+            },
+            "Questions": {
+                "Auth": true,
+                "Method": "getQuestions",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Questions"
+                }
+            },
+            "Question": {
+                "Auth": true,
+                "Method": "getQuestion",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Question"
+                }
+            },
+            "QuestionAnswers": {
+                "Auth": true,
+                "Method": "getQuestionAnswers",
+                "Request": {
+                    "Path": "get",
+                    "Class": "QuestionAnswers"
+                }
+            },
+            "QuestionAnswer": {
+                "Auth": true,
+                "Method": "getQuestionAnswer",
+                "Request": {
+                    "Path": "get",
+                    "Class": "QuestionAnswer"
+                }
+            },
+            "AccountsAnswers": {
+                "Auth": true,
+                "Method": "getAccountsAnswers",
+                "Request": {
+                    "Path": "get",
+                    "Class": "AccountsAnswers"
+                }
+            }
+        },
+        "POST": {
+            "": {
+                "Auth": true,
+                "Method": "create"
+            },
+            "Question": {
+                "Auth": true,
+                "Method": "createQuestion",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Question"
+                }
+            },
+            "QuestionAnswer": {
+                "Auth": true,
+                "Method": "createQuestionAnswer",
+                "Request": {
+                    "Path": "post",
+                    "Class": "QuestionAnswer"
+                }
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Update"
+                }
+            },
+            "Question": {
+                "Auth": true,
+                "Method": "updateQuestion",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Question"
+                }
+            },
+            "QuestionAnswer": {
+                "Auth": true,
+                "Method": "updateQuestionAnswer",
+                "Request": {
+                    "Path": "put",
+                    "Class": "QuestionAnswer"
+                }
+            },
+            "QuestionsOrder": {
+                "Auth": true,
+                "Method": "updateQuestionsOrder",
+                "Request": {
+                    "Path": "put",
+                    "Class": "QuestionsOrder"
+                }
+            },
+            "QuestionAnswersOrder": {
+                "Auth": true,
+                "Method": "updateQuestionAnswersOrder",
+                "Request": {
+                    "Path": "put",
+                    "Class": "QuestionAnswersOrder"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            },
+            "Question": {
+                "Auth": true,
+                "Method": "deleteQuestion",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Question"
+                }
+            },
+            "QuestionAnswer": {
+                "Auth": true,
+                "Method": "deleteQuestionAnswer",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "QuestionAnswer"
+                }
+            }
+        }
+    }
+}

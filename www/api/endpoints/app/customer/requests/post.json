@@ -1,0 +1,29 @@
+{
+    "Login": {
+        "Email": true,
+        "Password": true,
+        "IdLanguage": true
+    },
+    "Register": {
+        "Name": true,
+        "Surname": true,
+        "Email": true,
+        "IdLanguage": true,
+        "Password": true
+    },
+    "Favorites": {
+        "IdPlace": true
+    },
+    "RecoverPassword": {
+        "Email": true
+    },
+    "ValidateOTP": {
+        "Code": true,
+        "Ref": true
+    },
+    "ResetPassword": {
+        "Password": true,
+        "PasswordConfirm": true,
+        "Token": true
+    }
+}

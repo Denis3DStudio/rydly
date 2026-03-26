@@ -1,0 +1,21 @@
+{
+    "Banner": {
+        "IdBanner": true,
+        "Name": true,
+        "Languages": {
+            "Mandatory": false,
+            "Array": {
+                "Object": {
+                    "IdLanguage": true,
+                    "ButtonLink": false
+                }
+            }
+        }
+    },
+    "SliderOrder": {
+        "Order": {
+            "Mandatory": true,
+            "Array": "*"
+        }
+    }
+}

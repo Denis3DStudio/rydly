@@ -1,0 +1,12 @@
+{
+    "Url": "inserisci qui l'URL del sito di prod",
+    "Dev": false,
+    "Prod": true,
+    "Mail_Gestione": null,
+    "Database": {
+        "User": "",
+        "Password": "",
+        "Host": "",
+        "Name": ""
+    }
+}

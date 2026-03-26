@@ -1,0 +1,357 @@
+[
+	{
+		"Names": [
+			"jquery"
+		],
+		"AlwaysInclude": true,
+		"Foot": [
+			"/assets/common/vendors/jquery/jquery-3.7.1.min.js"
+		]
+	},
+	{
+		"Names": [
+			"bootstrap"
+		],
+		"AlwaysInclude": true,
+		"Head": [
+			"/assets/common/vendors/bootstrap/css/bootstrap.min.css"
+		],
+		"Foot": [
+			"/assets/common/vendors/bootstrap/js/bootstrap.bundle.min.js"
+		]
+	},
+	{
+		"Names": [
+			"popper"
+		],
+		"AlwaysInclude": true,
+		"Foot": [
+			"/assets/common/vendors/popper/popper.min.js"
+		]
+	},
+	{
+		"Names": [
+			"fontawesome"
+		],
+		"AlwaysInclude": true,
+		"Head": [
+			"/assets/common/vendors/font-awesome/css/all.css"
+		]
+	},
+	{
+		"Names": [
+			"jquery-ui"
+		],
+		"AlwaysInclude": true,
+		"Head": [
+			"/assets/{{ACTIVE_PATH}}/vendors/jquery-ui/jquery-ui.theme.min.css"
+		],
+		"Foot": [
+			"/assets/{{ACTIVE_PATH}}/vendors/jquery-ui/jquery-ui.min.js"
+		]
+	},
+	{
+		"Names": [
+			"jquery-easing"
+		],
+		"AlwaysInclude": true,
+		"Foot": [
+			"/assets/{{ACTIVE_PATH}}/vendors/jquery-easing/jquery.easing.min.js"
+		]
+	},
+	{
+		"Names": [
+			"k-box"
+		],
+		"AlwaysInclude": true,
+		"Head": [
+			"/assets/common/vendors/k-box/k-box.css"
+		],
+		"Foot": [
+			"/assets/common/vendors/k-box/k-box.js"
+		]
+	},
+	{
+		"Names": [
+			"loader"
+		],
+		"AlwaysInclude": true,
+		"Head": [
+			"/assets/common/css/loader.css"
+		]
+	},
+	{
+		"Names": [
+			"moment"
+		],
+		"AlwaysInclude": true,
+		"Foot": [
+			"/assets/common/vendors/moment/moment.min.js"
+		]
+	},
+	{
+		"Names": [
+			"fullcalendar"
+		],
+		"AlwaysInclude": false,
+		"Foot": [
+			"/assets/common/vendors/fullcalendar/index.global.min.js"
+		]
+	},
+	{
+		"Names": [
+			"datepicker"
+		],
+		"AlwaysInclude": true,
+		"Head": [
+			"/assets/common/vendors/tempus-dominus/css/tempus-dominus.min.css"
+		],
+		"Foot": [
+			"/assets/common/vendors/tempus-dominus/js/tempus-dominus.min.js"
+		]
+	},
+	{
+		"Names": [
+			"bootstrap-select"
+		],
+		"AlwaysInclude": true,
+		"Head": [
+			"/assets/common/vendors/bootstrap-select/css/bootstrap-select.min.css"
+		],
+		"Foot": [
+			"/assets/common/vendors/bootstrap-select/js/bootstrap-select.min.js",
+			"/assets/common/vendors/bootstrap-select/js/i18n/defaults-it_IT.min.js"
+		]
+	},
+	{
+		"Names": [
+			"datepicker"
+		],
+		"AlwaysInclude": false,
+		"Head": [
+			"/assets/common/vendors/tempus-dominus/css/tempus-dominus.min.css"
+		],
+		"Foot": [
+			"/assets/common/vendors/tempus-dominus/js/tempus-dominus.min.js",
+			"/assets/common/vendors/tempus-dominus/locales/it.js"
+		]
+	},
+	{
+		"Names": [
+			"datatable",
+			"datatables"
+		],
+		"AlwaysInclude": true,
+		"Head": [
+			"/assets/{{ACTIVE_PATH}}/vendors/datatables/datatables.min.css"
+		],
+		"Foot": [
+			"/assets/{{ACTIVE_PATH}}/vendors/datatables/datatables.min.js",
+			"/assets/common/js/datatable.js"
+		]
+	},
+	{
+		"Names": [
+			"nestedsortable"
+		],
+		"AlwaysInclude": false,
+		"Foot": [
+			"/assets/{{ACTIVE_PATH}}/vendors/jquery-nestedSortable/jquery.mjs.nestedSortable.js"
+		]
+	},
+	{
+		"Names": [
+			"builder"
+		],
+		"AlwaysInclude": false,
+		"Head": [
+			"/assets/common/vendors/builder/builder.css"
+		],
+		"Foot": [
+			"https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"
+		]
+	},
+	{
+		"Names": [
+			"toastr"
+		],
+		"AlwaysInclude": true,
+		"Head": [
+			"/assets/common/vendors/toastr/toastr.min.css"
+		],
+		"Foot": [
+			"/assets/common/vendors/toastr/toastr.min.js"
+		]
+	},
+	{
+		"Names": [
+			"summernote"
+		],
+		"AlwaysInclude": false,
+		"Head": [
+			"/assets/{{ACTIVE_PATH}}/vendors/summernote/summernote-bs5.min.css"
+		],
+		"Foot": [
+			"/assets/{{ACTIVE_PATH}}/vendors/summernote/summernote.min.js",
+			"/assets/{{ACTIVE_PATH}}/vendors/summernote/summernote-bs5.min.js",
+			"/assets/{{ACTIVE_PATH}}/vendors/summernote/lang/summernote-it-IT.js"
+		]
+	},
+	{
+		"Names": [
+			"tokenize"
+		],
+		"AlwaysInclude": true,
+		"Head": [
+			"/assets/{{ACTIVE_PATH}}/vendors/tokenize2/tokenize2.min.css"
+		],
+		"Foot": [
+			"/assets/{{ACTIVE_PATH}}/vendors/tokenize2/tokenize2.min.js"
+		]
+	},
+	{
+		"Names": [
+			"tom-select"
+		],
+		"AlwaysInclude": false,
+		"Head": [
+			"/assets/common/vendors/tom-select/tom-select.bootstrap5.min.css"
+		],
+		"Foot": [
+			"/assets/common/vendors/tom-select/tom-select.complete.min.js"
+		]
+	},
+	{
+		"Names": [
+			"nouislider"
+		],
+		"AlwaysInclude": false,
+		"Head": [
+			"/assets/common/vendors/nouislider/nouislider.min.css"
+		],
+		"Foot": [
+			"/assets/common/vendors/nouislider/nouislider.min.js",
+			"/assets/common/vendors/nouislider/wNumb.min.js"
+		]
+	},
+	{
+		"Names": [
+			"chartjs"
+		],
+		"AlwaysInclude": false,
+		"Foot": [
+			"/assets/common/vendors/chart-js/chart.umd.min.js"
+		]
+	},
+	{
+		"Names": [
+			"crypto",
+			"cryptojs",
+			"crypto-js"
+		],
+		"AlwaysInclude": true,
+		"Foot": [
+			"/assets/common/vendors/crypto-js/crypto-js.js"
+		]
+	},
+	{
+		"Names": [
+			"address",
+			"addresses"
+		],
+		"Foot": [
+			"/assets/common/js/address.js"
+		]
+	},
+	{
+		"Names": [
+			"images_caption",
+			"caption"
+		],
+		"Foot": [
+			"/assets/{{ACTIVE_PATH}}/js/caption.js"
+		]
+	},
+	{
+		"Names": [
+			"list"
+		],
+		"Foot": [
+			"/assets/common/js/ac-list.js"
+		]
+	},
+	{
+		"Names": [
+			"k-table-dev"
+		],
+		"AlwaysInclude": false,
+		"Head": [
+			"/assets/common/vendors/k-table/k-table.css"
+		],
+		"Pages": [
+			"../../assets/common/vendors/k-table/k-table.html"
+		],
+		"Foot": [
+			"/assets/common/vendors/k-table/k-table.js",
+			"/assets/common/vendors/k-table/extensions/write-excel-file.min.js"
+		]
+	},
+	{
+		"Names": [
+			"k-table"
+		],
+		"AlwaysInclude": false,
+		"Head": [
+			"https://sentinel.valeo.tools/assets/common/vendors/k-table/k-table.css"
+		],
+        "Pages": [
+            "https://sentinel.valeo.tools/assets/common/vendors/k-table/k-table.html"
+        ],
+		"Foot": [
+			"https://sentinel.valeo.tools/assets/common/vendors/k-table/k-table.js",
+            "https://sentinel.valeo.tools/assets/common/vendors/k-table/extensions/write-excel-file.min.js"
+		]
+	},
+	{
+		"Names": [
+			"k-select"
+		],
+		"AlwaysInclude": false,
+		"Head": [
+			"/assets/common/vendors/k-select/k-select.css"
+		],
+		"Pages": [
+			"../../assets/common/vendors/k-select/k-select.html"
+		],
+		"Foot": [
+			"/assets/common/vendors/k-select/k-select.js"
+		]
+	},
+	{
+		"Names": [
+			"custom"
+		],
+		"AlwaysInclude": true,
+		"Head": [
+			"/assets/{{ACTIVE_PATH}}/css/style.css"
+		],
+		"Foot": [
+			"/assets/common/js/ac-file.js",
+			"/assets/common/js/dev.js",
+			"/assets/common/js/template.js",
+			"/assets/common/js/translations.js",
+			"/assets/{{ACTIVE_PATH}}/js/custom.js",
+            "/assets/{{ACTIVE_PATH}}/js/deepl.js",
+            "/assets/common/js/fileManager.js"
+		]
+	},
+	{
+		"Names": [
+			"g-maps"
+		],
+		"AlwaysInclude": false,
+		"Foot": [
+			"https://maps.googleapis.com/maps/api/js?key=AIzaSyCtZnRGMjUYApxtiYxAqzKC9S97wIgHgK0&libraries=places"
+		]
+	}
+]

@@ -1,0 +1,30 @@
+{
+  "Encryption_Key": "!?Tru3-LoC4L-Pr0D^!",
+  "Jwt_Secret": "JwT-!?Tru3-LoC4L-Pr0D^!",
+  "Is_Debug": false,
+  "Index_Follow": true,
+  "Mail_Noreply": "",
+  "Api_Endpoint": "",
+  "SMTP": {
+    "Username": "smtp@valeo.site",
+    "Password": "bs2-Mk89u",
+    "Port": "25",
+    "Host": "authsmtp.valeo.site",
+    "Protocol": ""
+  },
+  "Mail": {
+    "Sender": "True Local",
+    "Subject": "True Local"
+  },
+  "Site": {
+    "Name": "True Local",
+    "Description": "Description default",
+    "Separator": "|",
+    "Email": "<mark>kebab@valeo.it</mark>",
+    "OG": {
+      "Image": "<mark>url image</mark>",
+      "Type": "website"
+    }
+  },
+  "Deepl_Auth_Key": "a9f723e8-68c0-4ebe-8f24-abed456d2529"
+}

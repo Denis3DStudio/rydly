@@ -1,0 +1,9 @@
+{
+    "Delete": {
+        "IdSponsor": true
+    },
+    "Content": {
+        "IdSponsor": true,
+        "ContentRefId": true
+    }
+}

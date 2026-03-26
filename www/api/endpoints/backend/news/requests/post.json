@@ -1,0 +1,18 @@
+{
+    "Link": {
+        "IdNews": true,
+        "IdLanguage": true,
+        "Link": true
+    },
+    "Attachments": {
+        "IdNews": true,
+        "IdLanguage": true
+    },
+    "Images": {
+        "IdNews": true
+    },
+    "Video": {
+        "IdNews": true,
+        "VideoCode": true
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "ClaimRequest": {
+        "Name": true,
+        "Surname": true,
+        "Email": true,
+        "Place": true,
+        "Message": false
+    },
+    "SuggestRequest": {
+        "Email": true,
+        "PlaceName": true,
+        "City": true,
+        "Message": true
+    },
+    "ToogleFavorite": {
+        "IsFavorite": true,
+        "IdPlace": true
+    }
+}

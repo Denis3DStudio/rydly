@@ -1,0 +1,10 @@
+{
+    "AppSettings": {
+        "Version": true,
+        "TranslationVersion": false,
+        "IdLanguage": true
+    },
+    "Translations": {
+        "IdLanguage": true
+    }
+}

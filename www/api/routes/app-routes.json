@@ -1,0 +1,287 @@
+{
+    "Customer": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get"
+            }
+        },
+        "POST": {
+            "Login": {
+                "Auth": false,
+                "Method": "login",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Login"
+                }
+            },
+            "Register": {
+                "Auth": false,
+                "Method": "register",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Register"
+                }
+            },
+            "Favorites": {
+                "Auth": true,
+                "Method": "addFavoritePlace",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Favorites"
+                }
+            },
+            "RecoverPassword": {
+                "Auth": false,
+                "Method": "recoverPassword",
+                "Request": {
+                    "Path": "post",
+                    "Class": "RecoverPassword"
+                }
+            },
+            "ValidateOTP": {
+                "Auth": false,
+                "Method": "validateOTP",
+                "Request": {
+                    "Path": "post",
+                    "Class": "ValidateOTP"
+                }
+            },
+            "ResetPassword": {
+                "Auth": false,
+                "Method": "resetPassword",
+                "Request": {
+                    "Path": "post",
+                    "Class": "ResetPassword"
+                }
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Update"
+                }
+            },
+            "ChangePassword": {
+                "Auth": true,
+                "Method": "changePassword",
+                "Request": {
+                    "Path": "put",
+                    "Class": "ChangePassword"
+                }
+            },
+            "Language": {
+                "Auth": true,
+                "Method": "updateIdLanguage",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Language"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete"
+            }
+        }
+    },
+    "Utility": {
+        "GET": {
+            "AppSettings": {
+                "Method": "getAppSettings",
+                "Request": {
+                    "Path": "get",
+                    "Class": "AppSettings"
+                }
+            },
+            "Translations": {
+                "Method": "getTranslations",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Translations"
+                }
+            }
+        }
+    },
+    "Notification": {
+        "POST": {
+            "NotificationToken": {
+                "Method": "setNotificationToken",
+                "Request": {
+                    "Path": "post",
+                    "Class": "NotificationToken"
+                }
+            }
+        }
+    },
+    "Category_Place": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll",
+                "Request": {
+                    "Path": "get",
+                    "Class": "All"
+                }
+            }
+        }
+    },
+    "Place": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": false,
+                "Method": "getAll",
+                "Request": {
+                    "Path": "get",
+                    "Class": "All"
+                }
+            },
+            "Search": {
+                "Auth": false,
+                "Method": "getSearch",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Search"
+                }
+            }
+        },
+        "POST" : {
+            "claimRequest" : {
+                "Auth" : true,
+                "Method" : "claimRequest",
+                "Request" : {
+                    "Path" : "post",
+                    "Class" : "ClaimRequest"
+                }
+            },
+            "SuggestRequest" : {
+                "Auth" : true,
+                "Method" : "suggestRequest",
+                "Request" : {
+                    "Path" : "post",
+                    "Class" : "SuggestRequest"
+                }
+            },
+            "ToogleFavorite": {
+                "Auth" : true,
+                "Method" : "toogleFavorite",
+                "Request" : {
+                    "Path" : "post",
+                    "Class" : "ToogleFavorite"
+                }
+            }
+        }
+    },
+    "Homepage": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll",
+                "Request": {
+                    "Path": "get",
+                    "Class": "All"
+                }
+            }
+        },
+        "POST" : {
+            "WriteRequest" : {
+                "Auth" : true,
+                "Method" : "requestToWrite",
+                "Request" : {
+                    "Path" : "post",
+                    "Class" : "WriteRequest"
+                }
+            }
+        }
+    },
+    "Category": {
+        "GET": {
+            "All": {
+                "Auth": true,
+                "Method": "getAll",
+                "Request": {
+                    "Path": "get",
+                    "Class": "All"
+                }
+            }
+        }
+    },
+    "News": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll",
+                "Request": {
+                    "Path": "get",
+                    "Class": "All"
+                }
+            }
+        }
+    },
+    "Traveler_Path": {
+        "GET": {
+            "Recap": {
+                "Auth": true,
+                "Method": "getRecap"
+            },
+            "MapFilters": {
+                "Auth": true,
+                "Method": "getMapFilters"
+            },
+            "Questions": {
+                "Auth": true,
+                "Method": "getQuestions",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Questions"
+                }
+            }
+        },
+        "PUT": {
+            "Answers": {
+                "Auth": true,
+                "Method": "saveAnswers",
+                "Request": {
+                    "Path": "put",
+                    "Class": "SaveAnswers"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "Get": {
+        "IdPlace": true,
+        "IsValid": {
+            "Default": 0
+        }
+    },
+    "All": {
+        "IdsCategories": false
+    },
+    "Contents": {
+        "IdPlace": true
+    },
+    "News": {
+        "IdPlace": true
+    }
+}

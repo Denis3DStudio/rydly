@@ -1,0 +1,48 @@
+{
+    "Put": {
+        "IdPlace": true,
+        "Name": true,
+        "Category": {
+            "Mandatory": false,
+            "Array": "*"
+        },
+        "MainCategory": false,
+        "IdNews": false,
+        "Address": false,
+        "City": true,
+        "Latitude": true,
+        "Longitude": true,
+        "UseOnlyCoordinates": false,
+        "Phone": false,
+        "Notes": false,
+        "IsActive": true,
+        "IsClaimed": true,
+        "IdSurveyQuestionAnswers": {
+            "Mandatory": false,
+            "Array": "*"
+        },
+        "Languages": {
+            "Mandatory": true,
+            "Array": {
+                "Object": {
+                    "IdLanguage": true,
+                    "Description": true,
+                    "SmallDescription": true
+                }
+            }
+        }
+    },
+    "ContentsOrder": {
+        "IdPlace": true,
+        "Extras": true,
+        "Order": {
+            "Mandatory": true,
+            "Array": {
+                "Object": {
+                    "Id": true,
+                    "OrderNumber": true
+                }
+            }
+        }
+    }
+}

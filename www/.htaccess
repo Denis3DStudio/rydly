@@ -1,0 +1,55 @@
+Options +SymLinksIfOwnerMatch
+Options -Indexes
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
+RewriteEngine On
+RewriteBase /
+
+# non-www to www
+# RewriteCond %{HTTP_HOST} !^www\.
+# RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
+
+# Pretty URLs
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_URI} !(/$|\.)
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1/ [R=301,L]
+
+#region Dev
+
+    #region Private folders
+
+        RewriteRule ^api/routing/(.*)$ /core/router.php?b=private [NC,L]
+        RewriteRule ^backend/routing/(.*)$ /core/router.php?b=private [NC,L]
+        RewriteRule ^frontend/routing/(.*)$ /core/router.php?b=private [NC,L]
+        RewriteRule ^config/(.*)$ /core/router.php?b=private [NC,L]
+
+    #endregion
+
+    #region API > BFF
+
+        RewriteRule ^([^/]*)-bff/(.*)$ /core/router.php?b=$1-bff [NC,L,QSA]
+        RewriteRule ^([^/]*)-api/(.*)$ /core/router.php?is_api_router=1&b=$1 [NC,L,QSA]
+
+    #endregion
+
+    #region CMS
+
+        RewriteRule ^backend/$ /core/router.php?b=backend [NC,L]
+        
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule ^backend/(.*)$ /core/router.php?b=backend [NC,L,QSA]
+
+    #endregion
+
+    #region FE
+
+        RewriteRule ^$ /core/router.php?b=backend [NC,L,QSA]
+        
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule ^(.+)$ /core/router.php?b=backend [NC,L,QSA]
+        
+    #endregion
+
+#endregion
