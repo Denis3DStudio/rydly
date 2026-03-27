@@ -9,19 +9,18 @@ var selects = {
 var showFirstLanguageTab = false;
 
 $(document).ready(function () {
-    console.log("ready!");
-    
+    // Hide
+    $("[to_hide]").hide();
+
     getLanguagesTabs();
 
-    //#region Show the first tab only and move the languages tabs after the first one
-
-    // Move the tabs of languages after the General tab
+    // Show General tab first
     $("#tabLang-1-tab").before($("#tabGeneral-tab"));
 
-    //#endregion
-
     // Get the sponsor data
-    getSponsor();
+    getCategories(function () {
+        getSponsor();
+    });
 
     // Init google autocomplete - TODO
     initAutocomplete();
@@ -41,17 +40,18 @@ $(document).ready(function () {
 
 // Get
 function getSponsor() {
-    console.log(Url.Params.IdSponsor);
-    
+
     get_call(
         BACKEND.SPONSOR.INDEX,
         {
             IdSponsor: Url.Params.IdSponsor
         },
         function (response) {
-
+            console.log(response);
+            
             // Set main data
             fillContentByNames("#common_container", response);
+            fillContentByNames("#tabGeneral", response);
 
             // Set the translations
             response.Languages.forEach(translation => {
@@ -66,11 +66,7 @@ function getSponsor() {
 
             category_main_selected = response.MainCategory;
 
-            selects.Blogs = response.News;
-            selects.Categories = response.Categories;
-            selects.Answers = response.IdSurveyQuestionAnswers;
-
-            getBlogs();
+            hideLoader();
         },
         function () {
             notificationError("Errore durante il caricamento del luogo!");
@@ -86,20 +82,19 @@ function saveSponsor() {
     var tabs_data = checkLanguagesTabs();
 
     // Check the validity of the languages tab and the common container data
-    if (tabs_data.validity && checkMandatory("#common_container")) {
+    if (tabs_data.validity && checkMandatory("#tabGeneral") && checkMandatory("#common_container")) {
 
-        // Create the params
+        // Build
         var params = {
             IdSponsor: Url.Params.IdSponsor,
-            Languages: tabs_data.Languages
+            Languages: tabs_data.Languages,
+            ...getContentData("#common_container", true),
+            ...getContentData("#tabGeneral", true)
         };
-
-        // Create the final params
-        var final_params = { ...params, ...getContentData("#common_container", true) };
 
         put_call(
             BACKEND.SPONSOR.INDEX,
-            final_params,
+            params,
             function () {
 
                 window.location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/sponsor?st=ok&m=Luogo salvato correttamente!`;
@@ -113,106 +108,57 @@ function saveSponsor() {
 
 //#endregion
 
-//#region Blogs
-
-function getBlogs() {
-
-    // Set blog
-    get_call(
-        BACKEND.SPONSOR.ALLNEWS,
-        null,
-        function (news) {
-
-            initSelectpicker('#newsSelect');
-            buildPicker(news, '#newsSelect', 'IdNews', 'Title', selects.Blogs, '');
-            getCategories()
-        }
-    );
-}
-//#endregion
-
 //#region Categories
 
-function getCategories() {
+function getCategories(callback = null) {
 
     // Set category
     get_call(
-        BACKEND.CATEGORY_PLACE.ALL,
-        null,
+        BACKEND.CATEGORY.ALL,
+        {
+            IdType: ENUM.BASE_CATEGORY_TYPE.SPONSOR
+        },
         function (categories) {
+            console.log(categories);
 
             // Save in the global variable
             categories_list = categories;
 
-            initSelectpicker('#categorySelect');
-            buildPicker(categories, '#categorySelect', 'IdCategory', 'Title', selects.Categories, '');
+            // Init the picker
+            buildPicker(categories, '#Categories', 'IdCategory', 'Title', selects.Categories, '');
 
+            // Check main category
             checkMainCategory();
-            // getTravelerPath();
-            hideLoader();
+
+            // Check if callback is not null
+            if (callback != null)
+                callback();
+            else
+                hideLoader();
         }
     );
 }
-
-//#endregion
-
-//#region Traveler path
-
-function getTravelerPath() {
-
-    get_call(
-        BACKEND.SURVEY.ALLFORSELECT,
-        null,
-        function (response) {
-
-            if (response.length > 0) {
-
-                initSelectpicker('#travelerPathSelect');
-                response.forEach(question => {
-
-                    // Create the option group for the question
-                    var option_group = `<optgroup label="${question.Question}">`;
-
-                    // Add the options for the question
-                    question.Answers.forEach(answer => {
-                        option_group += `<option value="${answer.IdSurveyQuestionAnswer}" ${selects.Answers.includes(answer.IdSurveyQuestionAnswer) ? 'selected' : ''}>${answer.Answer}</option>`;
-                    });
-                    option_group += "</optgroup>";
-
-                    // Append the option group to the select
-                    $('#travelerPathSelect').append(option_group);
-                });
-
-                initSelectpicker('#travelerPathSelect');
-            }
-
-            hideLoader();
-        }
-    );
-}
-
-//#endregion
-
 function checkMainCategory() {
 
     // Get the values selected in the category select
-    var selected_values = $("#categorySelect").val();
+    var selected_values = $("#Categories").val();
     // Get also the main category select
-    var main_category_select = $('#mainCategory').val() || category_main_selected; // if the select is empty get the value from the global variable (used on page load)
+    var main_category_select = $('#MainCategory').val() || category_main_selected; // if the select is empty get the value from the global variable (used on page load)
 
     if (!isEmpty(category_main_selected))
         category_main_selected = null;
 
     if (selected_values.length > 0) {
 
+        // Filter the categories list to get only the selected categories
         var main_categories = categories_list.filter(function (category) {
             return selected_values.includes(category.IdCategory.toString());
         });
 
         // Init the main category select 
-        buildPicker(main_categories, '#mainCategory', 'IdCategory', 'Title', main_category_select);
+        buildPicker(main_categories, '#MainCategory', 'IdCategory', 'Title', main_category_select);
         // Set as mandatory
-        $('#mainCategory').attr('mandatory', 'true');
+        $('#MainCategory').attr('mandatory', 'true');
 
         // Show the main category container
         $('#main_category_container').show();
@@ -221,16 +167,18 @@ function checkMainCategory() {
     else {
 
         // Empty the main category select
-        buildPicker([], '#mainCategory', 'IdCategory', 'Title');
+        buildPicker([], '#MainCategory', 'IdCategory', 'Title');
         // Remove mandatory
-        $('#mainCategory').removeAttr('mandatory');
+        $('#MainCategory').removeAttr('mandatory');
 
         // Hide the main category container
         $('#main_category_container').hide();
     }
 }
 
-$(document).on("change", "#categorySelect", checkMainCategory);
+$(document).on("change", "#Categories", checkMainCategory);
+
+//#endregion
 
 // #region Google Autocomplete
 
@@ -240,7 +188,7 @@ let autocomplete;
 function initAutocomplete() {
     const input = document.getElementById("Address");
 
-    autocomplete = new google.maps.sponsors.Autocomplete(input, {
+    autocomplete = new google.maps.places.Autocomplete(input, {
         // Se vuoi includere attività e indirizzi:
         // types: [""], /
         // In alternativa: togli proprio "types" per suggerimenti più “misti”
@@ -248,30 +196,30 @@ function initAutocomplete() {
         fields: ["geometry", "name", "formatted_address", "address_components"] // importante: riduce costi e dati
     });
 
-    autocomplete.addListener("sponsor_changed", () => {
-        const sponsor = autocomplete.getSponsor();
+    autocomplete.addListener("place_changed", () => {
+        const address = autocomplete.getPlace();
 
-        if (!sponsor.geometry) {
+        if (!address.geometry) {
             notificationError("Luogo/indirizzo non valido");
             return;
         }
 
-        const lat = sponsor.geometry.location.lat();
-        const lng = sponsor.geometry.location.lng();
+        const lat = address.geometry.location.lat();
+        const lng = address.geometry.location.lng();
         $("#Latitude").val(lat);
         $("#Longitude").val(lng);
 
         // Se vuoi mostrare nel campo l’indirizzo completo (utile per attività)
-        if (sponsor.formatted_address) {
-            $("#Address").val(sponsor.formatted_address);
-        } else if (sponsor.name) {
-            $("#Address").val(sponsor.name);
+        if (address.formatted_address) {
+            $("#Address").val(address.formatted_address);
+        } else if (address.name) {
+            $("#Address").val(address.name);
         }
 
         // Estrai la città in modo robusto (non con split!)
-        const city = getAddressComponent(sponsor.address_components, "locality")
-            || getAddressComponent(sponsor.address_components, "administrative_area_level_3")
-            || getAddressComponent(sponsor.address_components, "administrative_area_level_2");
+        const city = getAddressComponent(address.address_components, "locality")
+            || getAddressComponent(address.address_components, "administrative_area_level_3")
+            || getAddressComponent(address.address_components, "administrative_area_level_2");
 
         if (city) $("#City").val(city);
     });

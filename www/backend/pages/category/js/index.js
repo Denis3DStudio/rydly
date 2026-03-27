@@ -6,70 +6,69 @@ $(document).ready(function () {
 
 // Get
 function renderTable() {
-    kT = new KTable("#dtItems", {
-        ajax: {
-            url: BACKEND.CATEGORY.ALL
-        },
-        sort: {
-            1: "ASC"
-        },
-        columns: [
-            {
-                title: 'Titolo',
-                render: function (data) {
-                    return data.Title;
-                }
-            },
-            {
-                title: 'Lingue',
-                render: function (data) {
-                    var text = '';
 
-                    global.Languages.forEach(language => {
+    var dt = new AC_Datatable();
+    dt.setAjaxUrl(BACKEND.CATEGORY.ALL)
+        .setAjaxData("IdType", $("#IdCategoryType").val() ?? null)
+        .setIdTable("dtItems")
+        .setOptions({
+            columnDefs: [
+                {
+                    title: 'Titolo',
+                    render: function (data, type, row) {
+                        return row.Title;
+                    }
+                },
+                {
+                    title: 'Descrizione',
+                    render: function (data, type, row) {
 
-                        // Check if the language is disabled
-                        var disabled = data.IdLanguages.indexOf(parseInt(`${language.Language}`)) > -1 ? '' : 'disabled';
+                        // If the description is too long, truncate it
+                        return (row.Description.length > 100) ? row.Description.substring(0, 100) + '...' : row.Description;
+                    }
+                },
+                {
+                    title: 'Lingue',
+                    render: function (data, type, row) {
+                        var text = '';
 
-                        text += `<i class="flag flag-${language.LanguageLower.toLowerCase()} ${disabled} me-1" tooltip="${language.LanguageLower.toUpperCase()}"></i>`
+                        global.Languages.forEach(language => {
 
-                    });
+                            // Check if the language is disabled
+                            var disabled = row.IdLanguages.indexOf(parseInt(`${language.Language}`)) > -1 ? '' : 'disabled';
 
-                    return text;
-                }
-            },
-            {
-                title: 'Colore',
-                render: function (data) {
-                    const colorEl = '<input type="color" value="' + data.Color + '" disabled />'
-                    return data.Color ? colorEl : '-';
-                }
-            },
-            {
-                title: 'Azioni',
-                render: function (data) {
+                            text += `<i class="flag flag-${language.LanguageLower.toLowerCase()} ${disabled} me-1" tooltip="${language.LanguageLower.toUpperCase()}"></i>`
 
-                    var disabled = data.IsDeletable == 1 ? '' : 'disabled';
+                        });
 
-                    return `
-                        <a class="btn btn-secondary" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/category/${data.IdCategory}">
-                            <i class="fa fa-fw fa-edit"></i>
-                        </a>
-                        <button type="button" class="btn btn-link text-danger ${disabled}" onclick="deleteCategory(${data.IdCategory})">
-                            <i class="fa fa-fw fa-trash"></i>
-                        </button>
-                    `
-                }
-            },
-        ],
-        events: {
-            pageChanged() {
-            },
-            completed(data) {
+                        return text;
+                    }
+                },
+                {
+                    title: 'Azioni',
+                    render: function (data, type, row) {
+
+                        var disabled = row.IsDeletable == 1 ? '' : 'disabled';
+
+                        return `
+                            <a class="btn btn-outline-secondary" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/${ENUM.BASE_CATEGORY_TYPE.PAGES[$("#IdCategoryType").val()]}${row.IdCategory}">
+                                <i class="fa fa-fw fa-edit"></i>
+                            </a>
+                            <button type="button" class="btn btn-link text-danger ${disabled}" onclick="deleteCategory(${row.IdCategory})">
+                                <i class="fa fa-fw fa-trash"></i>
+                            </button>
+                        `
+                    }
+                },
+            ],
+            initComplete: function (settings, json) {
                 hideLoader();
             }
-        },
-    });
+        })
+        .initDatatable();
+
 }
+
 // Post
 function create() {
 
@@ -77,12 +76,14 @@ function create() {
 
     post_call(
         BACKEND.CATEGORY.INDEX,
-        null,
+        {
+            IdType: $("#IdCategoryType").val() ?? null
+        },
         function (id) {
 
             hideLoader();
-            
-            location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/category/${id}`;
+
+            location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/${ENUM.BASE_CATEGORY_TYPE.PAGES[$("#IdCategoryType").val()]}${id}`;
         },
         function (response, message) {
 

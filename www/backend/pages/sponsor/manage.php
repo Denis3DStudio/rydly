@@ -42,68 +42,60 @@
                             <div class="tab-content" id="nav-tabContent">
                                 <!-- Tab General -->
                                 <div class="tab-pane fade show active" id="tabGeneral" role="tabpanel" aria-labelledby="tabGeneral-tab">
-                                    <div class="row" id="common_container">
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="Name">Nome luogo</label>
-                                                    <input type="text" class="form-control" id="Name" name="Name" mandatory>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="form-group">
-                                                    <label for="Address">Indirizzo completo</label>
-                                                    <input type="text" class="form-control" id="Address" name="Address">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="City">Città</label>
-                                                    <input type="text" class="form-control" id="City" name="City" mandatory>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="Latitude">Latitudine Google Maps</label>
-                                                    <input type="text" class="form-control" id="Latitude" name="Latitude" mandatory>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="Longitude">Longitudine Google Maps</label>
-                                                    <input type="text" class="form-control" id="Longitude" name="Longitude" mandatory>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="Phone">Telefono</label>
-                                                    <input type="text" class="form-control" id="Phone" name="Phone">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4">
-                                                <label for="">&nbsp;</label>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="UseOnlyCoordinates" name="UseOnlyCoordinates" trigger_change />
-                                                    <label class="form-check-label" for="UseOnlyCoordinates">
-                                                        Utilizza solo le coordinate per le indicazioni stradali
-                                                    </label>
-                                                </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="Address">Indirizzo completo</label>
+                                                <input type="text" class="form-control" id="Address" name="Address">
                                             </div>
                                         </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>Note</label>
-                                                    <textarea name="Notes" class="form-control" rows="5"></textarea>
-                                                </div>
+                                        <div class="col-lg-4" to_hide>
+                                            <div class="form-group">
+                                                <label for="City">Città</label>
+                                                <input type="text" class="form-control" id="City" name="City" mandatory>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4" to_hide>
+                                            <div class="form-group">
+                                                <label for="Latitude">Latitudine Google Maps</label>
+                                                <input type="text" class="form-control" id="Latitude" name="Latitude" mandatory>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4" to_hide>
+                                            <div class="form-group">
+                                                <label for="Longitude">Longitudine Google Maps</label>
+                                                <input type="text" class="form-control" id="Longitude" name="Longitude" mandatory>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4" to_hide>
+                                            <div class="form-group">
+                                                <label for="Phone">Telefono</label>
+                                                <input type="text" class="form-control" id="Phone" name="Phone">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4" to_hide>
+                                            <label for="">&nbsp;</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="UseOnlyCoordinates" name="UseOnlyCoordinates" trigger_change />
+                                                <label class="form-check-label" for="UseOnlyCoordinates">
+                                                    Utilizza solo le coordinate per le indicazioni stradali
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Note</label>
+                                                <textarea name="Notes" class="form-control" rows="5"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Images -->
-                                <div class="tab-pane" id="tabImages" role="tabpanel" aria-labelledby="tabImages-tab">
+                                <div class="tab-pane" id="tabImages" role="tabpanel" aria-labelledby="tabImages-tab" fileRender="dtContents">
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="row">
@@ -149,19 +141,14 @@
             <div class="card mb-3 shadow">
                 <div class="card-body" id="common_container">
                     <div class="form-group">
-                        <label for="categorySelect">Categorie</label>
-                        <select id="categorySelect" name="Category" class="selectpicker" data-width="100%" multiple data-live-search="true" data-size="8" title="Seleziona..." mandatory></select>
+                        <label for="Categories">Categorie</label>
+                        <select id="Categories" name="Categories" class="selectpicker" data-width="100%" multiple data-live-search="true" data-size="8" title="Seleziona..." mandatory trigger_change>
+                        </select>
                     </div>
 
                     <div class="form-group" id="main_category_container" style="display: none;">
-                        <label for="mainCategory">Categoria Principale</label>
-                        <select id="mainCategory" name="MainCategory" class="selectpicker" data-width="100%" data-live-search="true" data-size="8" title="Seleziona..."></select>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="newsSelect">Blog associati</label>
-                        <select id="newsSelect" name="IdNews" class="selectpicker" data-width="100%" multiple data-live-search="true" data-size="8" title="Seleziona..."></select>
+                        <label for="MainCategory">Categoria Principale</label>
+                        <select id="MainCategory" name="MainCategory" class="selectpicker" data-width="100%" data-live-search="true" data-size="8" title="Seleziona..."></select>
                     </div>
 
                     <div class="row">
@@ -172,27 +159,6 @@
                                     <option value="1">Pubblicata</option>
                                     <option value="0">Bozza</option>
                                 </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="IsClaimed">Scheda</label><br>
-                                <select class="selectpicker form-control" name="IsClaimed" id="IsClaimed" data-title="Seleziona..." data-width="100%" mandatory>
-                                    <option value="1">Rivendicata</option>
-                                    <option value="0">Da rivendicare</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="travelerPathSelect">Traveler Path</label>
-                                <select id="travelerPathSelect" name="IdSurveyQuestionAnswers" class="selectpicker" data-width="100%" multiple data-live-search="true" data-size="8" title="Seleziona..."></select>
                             </div>
                         </div>
                     </div>

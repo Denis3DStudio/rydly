@@ -19,3 +19,4 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="IdCategoryType" value="<?= $this->__route->__base->IdCategoryType ?? '' ?>" />

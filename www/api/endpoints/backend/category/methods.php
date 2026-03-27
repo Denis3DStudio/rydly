@@ -2,6 +2,7 @@
 
     namespace Backend\Category;
 
+    use Base_Category_Type;
     use stdClass;
     use Base_File;
     use Base_Files;
@@ -15,6 +16,7 @@
         private $table_name = "categories";
         private $table_translations_name = "categories_translations";
         private $table_images_name = "categories_images";
+        private $table_refs_name = "refs_categories";
 
         #region Constructors-Destructors
             public function __construct() {
@@ -46,50 +48,125 @@
                     
                 return $this->Success($response);
             }
-            public function getAll() {
+            public function getAll($idType = null, $ids = []) {
+
+                // Check if $ids is not an array and it's not null, if it's the case, create an array with the single id
+                $returnDirect = is_string($ids) && !Base_Functions::IsNullOrEmpty($ids);
+
+                // Set ids as array if it's not an array and it's not null
+                if (!is_array($ids) && !Base_Functions::IsNullOrEmpty($ids))
+                    $ids = [$ids];
+
+                // Check if reorder by ref
+                $reorderByRef = !Base_Functions::IsNullOrEmpty($ids);
+
+                // Base where condition
+                $where = "t.IsValid = 1 AND t.IsDeleted = 0";
+
+                // Add the IdType filter if it's not null
+                $where .= !Base_Functions::IsNullOrEmpty($idType) ? " AND t.IdType = $idType" : "";
+
+                // Create the ids filter if $ids is not null
+                $inner = "";
+                if ($reorderByRef)
+                    $inner = "INNER JOIN {$this->table_refs_name} tr ON t.IdCategory = tr.IdCategory AND tr.ContentRefId IN (" . implode(", ", array_map('intval', $ids)) . ") AND tr.IdType = $idType";
+
+                // Build the sql
+                $sql = "SELECT DISTINCT t.*
+                        FROM {$this->table_name} t
+                        $inner
+                        WHERE $where";
 
                 // Get all data
-                $sql = "SELECT DISTINCT t.{$this->id}, t.Color
-                        FROM {$this->table_name} t
-                        INNER JOIN {$this->table_translations_name} tt ON tt.{$this->id} = t.{$this->id}
-                        WHERE t.IsValid = 1 AND t.IsDeleted = 0";
+                $categories = $this->__linq->queryDB($sql)->getResults();
 
-                $all = $this->__linq->queryDB($sql)->getResults();
+                // Delete duplicates if $reorderByRef is true
+                if ($reorderByRef) {
 
-                $response = array();
+                    // Get unique categories by id
+                    $ids_categories = array_column($categories, $this->id);
 
-                // Check that $all is not null
-                if (count($all) > 0) {
-
-                    $all_deletable = $this->checkDeletableCategories(array_unique(array_column($all, $this->id)));
-
-                    // Get ids
-                    $ids = implode(",", array_column($all, $this->id));
-
-                    // Get all the translations
-                    $translations = $this->__linq->fromDB($this->table_translations_name)->whereDB("{$this->id} IN ($ids) ORDER BY IsValid DESC, IdLanguage ASC")->getResults();
-
-                    $translations = $this->__linq->reorder($translations, $this->id, true);
-
-                    // Cycle all data
-                    foreach($all as $category) {
-
-                        // Get the first translation
-                        $translation = $translations->{$category->{$this->id}}[0];
-
-                        // Create the obj for the response
-                        $obj = new stdClass();
-                        $obj->{$this->id} = $translation->{$this->id};
-                        $obj->Title = $translation->Title;
-                        $obj->Color = $category->Color;
-                        $obj->IdLanguages = array_column($translations->{$category->{$this->id}}, "IdLanguage");
-                        $obj->IsDeletable = $all_deletable->{$obj->{$this->id}}->IsDeletable;
-
-                        array_push($response, $obj);
-                    }
+                    // Build the real categories array with unique values
+                    $categories = array_map(function($id) use ($categories) {
+                        return $categories[array_search($id, array_column($categories, $this->id))];
+                    }, $ids_categories);
                 }
 
-                return $this->Success($response);
+                // Get all refs categories
+                $refs_categories = $reorderByRef ? $this->__linq->reorder($this->__linq->fromDB($this->table_refs_name)->whereDB("IdType = $idType AND ContentRefId IN (" . implode(", ", array_map('intval', $ids)) . ")")->getResults(), "ContentRefId", true) : new stdClass();
+
+                // Check that $all is not null
+                if (Base_Functions::IsNullOrEmpty($categories))
+                    return $this->Success([]);
+
+                // Get all the translations for the categories
+                $translations = $this->__linq->reorder($this->__linq->fromDB($this->table_translations_name)->whereDB("IdCategory IN (" . implode(", ", array_column($categories, $this->id)) . ")")->getResults(), "IdCategory");
+
+                // Get all the deletable categories
+                $deletable_categories = $this->checkDeletableCategories(array_column($categories, $this->id), $idType);
+
+                // Create the response array
+                $tmpCategories = [];
+
+                // Cycle all data
+                foreach($categories as $category) {
+
+                    // Get the translations for the current category
+                    $translation_category = $this->__linq->reorder($translations->{$category->{$this->id}}, "IdLanguage") ?? null;
+
+                    // Get the current languagge translation
+                    $translation = $translation_category->{$this->Logged->IdLanguage} ?? null;
+
+                    // Create the obj for the response
+                    $obj = new stdClass();
+                    $obj->{$this->id} = $translation->{$this->id};
+                    $obj->Title = $translation->Title;
+                    $obj->Description = $translation->Description;
+
+                    // Add additional properties
+                    if (!$reorderByRef) {
+                        $obj->IdLanguages = array_column((array)$translation_category, "IdLanguage");
+                        $obj->IsDeletable = property_exists($deletable_categories, $obj->{$this->id}) ? $deletable_categories->{$obj->{$this->id}}->IsDeletable : false;
+                    }
+
+                    array_push($tmpCategories, $obj);
+                }
+
+                // If not reorder by ref, return the response
+                if (!$reorderByRef)
+                    return $this->Success($tmpCategories);
+
+                // Init the response array
+                $response = new stdClass();
+
+                // Cicle all the refs categories to reorder the response
+                foreach ($refs_categories as $refId => $ref_categories) {
+
+                    $response->$refId = [];
+
+                    // Get all the ids of the current ref
+                    $ids_ref_category = array_column($ref_categories, $this->id);
+
+                    // Get the current categories in the response
+                    $current_categories = array_filter($tmpCategories, function($item) use ($ids_ref_category) {
+                        return in_array($item->{$this->id}, $ids_ref_category);
+                    });
+
+                    // Push if the current category is Main or not
+                    $current_categories = array_map(function($category) use ($ref_categories) {
+                        $category->IsMain = in_array($category->{$this->id}, array_column($ref_categories, $this->id));
+                        return $category;
+                    }, $current_categories);
+
+                    // Push the current categories in the response
+                    $response->$refId = array_values($current_categories);
+                }
+
+                // Get the return id
+                $returnId = $returnDirect ? $ids[0] : null;
+
+                // Return the response
+                return $this->Success($returnDirect ? (property_exists($response, $returnId) ? $response->{$returnId} : []) : $response);
             }
 
             // Post
@@ -101,6 +178,15 @@
                 // Check if the id is valid
                 if (Base_Functions::IsNullOrEmpty($id))
                     return $this->Internal_Server_Error(null, "Qualcosa è andato storto!");
+
+                // Get the request
+                $request = $this->Request;
+
+                // Add the id to the request
+                $request->{$this->id} = $id;
+
+                // Update the new row with the id
+                $this->__opHelper->object($request)->table($this->table_name)->where($this->id)->update();
 
                 return $this->Success($id);
             }
@@ -139,6 +225,7 @@
                     $tmp->Description = $translation->Description;
                     $tmp->SlugUrl = Base_Functions::Slug($translation->Title);
                     $tmp->IdLanguage = $translation->IdLanguage;
+                    $tmp->IsValid = 1;
 
                     // Convert the obj for the massive insert
                     $obj = Base_Functions::convertForMassive($tmp);
@@ -147,9 +234,39 @@
                 }
 
                 // Insert the translations
-                $this->__opHelper->table($this->table_translations_name)->insertMassive("(" . $this->id . ", Title, Description, SlugUrl, IdLanguage". ")", implode(", ", $translations_values));
+                $this->__opHelper->table($this->table_translations_name)->insertMassive("(" . $this->id . ", Title, Description, SlugUrl, IdLanguage, IsValid)", implode(", ", $translations_values));
 
                 return $this->Success(null, "Categoria salvata con successo!");
+            }
+            public function updateByType($idType, $idRef, $newIds, $mainId = null) {
+
+                // Delete the old refs
+                $sql = "DELETE FROM $this->table_refs_name WHERE IdType = $idType AND ContentRefId = $idRef";
+                $this->__linq->queryDB($sql)->getResults();
+
+                // Check if there are new refs to insert
+                if (Base_Functions::IsNullOrEmpty($newIds) || in_array("-1", $newIds))
+                    return $this->Success();
+
+                // Init
+                $massive = [];
+
+                // Insert the new refs
+                foreach ($newIds as $id) {
+
+                    $ref_obj = new stdClass();
+                    $ref_obj->{$this->id} = $id;
+                    $ref_obj->ContentRefId = $idRef;
+                    $ref_obj->IdType = $idType;
+                    $ref_obj->IsMain = ($mainId == $id) ? 1 : 0;
+
+                    $massive[] = "(" . implode(", ", array_values((array)$ref_obj)) . ")";
+                }
+
+                // Insert the new refs
+                $this->__opHelper->table($this->table_refs_name)->insertMassive("($this->id, ContentRefId, IdType, IsMain)", implode(", ", $massive));
+
+                return $this->Success();
             }
 
             // Delete 
@@ -289,33 +406,37 @@
 
                 return $response;
             }
-            private function checkDeletableCategories($ids) {
+            private function checkDeletableCategories($ids = [], $type = null) {
 
+                // Check if $ids in not null and $type is not null
+                if (Base_Functions::IsNullOrEmpty($ids) || Base_Functions::IsNullOrEmpty($type))
+                    return new stdClass();
+
+                // Create the where condition for the type
                 $all = false;
 
+                // Check if $ids is an array, if it's not, create an array with the single id
                 if (is_array($ids)) {
 
                     $ids = implode(",", $ids);
                     $all = true;
                 }
 
-                $sql = "SELECT 
-                            c.IdCategory, 
-                            IF(COUNT(cn.IdNews) = 0, 1, 0) AS IsDeletable 
-                        FROM categories c
-                        LEFT JOIN categories_news cn ON c.IdCategory = cn.IdCategory
-                        LEFT JOIN news n ON cn.IdNews = n.IdNews AND n.IsValid = 1 AND n.IsDeleted = 0
-                        WHERE c.IsValid = 1 AND c.IsDeleted = 0 AND c.IdCategory IN ($ids)
-                        GROUP BY c.IdCategory";
+                // Get the inner table name based on the type
+                $id_join = Base_Category_Type::IDS_TO_JOIN[$type] ?? null;
+                $main_table_inner = Base_Category_Type::MAIN_TABLE_INNER[$type] ?? null;
+
+                $sql = "SELECT c.$this->id, IF(COUNT(cn.ContentRefId) = 0, 1, 0) AS IsDeletable 
+                        FROM $this->table_name c
+                        LEFT JOIN $this->table_refs_name cn ON c.$this->id = cn.$this->id AND cn.IdType = $type
+                        LEFT JOIN $main_table_inner mt ON cn.ContentRefId = mt.$id_join AND mt.IsValid = 1 AND mt.IsDeleted = 0
+                        WHERE c.IsValid = 1 AND c.IsDeleted = 0 AND c.$this->id IN ($ids)
+                        GROUP BY c.$this->id";
 
                 $categories = $this->__linq->queryDB($sql)->getResults();
 
-                // Check if null
-                if (Base_Functions::IsNullOrEmpty($categories))
-                    return true;
-
                 if ($all)
-                    return $this->__linq->reorder($categories, "IdCategory");
+                    return $this->__linq->reorder($categories, "$this->id");
                 else 
                     return $categories[0]->IsDeletable;
             }

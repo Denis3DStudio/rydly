@@ -11,11 +11,41 @@
                 <div class="col">
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link text-dark" id="tabImages-tab" data-bs-toggle="tab" href="#tabImages" role="tab" aria-controls="tabImages" aria-selected="true">
+                                <i class="fa fa-fw fa-images"></i> Immagini
+                            </a>
                         </div>
                     </nav>
                     <div class="card mb-3 border-0">
                         <div class="card-body">
                             <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade" id="tabImages" role="tabpanel" aria-labelledby="tabImages-tab">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label>Contenuto</label>
+                                                        <div class="form-inline">
+                                                            <input class="form-control custom-render" type="file" name="Images" accept="image/*" multiple onclick="uploadImages()" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-8">
+                                            <div class="form-group">
+                                                <label>
+                                                    Tabella immagini
+                                                    <i class="far fa-fw fa-question-circle" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Trascina per modificare l'ordinamento"></i>
+                                                </label>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover dt-responsive has--actions" id="dtImages" style="width: 100%;"></table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -24,12 +54,6 @@
         </div>
         <div class="col-lg-4">
             <div class="card shadow-sm">
-                <div class="card-body" id="common_container">
-                    <div class="form-group">
-                        <label class="w-100" for="color">Colore Categoria</label>
-                        <input type="color" name="Color" value="#ffffff" mandatory/>
-                    </div>
-                </div>
                 <div class="card-footer">
                     <div class="row align-items-center">
                         <div class="col-6" id="deleteBtnContainer">
@@ -50,20 +74,19 @@
 </div>
 
 <script type="text/html" id="language_tab_template">
-    <form class="tab-pane fade" id="tabLang-{{Language}}" name="tabLang" role="tabpanel" aria-labelledby="tabLang-{{Language}}-tab" language="{{Language}}" tabToTranslate>
-        <div id="tabContent-{{Language}}" mandatory_fields_container>
-            <div class="row">
-                <div class="form-group col-12">
-                    <label>Titolo</label>
-                    <input type="text" name="Title" class="form-control" mandatory>
+    <form class="tab-pane fade" id="tabLang-{{Language}}" name="tabLang" role="tabpanel" aria-labelledby="tabLang-{{Language}}-tab" language="{{Language}}">
+        <div class="row">
+            <div class="form-group col-12">
+                <label>Titolo</label>
+                <input type="text" name="Title" class="form-control" mandatory>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>Descrizione</label>
+                    <textarea name="Description" class="form-control" rows="5" mandatory></textarea>
                 </div>
-                <!-- <div class="col-12">
-                    <div class="form-group">
-                        <label>Descrizione</label>
-                        <textarea name="Description" class="form-control" rows="5" mandatory></textarea>
-                    </div>
-                </div> -->
             </div>
         </div>
     </form>
 </script>
+<input type="hidden" id="IdCategoryType" value="<?= $this->__route->__base->IdCategoryType ?? '' ?>" />

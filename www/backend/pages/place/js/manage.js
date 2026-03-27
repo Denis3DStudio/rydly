@@ -135,8 +135,10 @@ function getCategories() {
 
     // Set category
     get_call(
-        BACKEND.CATEGORY_PLACE.ALL,
-        null,
+        BACKEND.CATEGORY.ALL,
+        {
+            IdType: ENUM.BASE_CATEGORY_TYPE.PLACE
+        },
         function (categories) {
 
             // Save in the global variable
@@ -146,42 +148,6 @@ function getCategories() {
             buildPicker(categories, '#categorySelect', 'IdCategory', 'Title', selects.Categories, '');
 
             checkMainCategory();
-            getTravelerPath();
-        }
-    );
-}
-
-//#endregion
-
-//#region Traveler path
-
-function getTravelerPath() {
-
-    get_call(
-        BACKEND.SURVEY.ALLFORSELECT,
-        null,
-        function (response) {
-
-            if (response.length > 0) {
-
-                initSelectpicker('#travelerPathSelect');
-                response.forEach(question => {
-
-                    // Create the option group for the question
-                    var option_group = `<optgroup label="${question.Question}">`;
-
-                    // Add the options for the question
-                    question.Answers.forEach(answer => {
-                        option_group += `<option value="${answer.IdSurveyQuestionAnswer}" ${selects.Answers.includes(answer.IdSurveyQuestionAnswer) ? 'selected' : ''}>${answer.Answer}</option>`;
-                    });
-                    option_group += "</optgroup>";
-
-                    // Append the option group to the select
-                    $('#travelerPathSelect').append(option_group);
-                });
-
-                initSelectpicker('#travelerPathSelect');
-            }
 
             hideLoader();
         }

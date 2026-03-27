@@ -7,8 +7,7 @@
                 "Path": "put",
                 "Class": "Language"
             }
-        },
-        "Color": true
+        }
     },
     "Language": {
         "IdLanguage": true,

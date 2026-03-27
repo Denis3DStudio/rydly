@@ -46,10 +46,28 @@
                 </ul>
             </li>
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/sponsor/">
                     <i class="fa fa-fw fa-ticket"></i> <span class="nav-link-text">Sponsor</span>
                 </a>
+            </li> -->
+
+            <li class="nav-item">
+                <a class="nav-link nav-link-collapse collapsed" data-bs-toggle="collapse" href="#c-sponsor" data-parent="#sidebarMenu">
+                    <i class="fa fa-fw fa-ticket"></i> <span class="nav-link-text">Sponsor</span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="c-sponsor">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/sponsor/">
+                            <span class="nav-link-text">Elenco</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/category_sponsor/">
+                            <span class="nav-link-text">Categorie</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
 
             <li class="nav-item" style="display: none;">

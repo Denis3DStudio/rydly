@@ -1,4 +1,7 @@
 {
+    "Create": {
+        "IdType": true
+    },
     "Images": {
         "IdCategory": true,
         "Identifier": true

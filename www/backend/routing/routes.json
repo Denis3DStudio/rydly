@@ -121,15 +121,16 @@
         "FullLoader": true,
         "Title": "Categorie",
         "Components": [
-            "k-table"
+            "datatable"
         ],
         "Js": [
             "/category/js/index.js",
             "/category/js/common.js"
         ],
         "Pages": [
-            "/category/index.html"
-        ]
+            "/category/index.php"
+        ],
+        "IdCategoryType": 1
     },
     "CategoryDetail": {
         "FullLoader": true,
@@ -142,7 +143,70 @@
         ],
         "Pages": [
             "/category/manage.php"
-        ]
+        ],
+        "IdCategoryType": 1
+    },
+    "Category_Sponsor": {
+        "Routes": "/category_sponsor/",
+        "Auth": true,
+        "FullLoader": true,
+        "Title": "Categorie Sponsor",
+        "Components": [
+            "k-table"
+        ],
+        "Js": [
+            "/category/js/index.js",
+            "/category/js/common.js"
+        ],
+        "Pages": [
+            "/category/index.php"
+        ],
+        "IdCategoryType": 3
+    },
+    "Category_SponsorDetail": {
+        "FullLoader": true,
+        "Routes": "/category_sponsor/(IdCategory)",
+        "Auth": true,
+        "Title": "Categoria Sponsor dettaglio",
+        "Js": [
+            "/category/js/manage.js",
+            "/category/js/common.js"
+        ],
+        "Pages": [
+            "/category/manage.php"
+        ],
+        "IdCategoryType": 3
+    },
+    "Category_Place": {
+        "Routes": "/category_place/",
+        "Auth": true,
+        "FullLoader": true,
+        "Title": "Categorie Locali",
+        "Components": [
+            "k-table"
+        ],
+        "Js": [
+            "/category/js/index.js",
+            "/category/js/common.js"
+        ],
+        "Pages": [
+            "/category/index.php"
+        ],
+        "IdCategoryType": 2
+    },
+    "Category_PlaceDetail": {
+        "FullLoader": true,
+        "Routes": "/category_place/(IdCategory)",
+        "Auth": true,
+        "Title": "Categoria Locali dettaglio",
+        "Js": [
+            "/category/js/manage.js",
+            "/category/js/common.js"
+        ],
+        "Pages": [
+            "/category/manage.php"
+        ],
+        "IdCategoryType": 2
     },
     "News": {
         "Routes": "/news/",
@@ -223,145 +287,6 @@
             "k-table"
         ]
     },
-    "Attribute": {
-        "Routes": "/attribute/",
-        "Auth": true,
-        "FullLoader": true,
-        "Title": "Attributi Prodotti",
-        "Components": [
-            "datatable"
-        ],
-        "Js": [
-            "/attribute/js/index.js",
-            "/attribute/js/common.js"
-        ],
-        "Pages": [
-            "/attribute/index.html"
-        ]
-    },
-    "AttributeDetail": {
-        "Routes": "/attribute/(IdAttribute)",
-        "Auth": true,
-        "Title": "Gestione Tipologia Prodotto",
-        "Components": [
-            "datatable"
-        ],
-        "Js": [
-            "/attribute/js/manage.js",
-            "/attribute/js/common.js"
-        ],
-        "Pages": [
-            "/attribute/manage.php"
-        ]
-    },
-    "AttributeValue": {
-        "Routes": "/attribute_value/(IdAttribute)",
-        "Auth": true,
-        "FullLoader": true,
-        "Title": "Valori Attributi Prodotti",
-        "Render": [
-            "Attribute_Value",
-            "AttributeValue",
-            "index"
-        ],
-        "Components": [
-            "datatable"
-        ],
-        "Js": [
-            "/attribute_value/js/index.js",
-            "/attribute_value/js/common.js"
-        ],
-        "Pages": [
-            "/attribute_value/index.php"
-        ]
-    },
-    "AttributeValueDetail": {
-        "Routes": "/attribute_value/(IdAttribute)/(IdAttributeValue)",
-        "Auth": true,
-        "Title": "Gestione Valore Tipologia Prodotto",
-        "Render": [
-            "Attribute_Value",
-            "AttributeValue",
-            "manage"
-        ],
-        "Components": [
-            "datatable"
-        ],
-        "Js": [
-            "/attribute_value/js/manage.js",
-            "/attribute_value/js/common.js"
-        ],
-        "Pages": [
-            "/attribute_value/manage.php"
-        ]
-    },
-    "Product": {
-        "Routes": "/product/",
-        "Auth": true,
-        "FullLoader": true,
-        "Title": "Prodotti",
-        "Components": [
-            "datatable"
-        ],
-        "Js": [
-            "/product/js/index.js",
-            "/product/js/common.js"
-        ],
-        "Pages": [
-            "/product/index.html"
-        ]
-    },
-    "ProductDetail": {
-        "Routes": "/product/(IdProduct)/",
-        "Auth": true,
-        "Loader": true,
-        "Title": "Gestione Prodotto",
-        "Components": [
-            "k-table",
-            "summernote",
-            "selectpicker",
-            "images_caption"
-        ],
-        "Js": [
-            "/product/js/manage.js",
-            "/product/js/common.js",
-            "/product/js/attribute.js",
-            "/product/js/variant.js"
-        ],
-        "Pages": [
-            "/product/manage.php"
-        ]
-    },
-    "Projects": {
-        "Routes": "/project/",
-        "Auth": true,
-        "FullLoader": true,
-        "Title": "Progetti",
-        "Pages": [
-            "/project/index.php"
-        ],
-        "Js": [
-            "/project/js/index.js"
-        ],
-        "Components": [
-            "k-table"
-        ]
-    },
-    "Project": {
-        "Routes": "/project/(IdProject)/",
-        "Auth": true,
-        "FullLoader": true,
-        "Title": "Gestione progetto",
-        "Pages": [
-            "/project/manage.php"
-        ],
-        "Js": [
-            "/project/js/manage.js"
-        ],
-        "Components": [
-            "k-table"
-        ]
-    },
     "Translations": {
         "Routes": "/translation/",
         "Auth": true,
@@ -389,72 +314,6 @@
         ],
         "Pages": [
             "/translation/manage.php"
-        ]
-    },
-    "TranslateFile": {
-        "Routes": "/translate-file/",
-        "Auth": true,
-        "Loader": true,
-        "Title": "Translate File",
-        "Components": [
-            "datatable",
-            "selectpicker"
-        ],
-        "Js": [
-            "/translate-file/js/manage.js",
-            "/translate-file/js/common.js"
-        ],
-        "Pages": [
-            "/translate-file/manage.php"
-        ]
-    },
-    "Shipping": {
-        "Routes": "/shipping/",
-        "Auth": true,
-        "Title": "Lista prezzi spedizioni",
-        "Components": [
-            "datatable"
-        ],
-        "Js": [
-            "/shipping/js/index.js",
-            "/shipping/js/common.js"
-        ],
-        "Pages": [
-            "/shipping/index.html"
-        ]
-    },
-    "ProductCategory": {
-        "Routes": "/product_category/",
-        "Auth": true,
-        "FullLoader": true,
-        "Title": "Product Category",
-        "Components": [
-            "datatable",
-            "list"
-        ],
-        "Js": [
-            "/product_category/js/index.js",
-            "/product_category/js/common.js"
-        ],
-        "Pages": [
-            "/product_category/index.php"
-        ]
-    },
-    "ProductCategoryDetail": {
-        "Routes": "/product_category/(IdCategory)",
-        "Auth": true,
-        "FullLoader": true,
-        "Title": "Product Category Detail",
-        "Components": [
-            "datatable",
-            "summernote"
-        ],
-        "Js": [
-            "/product_category/js/manage.js",
-            "/product_category/js/common.js"
-        ],
-        "Pages": [
-            "/product_category/manage.html"
         ]
     },
     "Coupon": {
@@ -487,38 +346,6 @@
         ],
         "Pages": [
             "/coupon/manage.php"
-        ]
-    },
-    "Order": {
-        "Routes": "/order/",
-        "Auth": true,
-        "FullLoader": true,
-        "Title": "Orders",
-        "Components": [
-            "datatable"
-        ],
-        "Js": [
-            "/order/js/index.js",
-            "/order/js/common.js"
-        ],
-        "Pages": [
-            "/order/index.html"
-        ]
-    },
-    "OrderDetail": {
-        "Routes": "/order/(IdOrder)",
-        "Auth": true,
-        "FullLoader": true,
-        "Title": "Order Detail",
-        "Components": [
-            "datatable"
-        ],
-        "Js": [
-            "/order/js/manage.js",
-            "/order/js/common.js"
-        ],
-        "Pages": [
-            "/order/manage.php"
         ]
     },
     "ApiHistory": {
@@ -574,6 +401,41 @@
             "/sponsor/manage.php"
         ]
     },
+    "Place": {
+        "Routes": "/place/",
+        "Auth": true,
+        "FullLoader": true,
+        "Title": "Luoghi",
+        "Components": [
+            "k-table"
+        ],
+        "Js": [
+            "/place/js/index.js"
+        ],
+        "Pages": [
+            "/place/index.php"
+        ]
+    },
+    "PlaceDetail": {
+        "Routes": "/place/(IdPlace)",
+        "Auth": true,
+        "Loader": true,
+        "Title": "Gestione Luoghi",
+        "Components": [
+            "k-table",
+            "summernote",
+            "selectpicker",
+            "images_caption",
+            "deepl",
+            "g-maps"
+        ],
+        "Js": [
+            "/place/js/manage.js"
+        ],
+        "Pages": [
+            "/place/manage.php"
+        ]
+    },
     "Emails": {
         "Routes": "/email/",
         "Auth": true,
@@ -599,72 +461,6 @@
             "email",
             "Email",
             "detail"
-        ]
-    },
-    "DEV": {
-        "Routes": "/@dev/",
-        "Title": "DEV Components",
-        "Auth": true,
-        "Components": [
-            "k-box",
-            "fullcalendar",
-            "chartjs",
-            "nouislider",
-            "tom-select",
-            "nestedsortable",
-            "datepicker"
-        ],
-        "Js": [
-            "/@dev/js/fullcalendar.js",
-            "/@dev/js/chartjs.js",
-            "/@dev/js/nouislider.js",
-            "/@dev/js/tom-select.js",
-            "/@dev/js/sortable.js",
-            "/@dev/js/nestedlist.js",
-            "/@dev/js/datepicker.js"
-        ],
-        "Pages": [
-            "/@dev/index.html"
-        ]
-    },
-    "DEVTABLE": {
-        "Routes": "/@dev/k-table/",
-        "Title": "K-Table DEV",
-        "Auth": true,
-        "Components": [
-            "k-table-dev"
-        ],
-        "Js": [
-            "/@dev/js/k-table.js"
-        ],
-        "Pages": [
-            "/@dev/k-table.html"
-        ]
-    },
-    "KSELECT": {
-        "Routes": "/@dev/k-select/",
-        "Title": "K-Select DEV",
-        "Components": [
-            "k-select"
-        ],
-        "Js": [
-            "/@dev/js/k-select.js"
-        ],
-        "Pages": [
-            "/@dev/k-select.html"
-        ]
-    },
-    "BUILDER": {
-        "Routes": "/@dev/builder/",
-        "Title": "Builder DEV",
-        "Components": [
-            "builder"
-        ],
-        "Js": [
-            "/@dev/js/builder.js"
-        ],
-        "Pages": [
-            "/@dev/builder.html"
         ]
     },
     "301": {
@@ -707,71 +503,6 @@
         ],
         "Pages": [
             "/static/404.html"
-        ]
-    },
-    "PlaceCategory": {
-        "Routes": "/place_category/",
-        "Auth": true,
-        "FullLoader": true,
-        "Title": "Place Category",
-        "Components": [
-            "k-table",
-            "list"
-        ],
-        "Js": [
-            "/place_category/js/index.js",
-            "/place_category/js/common.js"
-        ],
-        "Pages": [
-            "/place_category/index.php"
-        ]
-    },
-    "PlaceCategoryDetail": {
-        "FullLoader": true,
-        "Routes": "/place_category/(IdCategory)",
-        "Auth": true,
-        "Title": "Categoria dettaglio",
-        "Js": [
-            "/place_category/js/manage.js",
-            "/place_category/js/common.js"
-        ],
-        "Pages": [
-            "/place_category/manage.php"
-        ]
-    },
-    "Place": {
-        "Routes": "/place/",
-        "Auth": true,
-        "FullLoader": true,
-        "Title": "Luoghi",
-        "Components": [
-            "k-table"
-        ],
-        "Js": [
-            "/place/js/index.js"
-        ],
-        "Pages": [
-            "/place/index.php"
-        ]
-    },
-    "PlaceDetail": {
-        "Routes": "/place/(IdPlace)",
-        "Auth": true,
-        "Loader": true,
-        "Title": "Gestione Luoghi",
-        "Components": [
-            "k-table",
-            "summernote",
-            "selectpicker",
-            "images_caption",
-            "deepl",
-            "g-maps"
-        ],
-        "Js": [
-            "/place/js/manage.js"
-        ],
-        "Pages": [
-            "/place/manage.php"
         ]
     }
 }

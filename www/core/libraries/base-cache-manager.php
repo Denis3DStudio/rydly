@@ -96,6 +96,24 @@ class Base_Cache_Manager {
             // Set the cache
             self::setCache(Base_Cache_Names::PLACES_CATEGORIES_ALL, $linq->reorder($categories, "IdCategory"));
         }
+        public static function setSponsorAllCache() {
+
+            // $linq = new Base_LINQHelper();
+
+            // $sponsors = $linq->selectDB("IdSponsor, Name")->fromDB("sponsors")->whereDB("IsValid = 1 AND IsDeleted = 0 AND IsActive = 1")->getResults();
+
+            // if (!Base_Functions::IsNullOrEmpty($sponsors)) {
+
+            //     $ids_sponsors = array_column($sponsors, "IdSponsor");
+
+            //     // Get all the translations of the sponsors
+            //     $sponsors_translations = $linq->reorder($linq->fromDB("sponsors_translations")->whereDB("IdSponsor IN (" . implode(",", $ids_sponsors) . ")")->getResults(), "IdSponsor", true);
+
+            // }
+
+            // // Set the cache
+            self::setCache(Base_Cache_Names::SPONSORS_ALL, []);
+        }
 
     #endregion
 
@@ -177,10 +195,12 @@ class Base_Cache_Names {
 
     const PLACES_ALL = "PLACES_ALL";
     const PLACES_CATEGORIES_ALL = "CATEGORIES_PLACES_ALL";
+    const SPONSORS_ALL = "SPONSORS_ALL";
 
     const SETTER = [
         self::PLACES_ALL => "setPlacesAllCache",
         self::PLACES_CATEGORIES_ALL => "setPlacesCategoriesAll",
+        self::SPONSORS_ALL => "setSponsorsAllCache",
     ];
 
     // Set the expiration date

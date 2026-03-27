@@ -1,13 +1,11 @@
 {
     "Put": {
         "IdSponsor": true,
-        "Name": true,
-        "Category": {
+        "Categories": {
             "Mandatory": false,
             "Array": "*"
         },
         "MainCategory": false,
-        "IdNews": false,
         "Address": false,
         "City": true,
         "Latitude": true,
@@ -16,11 +14,6 @@
         "Phone": false,
         "Notes": false,
         "IsActive": true,
-        "IsClaimed": true,
-        "IdSurveyQuestionAnswers": {
-            "Mandatory": false,
-            "Array": "*"
-        },
         "Languages": {
             "Mandatory": true,
             "Array": {

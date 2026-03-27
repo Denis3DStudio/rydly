@@ -9,11 +9,12 @@ function getCategories(callback = null) {
 
     // Init the picker
     get_call(
-        BACKEND.CATEGORY_PLACE.ALL,
-        null,
+        BACKEND.CATEGORY.ALL,
+        {
+            IdType: ENUM.BASE_CATEGORY_TYPE.SPONSOR
+        },
         function (categories) {
 
-            initSelectpicker('#categorySelect');
             buildPicker(categories, '#categorySelect', 'IdCategory', 'Title');
 
             // Check if callback is not null
@@ -40,7 +41,7 @@ function renderTable() {
             {
                 title: 'Nome',
                 render: function (data) {
-                    return data.Name;
+                    return data.Title;
                 }
             },
             {

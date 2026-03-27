@@ -488,7 +488,11 @@
             },
             "All": {
                 "Auth": true,
-                "Method": "getAll"
+                "Method": "getAll",
+                "Request": {
+                    "Path": "get",
+                    "Class": "All"
+                }
             },
             "Images": {
                 "Auth": true,
@@ -502,7 +506,11 @@
         "POST": {
             "": {
                 "Auth": true,
-                "Method": "create"
+                "Method": "create",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Create"
+                }
             },
             "Images": {
                 "Auth": true,
@@ -546,172 +554,6 @@
                 "Request": {
                     "Path": "delete",
                     "Class": "Image"
-                }
-            }
-        }
-    },
-    "Category_Product": {
-        "GET": {
-            "": {
-                "Auth": true,
-                "Method": "get",
-                "Request": {
-                    "Path": "get",
-                    "Class": "Get"
-                }
-            },
-            "All": {
-                "Auth": true,
-                "Method": "getAll"
-            },
-            "Select": {
-                "Auth": true,
-                "Method": "getSelect"
-            }
-        },
-        "POST": {
-            "": {
-                "Auth": true,
-                "Method": "create",
-                "Request": {
-                    "Path": "post",
-                    "Class": "Create"
-                }
-            }
-        },
-        "PUT": {
-            "": {
-                "Auth": true,
-                "Method": "update",
-                "Request": {
-                    "Path": "put",
-                    "Class": "Put"
-                }
-            }
-        },
-        "DELETE": {
-            "": {
-                "Auth": true,
-                "Method": "delete",
-                "Request": {
-                    "Path": "delete",
-                    "Class": "Delete"
-                }
-            }
-        }
-    },
-    "Attribute": {
-        "GET": {
-            "": {
-                "Auth": true,
-                "Method": "get",
-                "Request": {
-                    "Path": "get",
-                    "Class": "Get"
-                }
-            },
-            "All": {
-                "Auth": true,
-                "Method": "getAll"
-            }
-        },
-        "POST": {
-            "": {
-                "Auth": true,
-                "Method": "create"
-            }
-        },
-        "PUT": {
-            "": {
-                "Auth": true,
-                "Method": "update",
-                "Request": {
-                    "Path": "put",
-                    "Class": "Update"
-                }
-            }
-        },
-        "DELETE": {
-            "": {
-                "Auth": true,
-                "Method": "delete",
-                "Request": {
-                    "Path": "delete",
-                    "Class": "Delete"
-                }
-            }
-        }
-    },
-    "Attribute_Value": {
-        "GET": {
-            "": {
-                "Auth": true,
-                "Method": "get",
-                "Request": {
-                    "Path": "get",
-                    "Class": "Get"
-                }
-            },
-            "All": {
-                "Auth": true,
-                "Method": "getAll",
-                "Request": {
-                    "Path": "get",
-                    "Class": "All"
-                }
-            },
-            "Colors": {
-                "Auth": true,
-                "Method": "getColors",
-                "Request": {
-                    "Path": "get",
-                    "Class": "Colors"
-                }
-            }
-        },
-        "POST": {
-            "": {
-                "Auth": true,
-                "Method": "create",
-                "Request": {
-                    "Path": "post",
-                    "Class": "Create"
-                }
-            },
-            "Color": {
-                "Auth": true,
-                "Method": "insertColor",
-                "Request": {
-                    "Path": "post",
-                    "Class": "Color"
-                }
-            }
-        },
-        "PUT": {
-            "": {
-                "Auth": true,
-                "Method": "update",
-                "Request": {
-                    "Path": "put",
-                    "Class": "Update"
-                }
-            }
-        },
-        "DELETE": {
-            "": {
-                "Auth": true,
-                "Method": "delete",
-                "Request": {
-                    "Path": "delete",
-                    "Class": "Delete"
-                }
-            },
-            "Color": {
-                "Auth": true,
-                "Method": "deleteColor",
-                "Request": {
-                    "Path": "delete",
-                    "Class": "Color"
                 }
             }
         }
@@ -990,88 +832,6 @@
             }
         }
     },
-    "Category_Place": {
-        "GET": {
-            "": {
-                "Auth": true,
-                "Method": "get",
-                "Request": {
-                    "Path": "get",
-                    "Class": "Get"
-                }
-            },
-            "All": {
-                "Auth": true,
-                "Method": "getAll"
-            },
-            "Image": {
-                "Auth": true,
-                "Method": "getImage",
-                "Request": {
-                    "Path": "get",
-                    "Class": "Image"
-                }
-            }
-        },
-        "POST": {
-            "": {
-                "Auth": true,
-                "Method": "create"
-            },
-            "Image": {
-                "Auth": true,
-                "Method": "uploadImage",
-                "Request": {
-                    "Path": "post",
-                    "Class": "Image"
-                }
-            }
-        },
-        "PUT": {
-            "": {
-                "Auth": true,
-                "Method": "update",
-                "Request": {
-                    "Path": "put",
-                    "Class": "Update"
-                }
-            },
-            "ImagesOrder": {
-                "Auth": true,
-                "Method": "updateImagesOrder",
-                "Request": {
-                    "Path": "put",
-                    "Class": "ImagesOrder"
-                }
-            },
-            "CategoriesOrder": {
-                "Auth": true,
-                "Method": "updateCategoriesOrder",
-                "Request": {
-                    "Path": "put",
-                    "Class": "CategoriesOrder"
-                }
-            }
-        },
-        "DELETE": {
-            "": {
-                "Auth": true,
-                "Method": "delete",
-                "Request": {
-                    "Path": "delete",
-                    "Class": "Delete"
-                }
-            },
-            "Image": {
-                "Auth": true,
-                "Method": "deleteImage",
-                "Request": {
-                    "Path": "delete",
-                    "Class": "Image"
-                }
-            }
-        }
-    },
     "Place": {
         "GET": {
             "": {
@@ -1168,7 +928,7 @@
                     "Class": "Content"
                 }
             },
-            "News" : {
+            "News": {
                 "Auth": true,
                 "Method": "deleteNews",
                 "Request": {
@@ -1274,7 +1034,7 @@
                     "Class": "Content"
                 }
             },
-            "News" : {
+            "News": {
                 "Auth": true,
                 "Method": "deleteNews",
                 "Request": {

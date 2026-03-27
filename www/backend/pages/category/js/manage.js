@@ -44,23 +44,21 @@ function get() {
 function save() {
 
     // Check the languages tabs
-    var translations = checkLanguagesTabs(true);
+    var translations = checkLanguagesTabs(false);
 
-    if (translations.validity == true && checkMandatory("#common_container")) {
+    if (translations.validity == true) {
 
         // Get the common data
         var params = {};
         params["IdCategory"] = Url.Params.IdCategory;
         params["Languages"] = translations.Languages;
 
-        var final_params = { ...params, ...getContentData("#common_container") };
-
         put_call(
             BACKEND.CATEGORY.INDEX,
-            final_params,
+            params,
             function (response, message) {
 
-                location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/category?st=ok&m=${message}`
+                location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/${ENUM.BASE_CATEGORY_TYPE.PAGES[$("#IdCategoryType").val()]}?st=ok&m=${message}`
             },
             function (response, message) {
 

@@ -39,13 +39,13 @@
                 $place = $this->__linq->fromDB($this->table_name)->whereDB($this->id . " = $idPlace AND IsDeleted = 0 $where")->getFirstOrDefault();
 
                 // Get the place categories
-                $place->Categories = $this->__linq->selectDB('IdCategory, IsMain')->fromDB("categories_places_parents")->whereDB($this->id . " = $idPlace")->getResults();
+                $place->Categories = [];
 
                 // Get the place blog
                 $place->News = $this->__linq->selectDB('IdNews')->fromDB("news_places")->whereDB($this->id . " = $idPlace")->getResults();
 
                 // Get traveler path
-                $place->IdSurveyQuestionAnswers = array_column($this->__linq->selectDB('IdSurveyQuestionAnswer')->fromDB("surveys_questions_answers_places")->whereDB($this->id . " = $idPlace")->getResults(), "IdSurveyQuestionAnswer");
+                $place->IdSurveyQuestionAnswers = [];
 
                 if(!Base_Functions::IsNullOrEmpty($place))
                     return $this->Success($this->formatPlace($place));
@@ -96,16 +96,16 @@
                 if (count($all) > 0) {
                     
                     // Get the selection of the places
-                    $categories_selected = $this->__linq->reorder($this->__linq->fromDB("categories_places_parents")->getResults(), "IdPlace", true);
-                    // Get the translations of the categories
-                    $sql = "SELECT cp.IdCategory, cpt.Title, cp.OrderNumber
-                            FROM categories_places cp
-                            INNER JOIN categories_places_translations cpt ON cp.IdCategory = cpt.IdCategory AND cpt.IdLanguage = " . Base_Languages::ITALIAN . "
-                            WHERE cp.IsValid = 1 AND cp.IsDeleted = 0 
-                            ORDER BY cpt.Title ASC";
+                    $categories_selected = new stdClass();
+                    // // Get the translations of the categories
+                    // $sql = "SELECT cp.IdCategory, cpt.Title, cp.OrderNumber
+                    //         FROM categories_places cp
+                    //         INNER JOIN categories_places_translations cpt ON cp.IdCategory = cpt.IdCategory AND cpt.IdLanguage = " . Base_Languages::ITALIAN . "
+                    //         WHERE cp.IsValid = 1 AND cp.IsDeleted = 0 
+                    //         ORDER BY cpt.Title ASC";
 
-                    $categories = $this->__linq->queryDB($sql)->getResults();
-                    $categories_reordered = $this->__linq->reorder($categories, "IdCategory");
+                    // $categories = $this->__linq->queryDB($sql)->getResults();
+                    $categories_reordered = new stdClass();
 
                     $all = $this->__linq->reorder($all, $this->id, true);
 

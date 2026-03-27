@@ -2,6 +2,9 @@
     "Get": {
         "IdCategory": true
     },
+    "All": {
+        "IdType": false
+    },
     "Images": {
         "IdCategory": true
     }
