@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row page-head">
         <div class="col-6 p-0">
-            <h1><i class="fa fa-fw fa-location-dot op-2"></i> Gestione Luogo</h1>
+            <h1><i class="fa fa-fw fa-user-tie op-2"></i> Gestione Organizzatore</h1>
         </div>
         <?php
         // Check if the deepl key is set
@@ -42,68 +42,66 @@
                             <div class="tab-content" id="nav-tabContent">
                                 <!-- Tab General -->
                                 <div class="tab-pane fade show active" id="tabGeneral" role="tabpanel" aria-labelledby="tabGeneral-tab">
-                                    <div class="row" id="common_container">
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="Name">Nome luogo</label>
-                                                    <input type="text" class="form-control" id="Name" name="Name" mandatory>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="form-group">
-                                                    <label for="Address">Indirizzo completo</label>
-                                                    <input type="text" class="form-control" id="Address" name="Address">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="City">Città</label>
-                                                    <input type="text" class="form-control" id="City" name="City" mandatory>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="Latitude">Latitudine Google Maps</label>
-                                                    <input type="text" class="form-control" id="Latitude" name="Latitude" mandatory>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="Longitude">Longitudine Google Maps</label>
-                                                    <input type="text" class="form-control" id="Longitude" name="Longitude" mandatory>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    <label for="Phone">Telefono</label>
-                                                    <input type="text" class="form-control" id="Phone" name="Phone">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4">
-                                                <label for="">&nbsp;</label>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="UseOnlyCoordinates" name="UseOnlyCoordinates" trigger_change />
-                                                    <label class="form-check-label" for="UseOnlyCoordinates">
-                                                        Utilizza solo le coordinate per le indicazioni stradali
-                                                    </label>
-                                                </div>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="Latitude">Nome</label>
+                                                <input type="text" class="form-control" id="Name" name="Name" mandatory>
                                             </div>
                                         </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label>Note</label>
-                                                    <textarea name="Notes" class="form-control" rows="5"></textarea>
-                                                </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="Address">Indirizzo completo</label>
+                                                <input type="text" class="form-control" id="Address" name="Address">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4" to_hide>
+                                            <div class="form-group">
+                                                <label for="City">Città</label>
+                                                <input type="text" class="form-control" id="City" name="City" mandatory>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4" to_hide>
+                                            <div class="form-group">
+                                                <label for="Latitude">Latitudine Google Maps</label>
+                                                <input type="text" class="form-control" id="Latitude" name="Latitude" mandatory>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4" to_hide>
+                                            <div class="form-group">
+                                                <label for="Longitude">Longitudine Google Maps</label>
+                                                <input type="text" class="form-control" id="Longitude" name="Longitude" mandatory>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4" to_hide>
+                                            <div class="form-group">
+                                                <label for="Phone">Telefono</label>
+                                                <input type="text" class="form-control" id="Phone" name="Phone">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4" to_hide>
+                                            <label for="">&nbsp;</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="UseOnlyCoordinates" name="UseOnlyCoordinates" trigger_change />
+                                                <label class="form-check-label" for="UseOnlyCoordinates">
+                                                    Utilizza solo le coordinate per le indicazioni stradali
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label>Note</label>
+                                                <textarea name="Notes" class="form-control" rows="5"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Images -->
-                                <div class="tab-pane" id="tabImages" role="tabpanel" aria-labelledby="tabImages-tab">
+                                <div class="tab-pane" id="tabImages" role="tabpanel" aria-labelledby="tabImages-tab" fileRender="dtContents">
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="row">
@@ -111,7 +109,7 @@
                                                     <div class="form-group">
                                                         <label>Contenuto</label>
                                                         <div class="form-inline">
-                                                            <input class="form-control custom-render" type="file" name="Images[]" accept="image/*" multiple fileUpload fileUploadType="<?= Base_Files_Upload_Type::ON_CHANGE ?>" fileMacro="<?= Base_Files::PLACE ?>" fileType="<?= Base_Files_Types::IMAGE ?>" onclick="uploadManager('Images[]')" callback="getFilesManager('dtContents', <?= Base_Files::PLACE ?>, <?= Base_Files_Types::IMAGE ?>)" />
+                                                            <input class="form-control custom-render" type="file" name="Images[]" accept="image/*" multiple fileUpload fileUploadType="<?= Base_Files_Upload_Type::ON_CHANGE ?>" fileMacro="<?= Base_Files::ORGANIZER ?>" fileType="<?= Base_Files_Types::IMAGE ?>" onclick="uploadManager('Images[]')" callback="getFilesManager('dtContents', <?= Base_Files::ORGANIZER ?>, <?= Base_Files_Types::IMAGE ?>)" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -127,9 +125,9 @@
                                                 </label>
                                                 <div class="table-responsive">
                                                     <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtContents" style="width: 100%;"
-                                                        fileMacro="<?= Base_Files::PLACE ?>"
+                                                        fileMacro="<?= Base_Files::ORGANIZER ?>"
                                                         fileType="<?= Base_Files_Types::IMAGE ?>"
-                                                        callback="getFilesManager('dtContents', <?= Base_Files::PLACE ?>, <?= Base_Files_Types::IMAGE ?>)">
+                                                        callback="getFilesManager('dtContents', <?= Base_Files::ORGANIZER ?>, <?= Base_Files_Types::IMAGE ?>)">
                                                     </table>
 
                                                 </div>
@@ -149,19 +147,14 @@
             <div class="card mb-3 shadow">
                 <div class="card-body" id="common_container">
                     <div class="form-group">
-                        <label for="categorySelect">Categorie</label>
-                        <select id="categorySelect" name="Category" class="selectpicker" data-width="100%" multiple data-live-search="true" data-size="8" title="Seleziona..." mandatory></select>
+                        <label for="Categories">Categorie</label>
+                        <select id="Categories" name="Categories" class="selectpicker" data-width="100%" multiple data-live-search="true" data-size="8" title="Seleziona..." mandatory trigger_change>
+                        </select>
                     </div>
 
                     <div class="form-group" id="main_category_container" style="display: none;">
-                        <label for="mainCategory">Categoria Principale</label>
-                        <select id="mainCategory" name="MainCategory" class="selectpicker" data-width="100%" data-live-search="true" data-size="8" title="Seleziona..."></select>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="newsSelect">Blog associati</label>
-                        <select id="newsSelect" name="IdNews" class="selectpicker" data-width="100%" multiple data-live-search="true" data-size="8" title="Seleziona..."></select>
+                        <label for="MainCategory">Categoria Principale</label>
+                        <select id="MainCategory" name="MainCategory" class="selectpicker" data-width="100%" data-live-search="true" data-size="8" title="Seleziona..."></select>
                     </div>
 
                     <div class="row">
@@ -176,38 +169,17 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="IsClaimed">Scheda</label><br>
-                                <select class="selectpicker form-control" name="IsClaimed" id="IsClaimed" data-title="Seleziona..." data-width="100%" mandatory>
-                                    <option value="1">Rivendicata</option>
-                                    <option value="0">Da rivendicare</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="travelerPathSelect">Traveler Path</label>
-                                <select id="travelerPathSelect" name="IdSurveyQuestionAnswers" class="selectpicker" data-width="100%" multiple data-live-search="true" data-size="8" title="Seleziona..."></select>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
                 <div class="card-footer">
                     <div class="row align-items-center">
                         <div class="col-6">
-                            <button type="button" class="btn btn-sm btn-link text-danger" onclick="simpleDelete(<?= Base_Simple_Delete::PLACE ?>)">
+                            <button type="button" class="btn btn-sm btn-link text-danger" onclick="simpleDelete(<?= Base_Simple_Delete::ORGANIZER ?>)">
                                 <i class="fas fa-trash"></i> Elimina
                             </button>
                         </div>
                         <div class="col-6 text-end">
-                            <button type="button" class="btn btn-success" onclick="savePlace()">
+                            <button type="button" class="btn btn-success" onclick="saveOrganizer()">
                                 <i class="fas fa-fw fa-save"></i> Salva
                             </button>
                         </div>

@@ -2,7 +2,18 @@
 
     class Base_Files {
 
-        const ALL = [self::NEWS];
+        const ALL = [
+            self::NEWS, 
+            self::PRODUCT,
+            self::CATEGORY,
+            self::PROJECT,
+            self::PROJECT_SINGLE,
+            self::EMAIL,
+            self::PLACE_CATEGORY,
+            self::PLACE,
+            self::SPONSOR,
+            self::ORGANIZER
+        ];
 
         const NEWS = 0;
         const PRODUCT = 1;
@@ -13,6 +24,7 @@
         const PLACE_CATEGORY = 6;
         const PLACE = 7;
         const SPONSOR = 8;
+        const ORGANIZER = 9;
 
         const IDS_DB = [
             self::NEWS => 'IdNews',
@@ -23,7 +35,8 @@
             self::EMAIL => 'IdEmail',
             self::PLACE_CATEGORY => 'IdCategory',
             self::PLACE => 'IdPlace',
-            self::SPONSOR => 'IdSponsor'
+            self::SPONSOR => 'IdSponsor',
+            self::ORGANIZER => 'IdOrganizer'
         ];
 
         const DB_TABLES_NAMES = [
@@ -36,6 +49,7 @@
             self::PLACE_CATEGORY => 'categories_places',
             self::PLACE => 'places',
             self::SPONSOR => 'sponsors',
+            self::ORGANIZER => 'organizers',
         ];
 
         const DB_TABLES_CAPTIONS_NAMES = [
@@ -56,6 +70,7 @@
             self::PLACE_CATEGORY => 'categories_places',
             self::PLACE => 'places',
             self::SPONSOR => 'sponsors',
+            self::ORGANIZER => 'organizers',
         ];
     }
 

@@ -2,7 +2,8 @@
 
     namespace Backend\Account;
 
-    use stdClass;
+use Base_Account;
+use stdClass;
     use Base_Methods;
     use Base_Functions;
     use Base_Languages;
@@ -21,21 +22,6 @@
         #region Public Methods
 
             // Get
-            public function getAll() {
-                
-                // Get accounts
-                $accounts = $this->__linq->fromDB("accounts")->whereDB("IsValid = 1 AND IsDeleted = 0")->getResults();
-
-                // Format accounts
-                $response = array();
-                foreach ($accounts as $account) {
-
-                    if ($this->Logged->IdRole >= $account->IdRole)
-                        array_push($response, $this->format($account));
-                }
-
-                return $this->Success($response);
-            }
             public function get($idAccount, $isValid = 0) {
 
                 $where = "";
@@ -56,6 +42,20 @@
                 // Format account
                 return $this->Success($account);
             }
+            public function getAll() {
+                
+                // Build where
+                $where = "IsValid = 1 AND IsDeleted = 0";
+
+                // Add filter for roles
+                $where .= " AND IdRole IN (" . implode(",", Base_Account::ROLES_CAN_SEE[$this->Logged->IdRole]) . ")";
+
+                // Get accounts
+                $accounts = $this->__linq->fromDB("accounts")->whereDB($where)->getResults();
+
+                // Format accounts
+                return $this->Success($this->format($accounts));
+            }
 
             // Post
             public function login($username, $password, $idAccount = null) {
@@ -65,32 +65,46 @@
                 // Get from username and password
                 if(Base_Functions::IsNullOrEmpty($idAccount)) {
 
+                    // Hash password
                     $password = Base_Functions::Hash($password);
                     $token = hash("sha256", $username . $password);
 
+                    // Build where
                     $where = "SHA2(CONCAT(Username, Password), 256) = '$token'";
-
                 }
 
                 // Check account
                 $account = $this->__linq->fromDB("accounts")->whereDB("$where AND IsValid = 1 AND IsDeleted = 0")->getFirstOrDefault();
 
+                // Check if found
                 if(Base_Functions::IsNullOrEmpty($account))
                     return $this->Not_Found(null, "Credenziali errate");
 
-                // Get response
-                $response = $this->format($account);
-
-                return $this->Success($response);
+                return $this->Success($this->format($account));
             }
             public function create() {
+
+                // Get new id
                 $idAccount = $this->__opHelper->object("IdAccount")->table("accounts")->insertIncrement();
 
                 // Check if created
-                if(is_numeric($idAccount) && $idAccount > 0)
+                if(!is_numeric($idAccount))
+                    return $this->Internal_Server_Error(null, "Account not created");
+
+                // Check if created by an user with organizer role and assign the same organizer to the new account
+                if(in_array($this->Logged->IdRole, Base_Account::ROLES_WITH_ORGANIZER))
                     return $this->Success($idAccount);
 
-                return $this->Internal_Server_Error(null, "Account not created");
+                // Update with default values
+                $obj = new stdClass();
+                $obj->IdAccount = $idAccount;
+                $obj->IdOrganizer = $this->Logged->IdOrganizer;
+
+                // Update
+                $this->__opHelper->object($obj)->table("accounts")->where("IdAccount")->update();
+
+                // Return id
+                return $this->Success($idAccount);
 
             }
             public function impersonate($idAccount) {
@@ -172,22 +186,64 @@
             
         #region Private Methods
 
-            private function format($account) {
+            private function format($accounts) {
 
-                $response = new stdClass();
-                $response->IdAccount = $account->IdAccount;
-                $response->Name = $account->Name;
-                $response->Surname = $account->Surname;
-                $response->Username = $account->Username;
-                $response->IdRole = $account->IdRole;
-                $response->IsValid = $account->IsValid;
-                $response->Type = class_exists("Base_Customer_Type") ? \Base_Customer_Type::LOGGED : 2;
-                $response->IdLanguage = Base_Languages::ITALIAN;
+                // Check if array
+                $isAll = is_array($accounts);
 
-                // Add 'Backup' Token
-                $response->Token = Base_Encryption::Encrypt(json_encode($response));
+                // Format response
+                $accounts = $isAll ? $accounts : [$accounts];
 
-                return $this->Success($response);
+                // Get all ids
+                $idsOrganizers = array_unique(array_filter(array_column($accounts, "IdOrganizer")));
+
+                // Get organizers
+                $organizers = $idsOrganizers
+                                ? $this->__linq->reorder($this->__linq->fromDB("organizers")->whereDB("IdOrganizer", $idsOrganizers)->getResults(), "IdOrganizer")
+                                : new stdClass();
+
+                // Init response
+                $response = [];
+
+                // Cycle accounts
+                foreach ($accounts as $account) {
+
+                    // Init tmp
+                    $tmp = new stdClass();
+                    $tmp->IdAccount = $account->IdAccount;
+                    $tmp->Name = $account->Name;
+                    $tmp->Surname = $account->Surname;
+                    $tmp->Username = $account->Username;
+                    $tmp->IdRole = $account->IdRole;
+                    $tmp->Type = class_exists("Base_Customer_Type") ? \Base_Customer_Type::LOGGED : 2;
+                    $tmp->IdLanguage = Base_Languages::ITALIAN;
+                    
+                    // Add sensitive data only for the single account
+                    if(!$isAll) {
+                        
+                        // Add organizer
+                        $tmp->IdOrganizer = $account->IdOrganizer;
+
+                        // Add IsValid
+                        $tmp->IsValid = $account->IsValid;
+
+                        // Add token
+                        $tmp->Token = Base_Encryption::Encrypt(json_encode($tmp));
+                    } else {
+
+                        // Add FullName
+                        $tmp->FullName = trim(($account->Name ?? '') . " " . ($account->Surname ?? ''));
+
+                        // Get organizer
+                        $tmp->Organizer = $account->IdOrganizer && property_exists($organizers, $account->IdOrganizer) ? $organizers->{$account->IdOrganizer} : null;
+                    }
+
+                    // Push to response
+                    array_push($response, $tmp);
+                }
+
+                // Return only one if not array
+                return $this->Success($isAll ? $response : $response[0]);
             }
 
         #endregion

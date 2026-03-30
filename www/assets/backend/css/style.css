@@ -444,7 +444,29 @@ code {
   transform: translateY(-50%);
   z-index: 1;
   pointer-events: none;
+  opacity: 0.3;
 }
+.form-group .icon-left.action-right .btn {
+  width: 50px;
+}
+
+.form-group .icon-left.action-right i {
+  left: 15px;
+}
+
+.input-group .btn {
+  z-index: 0;
+}
+
+.input-group .form-control:focus {
+  z-index: 1;
+}
+
+.form-group .icon-left .btn i {
+  opacity: 1;
+  left: 10px;
+}
+
 .form-group .icon-right .form-control {
   padding-right: 40px;
 }
@@ -2915,7 +2937,6 @@ footer.sticky-footer {
   background-size: contain;
   background-position: center center;
 }
-
 
 @media (min-width: 992px) {
   .modal-dialog.modal-dialog-xl {

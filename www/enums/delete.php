@@ -12,6 +12,7 @@
         const SURVEY_QUESTION_ANSWER = 9;
         const CUSTOMER = 10;
         const SPONSOR = 11;
+        const ORGANIZER = 12;
 
         const API_ENDPOINTS = [
             self::ACCOUNT => "ACCOUNT",
@@ -24,6 +25,7 @@
             self::SURVEY_QUESTION_ANSWER => "SURVEY",
             self::CUSTOMER => "CUSTOMER",
             self::SPONSOR => "SPONSOR",
+            self::ORGANIZER => "ORGANIZER",
         ];
 
         // Insert only if the METHOD is different from INDEX
@@ -43,6 +45,7 @@
             self::SURVEY_QUESTION_ANSWER => "IdSurveyQuestionAnswer",
             self::CUSTOMER => "IdCustomer",
             self::SPONSOR => "IdSponsor",
+            self::ORGANIZER => "IdOrganizer",
         ];
 
         const INDEX_PAGES = [
@@ -56,6 +59,7 @@
             self::SURVEY_QUESTION_ANSWER => null,
             self::CUSTOMER => "customer",
             self::SPONSOR => "sponsor",
+            self::ORGANIZER => "organizer",
         ];
 
         const MODAL_QUESTIONS = [
@@ -69,6 +73,7 @@
             self::SURVEY_QUESTION_ANSWER => "Sei sicuro di voler eliminare la risposta selezionata?",
             self::CUSTOMER => "Sei sicuro di voler eliminare il cliente selezionato?",
             self::SPONSOR => "Sei sicuro di voler eliminare lo sponsor selezionato?",
+            self::ORGANIZER => "Sei sicuro di voler eliminare l'organizzatore selezionato?",
         ];
     }
 

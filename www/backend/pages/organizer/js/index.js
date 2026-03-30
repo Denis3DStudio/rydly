@@ -1,6 +1,6 @@
 $(document).ready(function () {
     getLanguages();
-    // Get the categories sponsors
+    // Get the categories organizers
     getCategories(renderTable);
 });
 
@@ -11,7 +11,7 @@ function getCategories(callback = null) {
     get_call(
         BACKEND.CATEGORY.ALL,
         {
-            IdType: ENUM.BASE_CATEGORY_TYPE.SPONSOR
+            IdType: ENUM.BASE_CATEGORY_TYPE.ORGANIZER
         },
         function (categories) {
 
@@ -30,9 +30,9 @@ $(document).on("change", "#categorySelect", renderTable);
 
 function renderTable() {
     console.log($('#categorySelect').val());
-    kT = new KTable("#dtSponsors", {
+    kT = new KTable("#dtOrganizers", {
         ajax: {
-            url: BACKEND.SPONSOR.ALL,
+            url: BACKEND.ORGANIZER.ALL,
             data: {
                 IdsCategories: $('#categorySelect').val()
             }
@@ -80,10 +80,10 @@ function renderTable() {
                 searchable: false,
                 render: function (data) {
                     return `
-                        <a class="btn btn-secondary" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/sponsor/${data.IdSponsor}">
+                        <a class="btn btn-secondary" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/organizer/${data.IdOrganizer}">
                             <i class="fa fa-fw fa-edit"></i>
                         </a>
-                        <button type="button" class="btn btn-link text-danger" onclick="simpleDelete(${ENUM.BASE_SIMPLE_DELETE.SPONSOR}, ${data.IdSponsor})">
+                        <button type="button" class="btn btn-link text-danger" onclick="simpleDelete(${ENUM.BASE_SIMPLE_DELETE.ORGANIZER}, ${data.IdOrganizer})">
                             <i class="fa fa-fw fa-trash"></i>
                         </button>
                     `
@@ -102,19 +102,19 @@ function renderTable() {
 }
 
 // Post
-function createSponsor() {
+function createOrganizer() {
 
     showLoader();
 
     post_call(
-        BACKEND.SPONSOR.INDEX,
+        BACKEND.ORGANIZER.INDEX,
         null,
-        function (idSponsor) {
+        function (idOrganizer) {
 
             hideLoader();
 
             // Open the news detail page
-            location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/sponsor/${idSponsor}`;
+            location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/organizer/${idOrganizer}`;
 
         },
         function () {

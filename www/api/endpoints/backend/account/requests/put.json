@@ -5,6 +5,7 @@
         "Surname": true,
         "Username": true,
         "Password": false,
-        "IdRole": true
+        "IdRole": true,
+        "IdOrganizer": false
     }
 }

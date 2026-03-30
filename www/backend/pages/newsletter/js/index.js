@@ -6,40 +6,51 @@ $(document).ready(function () {
 // Get
 function renderTable() {
 
-    var dt = new AC_Datatable();
-    dt.setAjaxUrl(BACKEND.CUSTOMER.NEWSLETTER)
-        .setIdTable("dtNewsletter")
-        .setOptions({
-            dom: 'Bfrtip',
-            order: [[0, 'asc']],
-            buttons: ['excel'],
-            columnDefs: [
-                {
-                    title: 'Email',
-                    render: function (data, type, row) {
-                        return row.Email;
-                    }
-                },
-                {
-                    title: 'Azioni',
-                    render: function (data, type, row) {
+    new KTable("#dtNewsletter", {
+        ajax: {
+            url: BACKEND.CUSTOMER.NEWSLETTER
+        },
+        sort: {
+            0: "ASC"
+        },
+        buttons: "",
+        export: ["CSV", "XLS"],
+        columns: [
+            {
+                title: 'Email',
+                render: function (data) {
+                    return data.Email;
+                }
+            },
+            {
+                title: 'Azioni',
+                render: function (data) {
 
-                        // Initialize
-                        var btns = "";
+                    // Initialize
+                    var btns = "";
 
-                        if ("IdCustomer" in row)
-                            btns += `<a class="btn btn-secondary" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/customer/${row.IdCustomer}" target="_blank">
+                    // View disable if no customer
+                    var isNewsletter = "IdCustomer" in data;
+
+                    // View
+                    if (isNewsletter)
+                        btns += `<a class="btn btn-outline-secondary" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/customer/${data.IdCustomer}" target="_blank">
                                     <i class="fa fa-fw fa-eye"></i>
                                 </a>`;
+                    else
+                        btns += `<button type="button" class="btn btn-outline-secondary" disabled>
+                                    <i class="fa fa-fw fa-eye"></i>
+                                </button>`;
 
-                        return btns;
-                    }
-                },
-            ],
-            initComplete: function (settings, json) {
+                    return btns;
+                }
+            },
+        ],
+        events: {
+            completed(data) {
                 hideLoader();
             }
-        })
-        .initDatatable();
+        }
+    });
 
 }

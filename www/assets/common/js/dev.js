@@ -1067,9 +1067,10 @@ function fillContentByNames(selector, data, inputs = true) {
             }
         }
 
-        // Trigger change event for inputs
-        $(`${selector} [trigger_change]`).trigger("change");
     }
+
+    // Trigger change event for inputs
+    $(`${selector} [trigger_change]`).trigger("change");
 
     // Check if there are selectpicker
     if (selector && $(selector).find(".selectpicker").length > 0)

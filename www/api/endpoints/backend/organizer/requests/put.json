@@ -1,6 +1,6 @@
 {
     "Put": {
-        "IdSponsor": true,
+        "IdOrganizer": true,
         "Name": true,
         "Categories": {
             "Mandatory": false,
@@ -27,7 +27,7 @@
         }
     },
     "ContentsOrder": {
-        "IdSponsor": true,
+        "IdOrganizer": true,
         "Extras": true,
         "Order": {
             "Mandatory": true,

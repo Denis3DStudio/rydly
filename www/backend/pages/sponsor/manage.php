@@ -43,6 +43,12 @@
                                 <!-- Tab General -->
                                 <div class="tab-pane fade show active" id="tabGeneral" role="tabpanel" aria-labelledby="tabGeneral-tab">
                                     <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="Latitude">Nome</label>
+                                                <input type="text" class="form-control" id="Name" name="Name" mandatory>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="Address">Indirizzo completo</label>
@@ -118,7 +124,7 @@
                                                         data-bs-title="Trascina per modificare l'ordinamento"></i>
                                                 </label>
                                                 <div class="table-responsive">
-                                                    <table class="table table-hover dt-responsive has--actions" id="dtContents" style="width: 100%;"
+                                                    <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtContents" style="width: 100%;"
                                                         fileMacro="<?= Base_Files::SPONSOR ?>"
                                                         fileType="<?= Base_Files_Types::IMAGE ?>"
                                                         callback="getFilesManager('dtContents', <?= Base_Files::SPONSOR ?>, <?= Base_Files_Types::IMAGE ?>)">

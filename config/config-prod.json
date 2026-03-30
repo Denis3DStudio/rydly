@@ -1,12 +1,12 @@
 {
-    "Url": "inserisci qui l'URL del sito di prod",
+    "Url": "https://denisstudiolab.com/",
     "Dev": false,
     "Prod": true,
     "Mail_Gestione": null,
     "Database": {
-        "User": "",
-        "Password": "",
-        "Host": "",
-        "Name": ""
+        "User": "u579239614_urs_prod",
+        "Password": "K4zBKVsh;",
+        "Host": "localhost",
+        "Name": "u579239614_rydly_prod"
     }
 }

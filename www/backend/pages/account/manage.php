@@ -76,7 +76,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label>Ruolo</label>
-                                <select class="selectpicker form-control" name="IdRole" data-title="Seleziona..." data-width="100%" mandatory>
+                                <select class="selectpicker" name="IdRole" data-title="Seleziona..." data-width="100%" mandatory trigger_change>
                                     <?php 
                                         foreach (Base_Account::ALL as $account) {
                                             if ($account != Base_Account::SUPERADMIN || $this->Logged->IdRole == Base_Account::SUPERADMIN) {
@@ -86,6 +86,13 @@
                                             }
                                         }
                                     ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12" id="organizer_select_container" style="display: none;">
+                            <div class="form-group">
+                                <label>Organizzatore</label>
+                                <select class="selectpicker" name="IdOrganizer" data-title="Seleziona..." data-width="100%" mandatory>
                                 </select>
                             </div>
                         </div>

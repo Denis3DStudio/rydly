@@ -99,7 +99,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/place_category/">
+                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/category_place/">
                             <span class="nav-link-text">Categorie</span>
                         </a>
                     </li>
@@ -121,8 +121,26 @@
             <li class="nav-item nav-title">GESTIONE</li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/account/<?= ($this->Logged->IdRole == Base_Account::USER) ? $this->Logged->IdAccount : '' ?>">
-                    <i class="fa fa-fw fa-user-circle"></i> <span class="nav-link-text"><?= ($this->Logged->IdRole == Base_Account::USER) ? "Utente" : 'Utenti' ?></span>
+                <a class="nav-link nav-link-collapse collapsed" data-bs-toggle="collapse" href="#c-organizer" data-parent="#sidebarMenu">
+                    <i class="fa fa-fw fa-user-tie"></i> <span class="nav-link-text">Organizzatori</span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="c-organizer">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/organizer/">
+                            <span class="nav-link-text">Elenco</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/category_organizer/">
+                            <span class="nav-link-text">Categorie</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/account/<?= (!in_array($this->Logged->IdRole, Base_Account::USER_THAT_CAN_MANAGE)) ? $this->Logged->IdAccount : '' ?>">
+                    <i class="fa fa-fw fa-user-circle"></i> <span class="nav-link-text"><?= (!in_array($this->Logged->IdRole, Base_Account::USER_THAT_CAN_MANAGE)) ? "Utente" : 'Utenti' ?></span>
                 </a>
             </li>
 
@@ -165,18 +183,19 @@
                     </div>
                 </li>
 
-                <li class="nav-item nav-item--bottom text-center">
-                    <div class="row no-gutters">
-                        <div class="col-12 col-md-3">
-                            <button type="button" class="nav-link bg-danger" onclick="logout()">
-                                <i class="fa fa-fw fa-power-off text-white"></i>
-                            </button>
-                        </div>
-                    </div>
-                </li>
             <?php
             }
             ?>
+
+            <li class="nav-item nav-item--bottom text-center">
+                <div class="row no-gutters">
+                    <div class="col-12 col-md-3">
+                        <button type="button" class="nav-link bg-danger" onclick="logout()">
+                            <i class="fa fa-fw fa-power-off text-white"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
 
         </ul>
     </div>

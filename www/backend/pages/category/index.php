@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col">
             <div class="table-responsive">
-                <table class="table bg-white table-bordered dt-responsive has--actions" id="dtItems" width="100%"
+                <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtItems" width="100%"
                     cellspacing="0"></table>
             </div>
         </div>

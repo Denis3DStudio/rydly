@@ -1044,6 +1044,84 @@
             }
         }
     },
+    "Organizer": {
+        "GET": {
+            "": {
+                "Auth": true,
+                "Method": "get",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Get"
+                }
+            },
+            "All": {
+                "Auth": true,
+                "Method": "getAll",
+                "Request": {
+                    "Path": "get",
+                    "Class": "All"
+                }
+            },
+            "Contents": {
+                "Auth": true,
+                "Method": "getContents",
+                "Request": {
+                    "Path": "get",
+                    "Class": "Contents"
+                }
+            }
+        },
+        "POST": {
+            "": {
+                "Auth": true,
+                "Method": "create"
+            },
+            "Images": {
+                "Auth": true,
+                "Method": "saveImages",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Images"
+                }
+            }
+        },
+        "PUT": {
+            "": {
+                "Auth": true,
+                "Method": "update",
+                "Request": {
+                    "Path": "put",
+                    "Class": "Put"
+                }
+            },
+            "ContentsOrder": {
+                "Auth": true,
+                "Method": "updateContentsOrder",
+                "Request": {
+                    "Path": "put",
+                    "Class": "ContentsOrder"
+                }
+            }
+        },
+        "DELETE": {
+            "": {
+                "Auth": true,
+                "Method": "delete",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Delete"
+                }
+            },
+            "Content": {
+                "Auth": true,
+                "Method": "deleteContent",
+                "Request": {
+                    "Path": "delete",
+                    "Class": "Content"
+                }
+            }
+        }
+    },
     "Survey": {
         "GET": {
             "": {

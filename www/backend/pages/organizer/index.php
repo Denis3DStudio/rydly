@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="row page-head">
         <div class="col-6 col-md-9 p-0">
-            <h1><i class="fa fa-fw fa-ticket op-2"></i> Sponsor</h1>
+            <h1><i class="fa fa-fw fa-user-tie op-2"></i> Organizzatori</h1>
         </div>
         <div class="col-6 col-md-3 p-0 text-end">
             <button
                 type="button"
                 class="btn btn-success"
-                onclick="createSponsor()">
+                onclick="createOrganizer()">
                 <i class="fa fa-fw fa-plus"></i> Aggiungi
             </button>
         </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="col-12">
             <div class="table-responsive">
-                <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtSponsors" width="100%" cellspacing="0"></table>
+                <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtOrganizers" width="100%" cellspacing="0"></table>
             </div>
         </div>
     </div>

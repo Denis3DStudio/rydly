@@ -66,7 +66,7 @@
                                                         data-bs-title="Trascina per modificare l'ordinamento"></i>
                                                 </label>
                                                 <div class="table-responsive">
-                                                    <table class="table table-hover dt-responsive has--actions" id="dtContents" style="width: 100%;"
+                                                    <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtContents" style="width: 100%;"
                                                         fileMacro="<?= Base_Files::NEWS ?>"
                                                         fileType="<?= Base_Files_Types::IMAGE ?>"
                                                         callback="getFilesManager('dtContents', <?= Base_Files::NEWS ?>, <?= Base_Files_Types::IMAGE ?>)">
@@ -206,7 +206,7 @@
                                                     data-bs-title="Trascina per modificare l'ordinamento"></i>
                                             </label>
                                             <div class="table-responsive">
-                                                <table class="table table-hover dt-responsive has--actions" id="dtAttachments{{Language}}" style="width: 100%;"
+                                                <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtAttachments{{Language}}" style="width: 100%;"
                                                     fileMacro="<?= Base_Files::NEWS ?>"
                                                     fileType="<?= Base_Files_Types::ATTACHMENT ?>"
                                                     hasFileExtra
@@ -252,7 +252,7 @@
                                                     data-bs-title="Trascina per modificare l'ordinamento"></i>
                                             </label>
                                             <div class="table-responsive">
-                                                <table class="table table-hover dt-responsive has--actions" id="dtLinks{{Language}}" style="width: 100%;"></table>
+                                                <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtLinks{{Language}}" style="width: 100%;"></table>
                                             </div>
                                         </div>
                                     </div>

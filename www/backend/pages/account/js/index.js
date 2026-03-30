@@ -18,9 +18,16 @@ function renderTable() {
         },
         columns: [
             {
+                title: 'Organizzatore',
+                filterable: true,
+                render: function (data) {
+                    return data.Organizer ? `<a class="underline" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/organizer/${data.Organizer.IdOrganizer}" target="_blank">${data.Organizer.Name}</a>` : '-';
+                }
+            },
+            {
                 title: 'Nome Cognome',
                 render: function (data) {
-                    return `${data.Name}`;
+                    return `${data.FullName}`;
                 }
             },
             {
@@ -49,7 +56,7 @@ function renderTable() {
                         dltBtnDisabled = 'disabled';
                     }
 
-                    var impersonate = data.IdRole == ENUM.BASE_ACCOUNT.USER ? "" :
+                    var impersonate = data.IdRole != ENUM.BASE_ACCOUNT.SUPERADMIN ? "" :
                         `<button type="button" class="btn btn-outline-secondary" onclick="impersonateAccount(${data.IdAccount})" data-bs-toggle="tooltip" data-placement="top" title="Impersona" ${impersonate_disabled}>
                             <i class="fa fa-fw fa-person-walking-arrow-right"></i>
                         </button>`;

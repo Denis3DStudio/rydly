@@ -1,0 +1,9 @@
+{
+    "Delete": {
+        "IdOrganizer": true
+    },
+    "Content": {
+        "IdOrganizer": true,
+        "ContentRefId": true
+    }
+}

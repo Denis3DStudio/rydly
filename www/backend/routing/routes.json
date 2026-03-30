@@ -25,7 +25,7 @@
         "Auth": true,
         "Title": "Dashboard",
         "Components": [
-            "datatable"
+            "k-table"
         ],
         "Js": [
             "/dashboard/js/index.js"
@@ -90,7 +90,7 @@
         "FullLoader": true,
         "Title": "Cliente",
         "Components": [
-            "datatable",
+            "k-table",
             "address"
         ],
         "Js": [
@@ -106,7 +106,7 @@
         "FullLoader": true,
         "Title": "Clienti",
         "Components": [
-            "datatable"
+            "k-table"
         ],
         "Js": [
             "/newsletter/js/index.js"
@@ -121,7 +121,7 @@
         "FullLoader": true,
         "Title": "Categorie",
         "Components": [
-            "datatable"
+            "k-table"
         ],
         "Js": [
             "/category/js/index.js",
@@ -176,6 +176,37 @@
             "/category/manage.php"
         ],
         "IdCategoryType": 3
+    },
+    "Category_Organizer": {
+        "Routes": "/category_organizer/",
+        "Auth": true,
+        "FullLoader": true,
+        "Title": "Categorie Organizzatori",
+        "Components": [
+            "k-table"
+        ],
+        "Js": [
+            "/category/js/index.js",
+            "/category/js/common.js"
+        ],
+        "Pages": [
+            "/category/index.php"
+        ],
+        "IdCategoryType": 4
+    },
+    "Category_OrganizerDetail": {
+        "FullLoader": true,
+        "Routes": "/category_organizer/(IdCategory)",
+        "Auth": true,
+        "Title": "Categoria Organizzatori dettaglio",
+        "Js": [
+            "/category/js/manage.js",
+            "/category/js/common.js"
+        ],
+        "Pages": [
+            "/category/manage.php"
+        ],
+        "IdCategoryType": 4
     },
     "Category_Place": {
         "Routes": "/category_place/",
@@ -321,7 +352,7 @@
         "Auth": true,
         "Title": "Lista buoni sconto",
         "Components": [
-            "datatable"
+            "k-table"
         ],
         "Js": [
             "/coupon/js/index.js",
@@ -337,7 +368,7 @@
         "Loader": true,
         "Title": "Gestione Buono Sconto",
         "Components": [
-            "datatable",
+            "k-table",
             "selectpicker"
         ],
         "Js": [
@@ -356,7 +387,7 @@
             4
         ],
         "Components": [
-            "datatable"
+            "k-table"
         ],
         "Pages": [
             "/api-history/index.html"
@@ -401,6 +432,42 @@
             "/sponsor/manage.php"
         ]
     },
+    "Organizer": {
+        "Routes": "/organizer/",
+        "Auth": true,
+        "Title": "Organizzatori",
+        "Components": [
+            "k-table"
+        ],
+        "Js": [
+            "/organizer/js/index.js",
+            "/organizer/js/common.js"
+        ],
+        "Pages": [
+            "/organizer/index.php"
+        ]
+    },
+    "OrganizerDetail": {
+        "Routes": "/organizer/(IdOrganizer)/",
+        "Auth": true,
+        "FullLoader": true,
+        "Title": "Organizer Detail",
+        "Components": [
+            "k-table",
+            "summernote",
+            "selectpicker",
+            "images_caption",
+            "deepl",
+            "g-maps"
+        ],
+        "Js": [
+            "/organizer/js/manage.js",
+            "/organizer/js/common.js"
+        ],
+        "Pages": [
+            "/organizer/manage.php"
+        ]
+    },
     "Place": {
         "Routes": "/place/",
         "Auth": true,
@@ -441,7 +508,7 @@
         "Auth": true,
         "Title": "Email",
         "Components": [
-            "datatable"
+            "k-table"
         ],
         "Js": [
             "/email/js/index.js"

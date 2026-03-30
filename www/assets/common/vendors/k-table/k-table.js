@@ -119,6 +119,9 @@ class KTable {
     exportExcel() {
         return this.#kData.exportExcel();
     }
+    setHeaderFilter(columnIndex, value = "") {
+        return this.#kRender.setHeaderFilter(columnIndex, value);
+    }
 
     //#endregion
 
@@ -230,7 +233,15 @@ class KTable {
             else options.pagination.slices = [];
 
             // Set perPage
-            options.pagination.perPage = options.pagination.slices.length > 0 ? options.pagination.slices[0] : 10;
+            if (!("perPage" in options.pagination) || options.pagination.perPage == null)
+                options.pagination.perPage = options.pagination.slices.length > 0 ? options.pagination.slices[0] : 10;
+            else {
+
+                if (options.pagination.slices.length > 0 && options.pagination.slices.indexOf(options.pagination.perPage) == -1)
+                    options.pagination.perPage = options.pagination.slices[0];
+                else if (options.pagination.slices.length == 0)
+                    options.pagination.perPage = 10;
+            }
 
             // Check if page is set
             if (!("page" in options.pagination) || options.pagination.page == null)
@@ -384,6 +395,7 @@ class KTableRender {
     #columnsDefs = [];
     #search;
     #pagination;
+    #originalPerPage;
     #paging;
     #sort;
     #activeColumnVisibility;
@@ -497,6 +509,7 @@ class KTableRender {
         this.#columnsDefs = options.columns;
         this.#search = options.search;
         this.#pagination = options.pagination;
+        this.#originalPerPage = options.pagination.perPage;
         this.#paging = options.pagination.slices || [];
         this.#sort = options.sort;
         this.#activeColumnVisibility = options.activeColumnVisibility;
@@ -963,7 +976,7 @@ class KTableRender {
             document.querySelector(`table${this.#identifier} tbody`).appendChild(tr);
 
             // Call emitter row created
-            this.kEmitter.rowCreated(tr, i);
+            this.kEmitter.rowCreated(tr, i, rowObject.object);
         }
 
         // Call emitter completed
@@ -1070,7 +1083,7 @@ class KTableRender {
             slices = slices.filter(
                 (value) => value < this.kData.filteredItemsNumber
             );
-            slices.unshift(greater[0]);
+            slices.push(greater[0]);
         }
 
         // Get select
@@ -1090,22 +1103,34 @@ class KTableRender {
             select.appendChild(option);
         }
 
+        // Init trigger chage event
+        var triggerChange = false;
+
+        // Check if there are not active filters and the original per page is diffent from the current pagination per page, set original per page
+        if (!this.kData.filterActive && this.#originalPerPage != this.#pagination.perPage) {
+            this.#pagination.perPage = this.#originalPerPage;
+            triggerChange = true;
+        }
+
         // Check if this.#pagination.perPage in slices
         if (slices.indexOf(this.#pagination.perPage) == -1) {
 
-            // Set value
-            select.value = slices[0];
+            // Set value with last
+            select.value = slices[slices.length - 1];
 
             // Trigger change event
-            setTimeout(() => {
-                select.dispatchEvent(new Event("change"));
-            }, 200);
+            select.dispatchEvent(new Event("change"));
 
         }
 
         // Set value
-        else
+        else {
             select.value = this.#pagination.perPage;
+
+            if (triggerChange)
+                select.dispatchEvent(new Event("change"));
+
+        }
 
         // Set change event
         if (!pagingElementExists)
@@ -1118,6 +1143,10 @@ class KTableRender {
 
                 // Set pagination perPage
                 this.#pagination.perPage = value;
+
+                // Check if there aren't active filters, is the user changing
+                if (!this.kData.filterActive)
+                    this.#originalPerPage = parseInt(this.#pagination.perPage);
 
                 // Reload data
                 this.kData.paging(value, () => {
@@ -1491,6 +1520,7 @@ class KTableRender {
 
         // Check if buttons are set
         if (this.#buttons == null) return;
+        console.log(this.#buttons);
 
         // Check if export is active
         if (this.#export.length > 0) {
@@ -1500,6 +1530,7 @@ class KTableRender {
             // Check if contains "CSV"
             if (this.#export.indexOf("CSV") > -1)
                 button_templates.push(this.#TEMPLATES.EXPORT.CSV.TEMPLATE);
+            console.log(this.#export.indexOf("CSV") > -1);
 
             // Check if contains "XLS"
             if (this.#export.indexOf("XLS") > -1)
@@ -1684,6 +1715,30 @@ class KTableRender {
     //#endregion
 
     //#region Methods
+
+    setHeaderFilter(columnIndex, value = "") {
+        var select = document.querySelector(
+            this.#parentSelector(`thead th.has-filter-select select[k-table-filter-select='${columnIndex}']`)
+        );
+
+        // Check if select exists
+        if (select == null) return false;
+
+        var targetValue = value == null ? "" : `${value}`;
+        var option = Array.from(select.options).find((option) => option.value == targetValue || option.text == targetValue);
+
+        // Fallback to default option when value is empty
+        if (option == null && targetValue == "")
+            option = select.querySelector("option[default-column-name]");
+
+        // Check if option exists
+        if (option == null) return false;
+
+        select.value = option.value;
+        select.dispatchEvent(new Event("change"));
+
+        return true;
+    }
 
     #initSortable() {
         if (this.#sortable === false) return;
@@ -1957,8 +2012,8 @@ class KTableEmitter {
     pageChanged(page) {
         this.#emit("pageChanged", page);
     }
-    rowCreated(row, index) {
-        this.#emit("rowCreated", row, index);
+    rowCreated(row, index, object) {
+        this.#emit("rowCreated", row, index, object);
     }
     completed(data, rows) {
         this.#emit("completed", data, rows);
@@ -2061,6 +2116,9 @@ class KTableData {
         for (let i = 0; i < keys.length; i++) response += this.data[keys[i]].length;
 
         return response;
+    }
+    get filterActive() {
+        return this.totalItems != this.filteredItemsNumber;
     }
 
     //#endregion
@@ -2332,9 +2390,17 @@ class KTableData {
             var valueA = a.cells[column].value;
             var valueB = b.cells[column].value;
 
+            // Remove HTML
+            var valueAWithoutHTML = instance.#removeHTML(valueA);
+            var valueBWithoutHTML = instance.#removeHTML(valueB);
+
+            // If empty after removing HTML, leave original value
+            if (typeof valueAWithoutHTML === "string" && valueAWithoutHTML.trim() != "") valueA = valueAWithoutHTML;
+            if (typeof valueBWithoutHTML === "string" && valueBWithoutHTML.trim() != "") valueB = valueBWithoutHTML;
+
             // Format
-            valueA = instance.#castToTimestamp(instance.#removeHTML(valueA));
-            valueB = instance.#castToTimestamp(instance.#removeHTML(valueB));
+            valueA = instance.#castToTimestamp(valueA);
+            valueB = instance.#castToTimestamp(valueB);
 
             // Check if sort is asc
             if (sort == "asc") {
@@ -2542,7 +2608,7 @@ class KTableData {
     #castToTimestamp(value) {
 
         // Regex to match date
-        const regex = /^(\d{2})\/(\d{2})\/(\d{4})[ T]?(\d{2}:\d{2}(:\d{2})?)?$/;
+        const regex = /^(\d{2})[\/.](\d{2})[\/.](\d{4})[ T]?(\d{2}:\d{2}(:\d{2})?)?$/;
 
         if (value == "" || regex.test(value) == false)
             return value;
@@ -3051,63 +3117,3 @@ class KTableTranslation {
     //#endregion
 
 }
-
-
-
-
-//#region TODO
-
-// Fixed Header
-/*
-(function () {
-    function fixMe() {
-        var table = document.querySelector(".k-table-sticky-header table.k-table");
-        if (!table) return;
-
-        var tableContainer = document.createElement("div");
-        tableContainer.classList.add("k-stable-sticky-header-container");
-        table.parentNode.insertBefore(tableContainer, table);
-        var fixedTable = table.cloneNode(true);
-        fixedTable.classList.add("k-table-fixed");
-        fixedTable.querySelector("tbody").remove();
-        tableContainer.appendChild(fixedTable);
-
-        function resizeFixed() {
-            var originalHeaders = table.querySelectorAll("th");
-            var fixedHeaders = fixedTable.querySelectorAll("th");
-            for (var i = 0; i < originalHeaders.length; i++) {
-                fixedHeaders[i].style.width = originalHeaders[i].offsetWidth + "px";
-            }
-        }
-
-        function scrollFixed() {
-            var offset = window.scrollY || document.documentElement.scrollTop;
-            var tableOffsetTop = table.offsetTop;
-            var tableOffsetBottom =
-                tableOffsetTop +
-                table.offsetHeight -
-                table.querySelector("thead").offsetHeight;
-            if (offset < tableOffsetTop || offset > tableOffsetBottom) {
-                fixedTable.style.display = "none";
-            } else if (
-                offset >= tableOffsetTop &&
-                offset <= tableOffsetBottom &&
-                fixedTable.style.display === "none"
-            ) {
-                fixedTable.style.display = "table";
-            }
-        }
-
-        window.addEventListener("resize", resizeFixed);
-        window.addEventListener("scroll", scrollFixed);
-        resizeFixed();
-        scrollFixed();
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        fixMe();
-    });
-})();
-*/
-
-//#endregion

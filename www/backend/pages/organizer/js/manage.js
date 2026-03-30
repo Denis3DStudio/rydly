@@ -17,9 +17,9 @@ $(document).ready(function () {
     // Show General tab first
     $("#tabLang-1-tab").before($("#tabGeneral-tab"));
 
-    // Get the sponsor data
+    // Get the organizer data
     getCategories(function () {
-        getSponsor();
+        getOrganizer();
     });
 
     // Init google autocomplete - TODO
@@ -36,19 +36,19 @@ $(document).ready(function () {
 
 });
 
-//#region Sponsor
+//#region Organizer
 
 // Get
-function getSponsor() {
+function getOrganizer() {
 
     get_call(
-        BACKEND.SPONSOR.INDEX,
+        BACKEND.ORGANIZER.INDEX,
         {
-            IdSponsor: Url.Params.IdSponsor
+            IdOrganizer: Url.Params.IdOrganizer
         },
         function (response) {
             console.log(response);
-            
+
             // Set main data
             fillContentByNames("#common_container", response);
             fillContentByNames("#tabGeneral", response);
@@ -66,7 +66,7 @@ function getSponsor() {
 
             category_main_selected = response.MainCategory;
 
-            // Check main category
+            // Ricostruisci il picker della main category ORA che hai il valore corretto
             checkMainCategory();
 
             hideLoader();
@@ -79,7 +79,7 @@ function getSponsor() {
 }
 
 // Put
-function saveSponsor() {
+function saveOrganizer() {
 
     // Get the tabs data
     var tabs_data = checkLanguagesTabs();
@@ -89,18 +89,18 @@ function saveSponsor() {
 
         // Build
         var params = {
-            IdSponsor: Url.Params.IdSponsor,
+            IdOrganizer: Url.Params.IdOrganizer,
             Languages: tabs_data.Languages,
             ...getContentData("#common_container", true),
             ...getContentData("#tabGeneral", true)
         };
 
         put_call(
-            BACKEND.SPONSOR.INDEX,
+            BACKEND.ORGANIZER.INDEX,
             params,
             function () {
 
-                window.location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/sponsor?st=ok&m=Luogo salvato correttamente!`;
+                window.location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/organizer?st=ok&m=Luogo salvato correttamente!`;
             }
         );
     }
@@ -119,10 +119,10 @@ function getCategories(callback = null) {
     get_call(
         BACKEND.CATEGORY.ALL,
         {
-            IdType: ENUM.BASE_CATEGORY_TYPE.SPONSOR
+            IdType: ENUM.BASE_CATEGORY_TYPE.ORGANIZER
         },
         function (categories) {
-            console.log(categories);
+            // console.log(categories);
 
             // Save in the global variable
             categories_list = categories;
@@ -145,6 +145,7 @@ function checkMainCategory() {
     // Get also the main category select
     var main_category_select = $('#MainCategory').val() || category_main_selected; // if the select is empty get the value from the global variable (used on page load)
 
+    // Reset the global variable
     if (!isEmpty(category_main_selected))
         category_main_selected = null;
 
@@ -157,6 +158,7 @@ function checkMainCategory() {
 
         // Init the main category select 
         buildPicker(main_categories, '#MainCategory', 'IdCategory', 'Title', main_category_select);
+
         // Set as mandatory
         $('#MainCategory').attr('mandatory', 'true');
 

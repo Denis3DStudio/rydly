@@ -1,6 +1,6 @@
 {
-    "Backend_Session": "Backend True Local Session",
-    "Frontend_Session": "Frontend True Local Session",
+    "Backend_Session": "Backend Rydly Session",
+    "Frontend_Session": "Frontend Rydly Session",
     "Api_Folder": "/api",
     "Prod": false,
     "Sandbox": false,

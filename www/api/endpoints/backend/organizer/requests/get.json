@@ -1,0 +1,17 @@
+{
+    "Get": {
+        "IdOrganizer": true,
+        "IsValid": {
+            "Default": 0
+        }
+    },
+    "All": {
+        "IdsCategories": false
+    },
+    "Contents": {
+        "IdOrganizer": true
+    },
+    "News": {
+        "IdOrganizer": true
+    }
+}

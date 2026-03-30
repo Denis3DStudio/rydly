@@ -107,6 +107,25 @@
                 return $this->Not_Found();
             }
 
+            #region Newsletter
+
+                public function getNewsletter() {
+
+                    // Get the newsletter of the customers
+                    $newsletters = $this->__linq->selectDB("IdCustomer, Email")->fromDB("customers")->whereDB("IsValid = 1 AND IsDeleted = 0 AND Newsletter = 1")->getResults();
+
+                    // Get general newsletter
+                    $generalNewsletter = $this->__linq->selectDB("IdNewsletter, Email")->fromDB("newsletters")->getResults();
+
+                    // Merge the newsletters
+                    $newsletters = array_merge($newsletters, $generalNewsletter);
+
+                    // Return all newsletters
+                    return $this->Success($newsletters);
+                }
+
+            #endregion
+
         #endregion
 
         #region Private function

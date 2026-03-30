@@ -13,11 +13,11 @@
         "Protocol": ""
     },
     "Mail": {
-        "Sender": "True Local",
-        "Subject": "True Local"
+        "Sender": "Rydly",
+        "Subject": "Rydly"
     },
     "Site": {
-        "Name": "True Local",
+        "Name": "Rydly",
         "Description": "Description default",
         "Separator": "|",
         "Email": "<mark>kebab@valeo.it</mark>",

@@ -15,7 +15,7 @@
         <div class="col-12">
             <div class="form-group">
                 <div class="table-responsive">
-                    <table class="table table-hover dt-responsive has--actions" id="dtQuestions" style="width: 100%;"></table>
+                    <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtQuestions" style="width: 100%;"></table>
                 </div>
             </div>
         </div>
@@ -79,7 +79,7 @@
                     <div class="col-12">
                         <div class="form-group">
                             <div class="table-responsive">
-                                <table class="table table-hover dt-responsive has--actions" id="dtAnswers" style="width: 100%;"></table>
+                                <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtAnswers" style="width: 100%;"></table>
                             </div>
                         </div>
                     </div>

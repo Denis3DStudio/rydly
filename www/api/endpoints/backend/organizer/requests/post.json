@@ -1,14 +1,14 @@
 {
     "Link": {
-        "IdSponsor": true,
+        "IdOrganizer": true,
         "IdLanguage": true,
         "Link": true
     },
     "Attachments": {
-        "IdSponsor": true,
+        "IdOrganizer": true,
         "IdLanguage": true
     },
     "Images": {
-        "IdSponsor": true
+        "IdOrganizer": true
     }
 }

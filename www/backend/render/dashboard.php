@@ -44,18 +44,10 @@
                 );
             }
             private function getProductsData() {
-
-                // Get the products count
-                $products_count = count($this->__linq->fromDB("products")->whereDB("IsValid = 1 AND IsDeleted = 0")->getResults());
-                // Get the products categories count
-                $products_categories = count($this->__linq->fromDB("categories_products")->whereDB("IsValid = 1 AND IsDeleted = 0")->getResults());
-                // Get the products attributes count
-                $products_attributes = count($this->__linq->fromDB("attributes")->whereDB("IsValid = 1 AND IsDeleted = 0")->getResults());
-
                 return (object) array(
-                    "Count" => $products_count,
-                    "CategoriesCount" => $products_categories,
-                    "AttributesCount" => $products_attributes
+                    "Count" => 0,
+                    "CategoriesCount" => 0,
+                    "AttributesCount" => 0
                 );
             }
 

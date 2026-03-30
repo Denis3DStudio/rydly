@@ -1,6 +1,6 @@
 <?php
 
-    namespace Backend\Sponsor;
+    namespace Backend\Organizer;
 
     use stdClass;
     use Base_File;
@@ -14,10 +14,10 @@
 
     class Methods extends Base_Methods {
 
-        private $id = "IdSponsor";
-        private $table_name = "sponsors";
-        private $table_translations_name = "sponsors_translations";
-        private $table_images_name = "sponsors_images";
+        private $id = "IdOrganizer";
+        private $table_name = "organizers";
+        private $table_translations_name = "organizers_translations";
+        private $table_images_name = "organizers_images";
 
         #region Constructors-Destructors
             public function __construct() {
@@ -30,20 +30,20 @@
         #region Public Methods
 
             // Get
-            public function get($idSponsor, $isValid = 0) {
+            public function get($idOrganizer, $isValid = 0) {
 
                 // Set the value of the where
                 $where = ($isValid == 1) ? "AND IsValid = 1" : "";
 
                 // Get
-                $response = $this->__linq->fromDB($this->table_name)->whereDB($this->id . " = $idSponsor AND IsDeleted = 0 $where")->getFirstOrDefault();
+                $response = $this->__linq->fromDB($this->table_name)->whereDB($this->id . " = $idOrganizer AND IsDeleted = 0 $where")->getFirstOrDefault();
 
                 // Check if is not null
                 if (Base_Functions::IsNullOrEmpty($response))
                     return $this->Not_Found();
 
                 // Format
-                return $this->Success($this->formatSponsor($response));
+                return $this->Success($this->formatOrganizer($response));
             }
             public function getAll() {
 
@@ -53,15 +53,15 @@
                 // Build the inner join for the categories
                 $inner_join_categories = "";
                 if (property_exists($request, "IdsCategories") && !Base_Functions::IsNullOrEmpty($request->IdsCategories))
-                    $inner_join_categories = "INNER JOIN refs_categories rc ON rc.ContentRefId = s.IdSponsor AND rc.IdType = " . Base_Category_Type::SPONSOR . " AND rc.IdCategory IN (" . implode(", ", $request->IdsCategories) . ")";
+                    $inner_join_categories = "INNER JOIN refs_categories rc ON rc.ContentRefId = s.IdOrganizer AND rc.IdType = " . Base_Category_Type::ORGANIZER . " AND rc.IdCategory IN (" . implode(", ", $request->IdsCategories) . ")";
 
-                // Get the sponsor
+                // Get the organizer
                 $sql = "SELECT s.*, st.*
-                        FROM sponsors s
+                        FROM organizers s
                         $inner_join_categories
-                        INNER JOIN sponsors_translations st ON s.IdSponsor = st.IdSponsor AND st.IdLanguage = (SELECT MIN(st2.IdLanguage)
-                                                                                                        FROM sponsors_translations st2
-                                                                                                        WHERE st2.IdSponsor = s.IdSponsor
+                        INNER JOIN organizers_translations st ON s.IdOrganizer = st.IdOrganizer AND st.IdLanguage = (SELECT MIN(st2.IdLanguage)
+                                                                                                        FROM organizers_translations st2
+                                                                                                        WHERE st2.IdOrganizer = s.IdOrganizer
                                                                                                         )
                         WHERE s.IsValid = 1 AND s.IsDeleted = 0";
                 $all = $this->__linq->queryDB($sql)->getResults();
@@ -71,18 +71,18 @@
                     return $this->Not_Found();
 
                 // Return
-                return $this->Success($this->formatSponsor($all));
+                return $this->Success($this->formatOrganizer($all));
             }
 
             // Post
             public function create() {
 
-                // Create a new row in the sponsors table
-                $idSponsor = $this->__opHelper->object($this->id)->table($this->table_name)->insertIncrement();
+                // Create a new row in the organizers table
+                $idOrganizer = $this->__opHelper->object($this->id)->table($this->table_name)->insertIncrement();
 
                 // Check if created
-                if(is_numeric($idSponsor) && $idSponsor > 0)
-                    return $this->Success($idSponsor);
+                if(is_numeric($idOrganizer) && $idOrganizer > 0)
+                    return $this->Success($idOrganizer);
 
                 return $this->Internal_Server_Error();
             }
@@ -93,8 +93,8 @@
                 // Get the request
                 $request = $this->Request;
 
-                // Check if the sponsor exists
-                $this->get($request->IdSponsor);
+                // Check if the organizer exists
+                $this->get($request->IdOrganizer);
 
                 // Check if is success
                 if (!$this->Success)
@@ -110,9 +110,9 @@
                 $request->IsValid = 1;
 
                 // Call category update
-                $this->category->updateByType(Base_Category_Type::SPONSOR, $request->IdSponsor, $request->Categories ?? [], $request->MainCategory ?? null);
+                $this->category->updateByType(Base_Category_Type::ORGANIZER, $request->IdOrganizer, $request->Categories ?? [], $request->MainCategory ?? null);
 
-                // Update the sponsor
+                // Update the organizer
                 $this->__opHelper->object($request)->table($this->table_name)->where($this->id)->update();
 
                 // Init the array for the translation values
@@ -122,7 +122,7 @@
                 foreach ($languages as $language) {
                     
                     $obj = new stdClass();
-                    $obj->IdSponsor = $request->IdSponsor;
+                    $obj->IdOrganizer = $request->IdOrganizer;
                     $obj->Description = $language->Description;
                     $obj->SmallDescription = $language->SmallDescription;
                     $obj->IdLanguage = $language->IdLanguage;
@@ -136,12 +136,12 @@
                 }
 
                 // Delete the old translations
-                $sql = "DELETE FROM $this->table_translations_name WHERE $this->id = $request->IdSponsor";
+                $sql = "DELETE FROM $this->table_translations_name WHERE $this->id = $request->IdOrganizer";
                 $this->__linq->queryDB($sql)->getResults();
 
                 // Insert the languages
                 if(count($translation_values) > 0)
-                    $this->__opHelper->table($this->table_translations_name)->insertMassive("(IdSponsor, Description, SmallDescription, IdLanguage, IsValid)", implode(", ", $translation_values));
+                    $this->__opHelper->table($this->table_translations_name)->insertMassive("(IdOrganizer, Description, SmallDescription, IdLanguage, IsValid)", implode(", ", $translation_values));
 
                 // Refresh cache
                 $this->refreshCache();
@@ -150,17 +150,17 @@
             }
 
             // Delete
-            public function delete($idSponsor) {
+            public function delete($idOrganizer) {
 
-                // Check that the sponsor exists
-                $this->get($idSponsor);
+                // Check that the organizer exists
+                $this->get($idOrganizer);
 
                 // Check if success 
                 if ($this->Success == true) {
 
-                    // Update the sponsor to deleted
+                    // Update the organizer to deleted
                     $obj = new stdClass();
-                    $obj->IdSponsor = $idSponsor;
+                    $obj->IdOrganizer = $idOrganizer;
                     $obj->IsDeleted = 1;
 
                     // Update
@@ -181,14 +181,14 @@
                     // Get the request
                     $request = clone($this->Request);
 
-                    // Check that the sponsor exists
-                    $this->get($request->IdSponsor);
+                    // Check that the organizer exists
+                    $this->get($request->IdOrganizer);
 
                     // Check that is success
                     if ($this->Success) {
 
                         // Image
-                        $response = $this->__linq->fromDB("sponsors_images")->whereDB("IdImage = $request->ContentRefId")->getFirstOrDefault();
+                        $response = $this->__linq->fromDB("organizers_images")->whereDB("IdImage = $request->ContentRefId")->getFirstOrDefault();
 
                         // Check it the $response is not null
                         if (!Base_Functions::IsNullOrEmpty($response))
@@ -197,13 +197,13 @@
 
                     return $this->Not_Found();
                 }
-                public function getContents($idSponsor) {
+                public function getContents($idOrganizer) {
 
                     $sql = "SELECT *
                             FROM (
                                 SELECT ni.IdImage AS Id, ni.FullPath AS Preview, " . Base_Files_Types::IMAGE . " AS Type, ni.OrderNumber
-                                FROM sponsors_images ni
-                                WHERE ni.IdImage = $idSponsor
+                                FROM organizers_images ni
+                                WHERE ni.IdImage = $idOrganizer
 
                             ) t
                             ORDER BY OrderNumber ASC";
@@ -220,22 +220,22 @@
                     // Get the request
                     $request = $this->Request;
 
-                    // Check that the sponsor is not null
-                    $this->get($request->IdSponsor);
+                    // Check that the organizer is not null
+                    $this->get($request->IdOrganizer);
 
                     // Check if is success
                     if ($this->Success == true) {
     
                         // Cycle the Order array
-                        foreach($request->Order as $sponsor) {
+                        foreach($request->Order as $organizer) {
 
                             // Create the update object
                             $obj = new stdClass();
-                            $obj->IdImage = $sponsor->Id;
-                            $obj->OrderNumber = $sponsor->OrderNumber;
+                            $obj->IdImage = $organizer->Id;
+                            $obj->OrderNumber = $organizer->OrderNumber;
 
-                            // Update the sponsors_images table
-                            $this->__opHelper->object($obj)->table("sponsors_images")->where("IdImage")->update();
+                            // Update the organizers_images table
+                            $this->__opHelper->object($obj)->table("organizers_images")->where("IdImage")->update();
                          
                         }
 
@@ -253,7 +253,7 @@
                     $request = clone($this->Request);
 
                     // Delete the file
-                    if(!Base_File::deleteContentManager($request->ContentRefId, Base_Files::SPONSOR,  Base_Files_Types::IMAGE))
+                    if(!Base_File::deleteContentManager($request->ContentRefId, Base_Files::ORGANIZER,  Base_Files_Types::IMAGE))
                         return $this->Not_Found();
 
                     $this->refreshCache();
@@ -268,14 +268,14 @@
                         // Get the request
                         $request = $this->Request;
 
-                        // Check that the sponsor is not null
-                        $this->get($request->IdSponsor);
+                        // Check that the organizer is not null
+                        $this->get($request->IdOrganizer);
 
                         // Check if is success
                         if ($this->Success == true) {
 
                             // Save the images
-                            Base_File::saveContentManager($request->IdSponsor, Base_Files::SPONSOR, Base_Files_Types::IMAGE);
+                            Base_File::saveContentManager($request->IdOrganizer, Base_Files::ORGANIZER, Base_Files_Types::IMAGE);
 
                             $this->refreshCache();
                             return $this->Success();
@@ -295,31 +295,31 @@
                     // Create the expiration date
                     $expiration_date = date('Y-m-d', strtotime('- 365 days'));
 
-                    // Get the sponsor Update more than 30 days and having IsDeleted = 1
-                    $sponsor = $this->__linq->fromDB("sponsor")->whereDB("IsDeleted = 1 AND DATE_FORMAT(UpdateDate, '%Y-%m-%d') = '$expiration_date'")->getResults();
+                    // Get the organizer Update more than 30 days and having IsDeleted = 1
+                    $organizer = $this->__linq->fromDB("organizer")->whereDB("IsDeleted = 1 AND DATE_FORMAT(UpdateDate, '%Y-%m-%d') = '$expiration_date'")->getResults();
 
-                    // Check that the sponsor array is not null
-                    if (count($sponsor) > 0) {
+                    // Check that the organizer array is not null
+                    if (count($organizer) > 0) {
 
-                        // Get the IdSponsor array
-                        $ids_sponsors = array_column($sponsor, "IdSponsor");
+                        // Get the IdOrganizer array
+                        $ids_organizers = array_column($organizer, "IdOrganizer");
 
-                        // Get the id sponsor string
-                        $ids_sponsors_string = implode(", ", $ids_sponsors);    
+                        // Get the id organizer string
+                        $ids_organizers_string = implode(", ", $ids_organizers);    
 
                         // Delete from images table
-                        $sql = "DELETE FROM sponsors_images WHERE IdSponsor IN ($ids_sponsors_string)";
+                        $sql = "DELETE FROM organizers_images WHERE IdOrganizer IN ($ids_organizers_string)";
                         $this->__linq->queryDB($sql)->getResults();
 
                         // Delete from translations table
-                        $sql = "DELETE FROM sponsors_translations WHERE IdSponsor IN ($ids_sponsors_string)";
+                        $sql = "DELETE FROM organizers_translations WHERE IdOrganizer IN ($ids_organizers_string)";
                         $this->__linq->queryDB($sql)->getResults();
 
-                        // Cycle all sponsor
-                        foreach ($ids_sponsors as $id_sponsor) {
+                        // Cycle all organizer
+                        foreach ($ids_organizers as $id_organizer) {
 
-                            // Delete all files of the sponsor
-                            Base_Functions::deleteFiles($_SERVER["DOCUMENT_ROOT"] . Base_Path::SPONSOR . $id_sponsor);
+                            // Delete all files of the organizer
+                            Base_Functions::deleteFiles($_SERVER["DOCUMENT_ROOT"] . Base_Path::ORGANIZER . $id_organizer);
                         }
                     }
                 }
@@ -330,55 +330,55 @@
 
         #region Private Methods
 
-            private function formatSponsor($sponsors) {
+            private function formatOrganizer($organizers) {
 
-                // Check if the $sponsors is null
-                if (Base_Functions::IsNullOrEmpty($sponsors))
+                // Check if the $organizers is null
+                if (Base_Functions::IsNullOrEmpty($organizers))
                     return null;
 
-                // Check if the $sponsors is an array
-                $isAll = is_array($sponsors);
+                // Check if the $organizers is an array
+                $isAll = is_array($organizers);
 
                 // If is not an array, convert it in an array with only one element
                 if (!$isAll)
-                    $sponsors = array($sponsors);
+                    $organizers = array($organizers);
 
-                // Get all the IdSponsor
-                $ids_sponsors = array_column($sponsors, $this->id);
+                // Get all the IdOrganizer
+                $ids_organizers = array_column($organizers, $this->id);
 
                 // Get content translations
-                $sponsor_translations = $this->__linq->reorder($this->__linq->fromDB($this->table_translations_name)->whereDB("$this->id IN (" . implode(", ", $ids_sponsors) . ")")->getResults(), $this->id, true);
+                $organizer_translations = $this->__linq->reorder($this->__linq->fromDB($this->table_translations_name)->whereDB("$this->id IN (" . implode(", ", $ids_organizers) . ")")->getResults(), $this->id, true);
 
                 // Get Images
-                $sponsor_images = $this->__linq->reorder($this->__linq->selectDB("$this->id, FullPath, FileName")->fromDB($this->table_images_name)->whereDB("$this->id IN (" . implode(", ", $ids_sponsors) . ")")->getResults(), $this->id, true);
+                $organizer_images = $this->__linq->reorder($this->__linq->selectDB("$this->id, FullPath, FileName")->fromDB($this->table_images_name)->whereDB("$this->id IN (" . implode(", ", $ids_organizers) . ")")->getResults(), $this->id, true);
 
                 // Get categories
-                $sponsor_categories = $this->category->getAll(Base_Category_Type::SPONSOR, $ids_sponsors);
+                $organizer_categories = $this->category->getAll(Base_Category_Type::ORGANIZER, $ids_organizers);
 
                 // Build the response array
                 $response = [];
 
-                // Cycle all sponsors
-                foreach ($sponsors as $sponsor) {
+                // Cycle all organizers
+                foreach ($organizers as $organizer) {
 
                     // Build object
                     $tmp = new stdClass();
-                    $tmp->IdSponsor = $sponsor->IdSponsor;
-                    $tmp->Name = $sponsor->Name;
-                    $tmp->UseOnlyCoordinates = $sponsor->UseOnlyCoordinates;
-                    $tmp->Phone = $sponsor->Phone;
-                    $tmp->Notes = $sponsor->Notes;
-                    $tmp->Latitude = $sponsor->Latitude;
-                    $tmp->Longitude = $sponsor->Longitude;
-                    $tmp->Address = $sponsor->Address;
-                    $tmp->City = $sponsor->City;
-                    $tmp->IsActive = $sponsor->IsActive;
+                    $tmp->IdOrganizer = $organizer->IdOrganizer;
+                    $tmp->Name = $organizer->Name;
+                    $tmp->UseOnlyCoordinates = $organizer->UseOnlyCoordinates;
+                    $tmp->Phone = $organizer->Phone;
+                    $tmp->Notes = $organizer->Notes;
+                    $tmp->Latitude = $organizer->Latitude;
+                    $tmp->Longitude = $organizer->Longitude;
+                    $tmp->Address = $organizer->Address;
+                    $tmp->City = $organizer->City;
+                    $tmp->IsActive = $organizer->IsActive;
 
-                    // Check if the sponsor has images
-                    $tmp->Images = (property_exists($sponsor_images, $sponsor->IdSponsor)) ? $sponsor_images->{$sponsor->IdSponsor} : [];
+                    // Check if the organizer has images
+                    $tmp->Images = (property_exists($organizer_images, $organizer->IdOrganizer)) ? $organizer_images->{$organizer->IdOrganizer} : [];
 
-                    // Get the categories of the sponsor
-                    $categories = ($sponsor_categories && property_exists($sponsor_categories, $sponsor->IdSponsor)) ? $sponsor_categories->{$sponsor->IdSponsor} : [];
+                    // Get the categories of the organizer
+                    $categories = ($organizer_categories && property_exists($organizer_categories, $organizer->IdOrganizer)) ? $organizer_categories->{$organizer->IdOrganizer} : [];
 
                     // Get the main category
                     $main_category = array_filter($categories, function($category) {
@@ -386,7 +386,7 @@
                     })[0] ?? null;
 
                     // Get tmp translations
-                    $tmp_translations = (property_exists($sponsor_translations, $sponsor->IdSponsor)) ? $sponsor_translations->{$sponsor->IdSponsor} : [];
+                    $tmp_translations = (property_exists($organizer_translations, $organizer->IdOrganizer)) ? $organizer_translations->{$organizer->IdOrganizer} : [];
 
                     // Check if all the translations are valid
                     if ($isAll) {
@@ -421,7 +421,7 @@
             
             private function refreshCache() {
 
-                Base_Cache_Manager::setSponsorAllCache();
+                Base_Cache_Manager::setOrganizerAllCache();
             }
 
         #endregion

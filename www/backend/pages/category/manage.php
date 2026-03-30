@@ -40,7 +40,7 @@
                                                     <i class="far fa-fw fa-question-circle" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Trascina per modificare l'ordinamento"></i>
                                                 </label>
                                                 <div class="table-responsive">
-                                                    <table class="table table-hover dt-responsive has--actions" id="dtImages" style="width: 100%;"></table>
+                                                    <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtImages" style="width: 100%;"></table>
                                                 </div>
                                             </div>
                                         </div>
