@@ -29,6 +29,9 @@
                             <a class="nav-item nav-link text-dark active" id="tabGeneral-tab" data-bs-toggle="tab" href="#tabGeneral" role="tab" aria-controls="tabGeneral" aria-selected="true">
                                 <i class="fa fa-fw fa-gears"></i> Generali
                             </a>
+                            <a class="nav-item nav-link text-dark" id="tabCoupons-tab" data-bs-toggle="tab" href="#tabCoupons" role="tab" aria-controls="tabCoupons" aria-selected="true">
+                                <i class="fa fa-fw fa-ticket"></i> Coupon
+                            </a>
                             <a class="nav-item nav-link text-dark" id="tabImages-tab" data-bs-toggle="tab" href="#tabImages" role="tab" aria-controls="tabImages" fileRender="dtContents">
                                 <i class="fa fa-fw fa-images"></i> Immagini
                             </a>
@@ -96,6 +99,16 @@
                                             <div class="form-group">
                                                 <label>Note</label>
                                                 <textarea name="Notes" class="form-control" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Coupons -->
+                                <div class="tab-pane" id="tabCoupons" role="tabpanel" aria-labelledby="tabCoupons-tab" fileRender="dtContents">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="table-responsive">
+                                                <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtCoupons" width="100%" cellspacing="0"></table>
                                             </div>
                                         </div>
                                     </div>

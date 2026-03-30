@@ -36,8 +36,18 @@
             }
             public function getAll() {
 
+                // Get the request
+                $request = $this->Request;
+
+                // Build the where condition
+                $where = "IsDeleted = 0 AND IsValid = 1";
+
+                // Check if the IdSponsor is set
+                if (property_exists($request, "IdSponsor") && !Base_Functions::IsNullOrEmpty($request->IdSponsor))
+                    $where .= " AND IdSponsor = $request->IdSponsor";
+
                 // Get all the coupons valid and not deleted
-                $coupons = $this->__linq->fromDB("coupons")->whereDB("IsDeleted = 0 AND IsValid = 1")->getResults();
+                $coupons = $this->__linq->fromDB("coupons")->whereDB($where)->getResults();
 
                 // Check the in not null
                 if (!Base_Functions::IsNullOrEmpty($coupons)) {
@@ -71,11 +81,24 @@
                 // Create a new coupon
                 $id_coupon = $this->__opHelper->object("IdCoupon")->table("coupons")->insertIncrement();
 
-                // Check that the coupon was created
-                if (!Base_Functions::IsNullOrEmpty($id_coupon))
-                    return $this->Success($id_coupon);
+                // Get the request
+                $request = $this->Request;
 
-                return $this->Internal_Server_Error();
+                // Check that the coupon was created
+                if (Base_Functions::IsNullOrEmpty($id_coupon))
+                    return $this->Internal_Server_Error();
+
+                // Check if the IdSponsor is set
+                if (!Base_Functions::IsNullOrEmpty($request->IdSponsor)) {
+
+                    // Add IdSponsor to the request
+                    $request->IdCoupon = $id_coupon;
+
+                    // Update the sponsor to set the coupon
+                    $this->__opHelper->object($request)->table("coupons")->where("IdCoupon")->update();
+                }
+
+                return $this->Success($id_coupon);
             }
 
             // Put
@@ -156,7 +179,7 @@
                 $this->get($idCoupon, true);
 
                 // Check if is success
-                if ($this->Success == true) {
+                if (!$this->Success) {
 
                     // Create the obj to update
                     $obj = new stdClass();

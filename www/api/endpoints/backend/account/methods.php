@@ -91,14 +91,14 @@ use stdClass;
                 if(!is_numeric($idAccount))
                     return $this->Internal_Server_Error(null, "Account not created");
 
-                // Check if created by an user with organizer role and assign the same organizer to the new account
-                if(in_array($this->Logged->IdRole, Base_Account::ROLES_WITH_ORGANIZER))
+                // Check if created by an user with organization role and assign the same organization to the new account
+                if(in_array($this->Logged->IdRole, Base_Account::ROLES_WITH_ORGANIZATION))
                     return $this->Success($idAccount);
 
                 // Update with default values
                 $obj = new stdClass();
                 $obj->IdAccount = $idAccount;
-                $obj->IdOrganizer = $this->Logged->IdOrganizer;
+                $obj->IdOrganization = $this->Logged->IdOrganization;
 
                 // Update
                 $this->__opHelper->object($obj)->table("accounts")->where("IdAccount")->update();
@@ -195,11 +195,11 @@ use stdClass;
                 $accounts = $isAll ? $accounts : [$accounts];
 
                 // Get all ids
-                $idsOrganizers = array_unique(array_filter(array_column($accounts, "IdOrganizer")));
+                $idsOrganizations = array_unique(array_filter(array_column($accounts, "IdOrganization")));
 
-                // Get organizers
-                $organizers = $idsOrganizers
-                                ? $this->__linq->reorder($this->__linq->fromDB("organizers")->whereDB("IdOrganizer", $idsOrganizers)->getResults(), "IdOrganizer")
+                // Get organizations
+                $organizations = $idsOrganizations
+                                ? $this->__linq->reorder($this->__linq->fromDB("organizations")->whereDB("IdOrganization", $idsOrganizations)->getResults(), "IdOrganization")
                                 : new stdClass();
 
                 // Init response
@@ -221,8 +221,8 @@ use stdClass;
                     // Add sensitive data only for the single account
                     if(!$isAll) {
                         
-                        // Add organizer
-                        $tmp->IdOrganizer = $account->IdOrganizer;
+                        // Add organization
+                        $tmp->IdOrganization = $account->IdOrganization;
 
                         // Add IsValid
                         $tmp->IsValid = $account->IsValid;
@@ -234,8 +234,8 @@ use stdClass;
                         // Add FullName
                         $tmp->FullName = trim(($account->Name ?? '') . " " . ($account->Surname ?? ''));
 
-                        // Get organizer
-                        $tmp->Organizer = $account->IdOrganizer && property_exists($organizers, $account->IdOrganizer) ? $organizers->{$account->IdOrganizer} : null;
+                        // Get organization
+                        $tmp->Organization = $account->IdOrganization && property_exists($organizations, $account->IdOrganization) ? $organizations->{$account->IdOrganization} : null;
                     }
 
                     // Push to response

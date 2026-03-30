@@ -1,6 +1,6 @@
 <?php
 
-    namespace Backend\Organizer;
+    namespace Backend\Organization;
 
     use stdClass;
     use Base_File;
@@ -14,10 +14,10 @@
 
     class Methods extends Base_Methods {
 
-        private $id = "IdOrganizer";
-        private $table_name = "organizers";
-        private $table_translations_name = "organizers_translations";
-        private $table_images_name = "organizers_images";
+        private $id = "IdOrganization";
+        private $table_name = "organizations";
+        private $table_translations_name = "organizations_translations";
+        private $table_images_name = "organizations_images";
 
         #region Constructors-Destructors
             public function __construct() {
@@ -30,20 +30,20 @@
         #region Public Methods
 
             // Get
-            public function get($idOrganizer, $isValid = 0) {
+            public function get($idOrganization, $isValid = 0) {
 
                 // Set the value of the where
                 $where = ($isValid == 1) ? "AND IsValid = 1" : "";
 
                 // Get
-                $response = $this->__linq->fromDB($this->table_name)->whereDB($this->id . " = $idOrganizer AND IsDeleted = 0 $where")->getFirstOrDefault();
+                $response = $this->__linq->fromDB($this->table_name)->whereDB($this->id . " = $idOrganization AND IsDeleted = 0 $where")->getFirstOrDefault();
 
                 // Check if is not null
                 if (Base_Functions::IsNullOrEmpty($response))
                     return $this->Not_Found();
 
                 // Format
-                return $this->Success($this->formatOrganizer($response));
+                return $this->Success($this->formatOrganization($response));
             }
             public function getAll() {
 
@@ -53,15 +53,15 @@
                 // Build the inner join for the categories
                 $inner_join_categories = "";
                 if (property_exists($request, "IdsCategories") && !Base_Functions::IsNullOrEmpty($request->IdsCategories))
-                    $inner_join_categories = "INNER JOIN refs_categories rc ON rc.ContentRefId = s.IdOrganizer AND rc.IdType = " . Base_Category_Type::ORGANIZER . " AND rc.IdCategory IN (" . implode(", ", $request->IdsCategories) . ")";
+                    $inner_join_categories = "INNER JOIN refs_categories rc ON rc.ContentRefId = s.IdOrganization AND rc.IdType = " . Base_Category_Type::OR . " AND rc.IdCategory IN (" . implode(", ", $request->IdsCategories) . ")";
 
-                // Get the organizer
+                // Get the organization
                 $sql = "SELECT s.*, st.*
-                        FROM organizers s
+                        FROM organizations s
                         $inner_join_categories
-                        INNER JOIN organizers_translations st ON s.IdOrganizer = st.IdOrganizer AND st.IdLanguage = (SELECT MIN(st2.IdLanguage)
-                                                                                                        FROM organizers_translations st2
-                                                                                                        WHERE st2.IdOrganizer = s.IdOrganizer
+                        INNER JOIN organizations_translations st ON s.IdOrganization = st.IdOrganization AND st.IdLanguage = (SELECT MIN(st2.IdLanguage)
+                                                                                                        FROM organizations_translations st2
+                                                                                                        WHERE st2.IdOrganization = s.IdOrganization
                                                                                                         )
                         WHERE s.IsValid = 1 AND s.IsDeleted = 0";
                 $all = $this->__linq->queryDB($sql)->getResults();
@@ -71,18 +71,18 @@
                     return $this->Not_Found();
 
                 // Return
-                return $this->Success($this->formatOrganizer($all));
+                return $this->Success($this->formatOrganization($all));
             }
 
             // Post
             public function create() {
 
-                // Create a new row in the organizers table
-                $idOrganizer = $this->__opHelper->object($this->id)->table($this->table_name)->insertIncrement();
+                // Create a new row in the organizations table
+                $idOrganization = $this->__opHelper->object($this->id)->table($this->table_name)->insertIncrement();
 
                 // Check if created
-                if(is_numeric($idOrganizer) && $idOrganizer > 0)
-                    return $this->Success($idOrganizer);
+                if(is_numeric($idOrganization) && $idOrganization > 0)
+                    return $this->Success($idOrganization);
 
                 return $this->Internal_Server_Error();
             }
@@ -93,8 +93,8 @@
                 // Get the request
                 $request = $this->Request;
 
-                // Check if the organizer exists
-                $this->get($request->IdOrganizer);
+                // Check if the organization exists
+                $this->get($request->IdOrganization);
 
                 // Check if is success
                 if (!$this->Success)
@@ -110,9 +110,9 @@
                 $request->IsValid = 1;
 
                 // Call category update
-                $this->category->updateByType(Base_Category_Type::ORGANIZER, $request->IdOrganizer, $request->Categories ?? [], $request->MainCategory ?? null);
+                $this->category->updateByType(Base_Category_Type::ORGANIZATION, $request->IdOrganization, $request->Categories ?? [], $request->MainCategory ?? null);
 
-                // Update the organizer
+                // Update the organization
                 $this->__opHelper->object($request)->table($this->table_name)->where($this->id)->update();
 
                 // Init the array for the translation values
@@ -122,7 +122,7 @@
                 foreach ($languages as $language) {
                     
                     $obj = new stdClass();
-                    $obj->IdOrganizer = $request->IdOrganizer;
+                    $obj->IdOrganization = $request->IdOrganization;
                     $obj->Description = $language->Description;
                     $obj->SmallDescription = $language->SmallDescription;
                     $obj->IdLanguage = $language->IdLanguage;
@@ -136,12 +136,12 @@
                 }
 
                 // Delete the old translations
-                $sql = "DELETE FROM $this->table_translations_name WHERE $this->id = $request->IdOrganizer";
+                $sql = "DELETE FROM $this->table_translations_name WHERE $this->id = $request->IdOrganization";
                 $this->__linq->queryDB($sql)->getResults();
 
                 // Insert the languages
                 if(count($translation_values) > 0)
-                    $this->__opHelper->table($this->table_translations_name)->insertMassive("(IdOrganizer, Description, SmallDescription, IdLanguage, IsValid)", implode(", ", $translation_values));
+                    $this->__opHelper->table($this->table_translations_name)->insertMassive("(IdOrganization, Description, SmallDescription, IdLanguage, IsValid)", implode(", ", $translation_values));
 
                 // Refresh cache
                 $this->refreshCache();
@@ -150,17 +150,17 @@
             }
 
             // Delete
-            public function delete($idOrganizer) {
+            public function delete($idOrganization) {
 
-                // Check that the organizer exists
-                $this->get($idOrganizer);
+                // Check that the organization exists
+                $this->get($idOrganization);
 
                 // Check if success 
                 if ($this->Success == true) {
 
-                    // Update the organizer to deleted
+                    // Update the organization to deleted
                     $obj = new stdClass();
-                    $obj->IdOrganizer = $idOrganizer;
+                    $obj->IdOrganization = $idOrganization;
                     $obj->IsDeleted = 1;
 
                     // Update
@@ -181,14 +181,14 @@
                     // Get the request
                     $request = clone($this->Request);
 
-                    // Check that the organizer exists
-                    $this->get($request->IdOrganizer);
+                    // Check that the organization exists
+                    $this->get($request->IdOrganization);
 
                     // Check that is success
                     if ($this->Success) {
 
                         // Image
-                        $response = $this->__linq->fromDB("organizers_images")->whereDB("IdImage = $request->ContentRefId")->getFirstOrDefault();
+                        $response = $this->__linq->fromDB("organizations_images")->whereDB("IdImage = $request->ContentRefId")->getFirstOrDefault();
 
                         // Check it the $response is not null
                         if (!Base_Functions::IsNullOrEmpty($response))
@@ -197,13 +197,13 @@
 
                     return $this->Not_Found();
                 }
-                public function getContents($idOrganizer) {
+                public function getContents($idOrganization) {
 
                     $sql = "SELECT *
                             FROM (
                                 SELECT ni.IdImage AS Id, ni.FullPath AS Preview, " . Base_Files_Types::IMAGE . " AS Type, ni.OrderNumber
-                                FROM organizers_images ni
-                                WHERE ni.IdImage = $idOrganizer
+                                FROM organizations_images ni
+                                WHERE ni.IdImage = $idOrganization
 
                             ) t
                             ORDER BY OrderNumber ASC";
@@ -220,22 +220,22 @@
                     // Get the request
                     $request = $this->Request;
 
-                    // Check that the organizer is not null
-                    $this->get($request->IdOrganizer);
+                    // Check that the organization is not null
+                    $this->get($request->IdOrganization);
 
                     // Check if is success
                     if ($this->Success == true) {
     
                         // Cycle the Order array
-                        foreach($request->Order as $organizer) {
+                        foreach($request->Order as $organization) {
 
                             // Create the update object
                             $obj = new stdClass();
-                            $obj->IdImage = $organizer->Id;
-                            $obj->OrderNumber = $organizer->OrderNumber;
+                            $obj->IdImage = $organization->Id;
+                            $obj->OrderNumber = $organization->OrderNumber;
 
-                            // Update the organizers_images table
-                            $this->__opHelper->object($obj)->table("organizers_images")->where("IdImage")->update();
+                            // Update the organizations_images table
+                            $this->__opHelper->object($obj)->table("organizations_images")->where("IdImage")->update();
                          
                         }
 
@@ -253,7 +253,7 @@
                     $request = clone($this->Request);
 
                     // Delete the file
-                    if(!Base_File::deleteContentManager($request->ContentRefId, Base_Files::ORGANIZER,  Base_Files_Types::IMAGE))
+                    if(!Base_File::deleteContentManager($request->ContentRefId, Base_Files::ORGANIZATION,  Base_Files_Types::IMAGE))
                         return $this->Not_Found();
 
                     $this->refreshCache();
@@ -268,14 +268,14 @@
                         // Get the request
                         $request = $this->Request;
 
-                        // Check that the organizer is not null
-                        $this->get($request->IdOrganizer);
+                        // Check that the organization is not null
+                        $this->get($request->IdOrganization);
 
                         // Check if is success
                         if ($this->Success == true) {
 
                             // Save the images
-                            Base_File::saveContentManager($request->IdOrganizer, Base_Files::ORGANIZER, Base_Files_Types::IMAGE);
+                            Base_File::saveContentManager($request->IdOrganization, Base_Files::ORGANIZATION, Base_Files_Types::IMAGE);
 
                             $this->refreshCache();
                             return $this->Success();
@@ -295,31 +295,31 @@
                     // Create the expiration date
                     $expiration_date = date('Y-m-d', strtotime('- 365 days'));
 
-                    // Get the organizer Update more than 30 days and having IsDeleted = 1
-                    $organizer = $this->__linq->fromDB("organizer")->whereDB("IsDeleted = 1 AND DATE_FORMAT(UpdateDate, '%Y-%m-%d') = '$expiration_date'")->getResults();
+                    // Get the organization Update more than 30 days and having IsDeleted = 1
+                    $organization = $this->__linq->fromDB("organization")->whereDB("IsDeleted = 1 AND DATE_FORMAT(UpdateDate, '%Y-%m-%d') = '$expiration_date'")->getResults();
 
-                    // Check that the organizer array is not null
-                    if (count($organizer) > 0) {
+                    // Check that the organization array is not null
+                    if (count($organization) > 0) {
 
-                        // Get the IdOrganizer array
-                        $ids_organizers = array_column($organizer, "IdOrganizer");
+                        // Get the IdOrganization array
+                        $ids_organizations = array_column($organization, "IdOrganization");
 
-                        // Get the id organizer string
-                        $ids_organizers_string = implode(", ", $ids_organizers);    
+                        // Get the id organization string
+                        $ids_organizations_string = implode(", ", $ids_organizations);    
 
                         // Delete from images table
-                        $sql = "DELETE FROM organizers_images WHERE IdOrganizer IN ($ids_organizers_string)";
+                        $sql = "DELETE FROM organizations_images WHERE IdOrganization IN ($ids_organizations_string)";
                         $this->__linq->queryDB($sql)->getResults();
 
                         // Delete from translations table
-                        $sql = "DELETE FROM organizers_translations WHERE IdOrganizer IN ($ids_organizers_string)";
+                        $sql = "DELETE FROM organizations_translations WHERE IdOrganization IN ($ids_organizations_string)";
                         $this->__linq->queryDB($sql)->getResults();
 
-                        // Cycle all organizer
-                        foreach ($ids_organizers as $id_organizer) {
+                        // Cycle all organization
+                        foreach ($ids_organizations as $id_organization) {
 
-                            // Delete all files of the organizer
-                            Base_Functions::deleteFiles($_SERVER["DOCUMENT_ROOT"] . Base_Path::ORGANIZER . $id_organizer);
+                            // Delete all files of the organization
+                            Base_Functions::deleteFiles($_SERVER["DOCUMENT_ROOT"] . Base_Path::ORGANIZATION . $id_organization);
                         }
                     }
                 }
@@ -330,55 +330,55 @@
 
         #region Private Methods
 
-            private function formatOrganizer($organizers) {
+            private function formatOrganization($organizations) {
 
-                // Check if the $organizers is null
-                if (Base_Functions::IsNullOrEmpty($organizers))
+                // Check if the $organizations is null
+                if (Base_Functions::IsNullOrEmpty($organizations))
                     return null;
 
-                // Check if the $organizers is an array
-                $isAll = is_array($organizers);
+                // Check if the $organizations is an array
+                $isAll = is_array($organizations);
 
                 // If is not an array, convert it in an array with only one element
                 if (!$isAll)
-                    $organizers = array($organizers);
+                    $organizations = array($organizations);
 
-                // Get all the IdOrganizer
-                $ids_organizers = array_column($organizers, $this->id);
+                // Get all the IdOrganization
+                $ids_organizations = array_column($organizations, $this->id);
 
                 // Get content translations
-                $organizer_translations = $this->__linq->reorder($this->__linq->fromDB($this->table_translations_name)->whereDB("$this->id IN (" . implode(", ", $ids_organizers) . ")")->getResults(), $this->id, true);
+                $organization_translations = $this->__linq->reorder($this->__linq->fromDB($this->table_translations_name)->whereDB("$this->id IN (" . implode(", ", $ids_organizations) . ")")->getResults(), $this->id, true);
 
                 // Get Images
-                $organizer_images = $this->__linq->reorder($this->__linq->selectDB("$this->id, FullPath, FileName")->fromDB($this->table_images_name)->whereDB("$this->id IN (" . implode(", ", $ids_organizers) . ")")->getResults(), $this->id, true);
+                $organization_images = $this->__linq->reorder($this->__linq->selectDB("$this->id, FullPath, FileName")->fromDB($this->table_images_name)->whereDB("$this->id IN (" . implode(", ", $ids_organizations) . ")")->getResults(), $this->id, true);
 
                 // Get categories
-                $organizer_categories = $this->category->getAll(Base_Category_Type::ORGANIZER, $ids_organizers);
+                $organization_categories = $this->category->getAll(Base_Category_Type::ORGANIZATION, $ids_organizations);
 
                 // Build the response array
                 $response = [];
 
-                // Cycle all organizers
-                foreach ($organizers as $organizer) {
+                // Cycle all organizations
+                foreach ($organizations as $organization) {
 
                     // Build object
                     $tmp = new stdClass();
-                    $tmp->IdOrganizer = $organizer->IdOrganizer;
-                    $tmp->Name = $organizer->Name;
-                    $tmp->UseOnlyCoordinates = $organizer->UseOnlyCoordinates;
-                    $tmp->Phone = $organizer->Phone;
-                    $tmp->Notes = $organizer->Notes;
-                    $tmp->Latitude = $organizer->Latitude;
-                    $tmp->Longitude = $organizer->Longitude;
-                    $tmp->Address = $organizer->Address;
-                    $tmp->City = $organizer->City;
-                    $tmp->IsActive = $organizer->IsActive;
+                    $tmp->IdOrganization = $organization->IdOrganization;
+                    $tmp->Name = $organization->Name;
+                    $tmp->UseOnlyCoordinates = $organization->UseOnlyCoordinates;
+                    $tmp->Phone = $organization->Phone;
+                    $tmp->Notes = $organization->Notes;
+                    $tmp->Latitude = $organization->Latitude;
+                    $tmp->Longitude = $organization->Longitude;
+                    $tmp->Address = $organization->Address;
+                    $tmp->City = $organization->City;
+                    $tmp->IsActive = $organization->IsActive;
 
-                    // Check if the organizer has images
-                    $tmp->Images = (property_exists($organizer_images, $organizer->IdOrganizer)) ? $organizer_images->{$organizer->IdOrganizer} : [];
+                    // Check if the organization has images
+                    $tmp->Images = (property_exists($organization_images, $organization->IdOrganization)) ? $organization_images->{$organization->IdOrganization} : [];
 
-                    // Get the categories of the organizer
-                    $categories = ($organizer_categories && property_exists($organizer_categories, $organizer->IdOrganizer)) ? $organizer_categories->{$organizer->IdOrganizer} : [];
+                    // Get the categories of the organization
+                    $categories = ($organization_categories && property_exists($organization_categories, $organization->IdOrganization)) ? $organization_categories->{$organization->IdOrganization} : [];
 
                     // Get the main category
                     $main_category = array_filter($categories, function($category) {
@@ -386,7 +386,7 @@
                     })[0] ?? null;
 
                     // Get tmp translations
-                    $tmp_translations = (property_exists($organizer_translations, $organizer->IdOrganizer)) ? $organizer_translations->{$organizer->IdOrganizer} : [];
+                    $tmp_translations = (property_exists($organization_translations, $organization->IdOrganization)) ? $organization_translations->{$organization->IdOrganization} : [];
 
                     // Check if all the translations are valid
                     if ($isAll) {
@@ -421,7 +421,7 @@
             
             private function refreshCache() {
 
-                Base_Cache_Manager::setOrganizerAllCache();
+                Base_Cache_Manager::setOrganizationAllCache();
             }
 
         #endregion

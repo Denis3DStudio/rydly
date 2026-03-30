@@ -89,10 +89,10 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12" id="organizer_select_container" style="display: none;">
+                        <div class="col-12" id="organization_select_container" style="display: none;">
                             <div class="form-group">
                                 <label>Organizzatore</label>
-                                <select class="selectpicker" name="IdOrganizer" data-title="Seleziona..." data-width="100%" mandatory>
+                                <select class="selectpicker" name="IdOrganization" data-title="Seleziona..." data-width="100%" mandatory>
                                 </select>
                             </div>
                         </div>

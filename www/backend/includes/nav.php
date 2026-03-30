@@ -121,17 +121,17 @@
             <li class="nav-item nav-title">GESTIONE</li>
 
             <li class="nav-item">
-                <a class="nav-link nav-link-collapse collapsed" data-bs-toggle="collapse" href="#c-organizer" data-parent="#sidebarMenu">
+                <a class="nav-link nav-link-collapse collapsed" data-bs-toggle="collapse" href="#c-organization" data-parent="#sidebarMenu">
                     <i class="fa fa-fw fa-user-tie"></i> <span class="nav-link-text">Organizzatori</span>
                 </a>
-                <ul class="sidenav-second-level collapse" id="c-organizer">
+                <ul class="sidenav-second-level collapse" id="c-organization">
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/organizer/">
+                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/organization/">
                             <span class="nav-link-text">Elenco</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/category_organizer/">
+                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/category_organization/">
                             <span class="nav-link-text">Categorie</span>
                         </a>
                     </li>

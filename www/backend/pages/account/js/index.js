@@ -21,7 +21,7 @@ function renderTable() {
                 title: 'Organizzatore',
                 filterable: true,
                 render: function (data) {
-                    return data.Organizer ? `<a class="underline" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/organizer/${data.Organizer.IdOrganizer}" target="_blank">${data.Organizer.Name}</a>` : '-';
+                    return data.Organization ? `<a class="underline" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/organization/${data.Organization.IdOrganization}" target="_blank">${data.Organization.Name}</a>` : '-';
                 }
             },
             {

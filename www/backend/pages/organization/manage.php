@@ -109,7 +109,7 @@
                                                     <div class="form-group">
                                                         <label>Contenuto</label>
                                                         <div class="form-inline">
-                                                            <input class="form-control custom-render" type="file" name="Images[]" accept="image/*" multiple fileUpload fileUploadType="<?= Base_Files_Upload_Type::ON_CHANGE ?>" fileMacro="<?= Base_Files::ORGANIZER ?>" fileType="<?= Base_Files_Types::IMAGE ?>" onclick="uploadManager('Images[]')" callback="getFilesManager('dtContents', <?= Base_Files::ORGANIZER ?>, <?= Base_Files_Types::IMAGE ?>)" />
+                                                            <input class="form-control custom-render" type="file" name="Images[]" accept="image/*" multiple fileUpload fileUploadType="<?= Base_Files_Upload_Type::ON_CHANGE ?>" fileMacro="<?= Base_Files::ORGANIZATION ?>" fileType="<?= Base_Files_Types::IMAGE ?>" onclick="uploadManager('Images[]')" callback="getFilesManager('dtContents', <?= Base_Files::ORGANIZATION ?>, <?= Base_Files_Types::IMAGE ?>)" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -125,9 +125,9 @@
                                                 </label>
                                                 <div class="table-responsive">
                                                     <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtContents" style="width: 100%;"
-                                                        fileMacro="<?= Base_Files::ORGANIZER ?>"
+                                                        fileMacro="<?= Base_Files::ORGANIZATION ?>"
                                                         fileType="<?= Base_Files_Types::IMAGE ?>"
-                                                        callback="getFilesManager('dtContents', <?= Base_Files::ORGANIZER ?>, <?= Base_Files_Types::IMAGE ?>)">
+                                                        callback="getFilesManager('dtContents', <?= Base_Files::ORGANIZATION ?>, <?= Base_Files_Types::IMAGE ?>)">
                                                     </table>
 
                                                 </div>
@@ -174,12 +174,12 @@
                 <div class="card-footer">
                     <div class="row align-items-center">
                         <div class="col-6">
-                            <button type="button" class="btn btn-sm btn-link text-danger" onclick="simpleDelete(<?= Base_Simple_Delete::ORGANIZER ?>)">
+                            <button type="button" class="btn btn-sm btn-link text-danger" onclick="simpleDelete(<?= Base_Simple_Delete::ORGANIZATION ?>)">
                                 <i class="fas fa-trash"></i> Elimina
                             </button>
                         </div>
                         <div class="col-6 text-end">
-                            <button type="button" class="btn btn-success" onclick="saveOrganizer()">
+                            <button type="button" class="btn btn-success" onclick="saveOrganization()">
                                 <i class="fas fa-fw fa-save"></i> Salva
                             </button>
                         </div>

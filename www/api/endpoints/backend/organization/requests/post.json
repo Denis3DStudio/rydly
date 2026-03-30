@@ -1,14 +1,14 @@
 {
     "Link": {
-        "IdOrganizer": true,
+        "IdOrganization": true,
         "IdLanguage": true,
         "Link": true
     },
     "Attachments": {
-        "IdOrganizer": true,
+        "IdOrganization": true,
         "IdLanguage": true
     },
     "Images": {
-        "IdOrganizer": true
+        "IdOrganization": true
     }
 }

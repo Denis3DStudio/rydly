@@ -12,7 +12,7 @@
             self::PLACE_CATEGORY,
             self::PLACE,
             self::SPONSOR,
-            self::ORGANIZER
+            self::ORGANIZATION
         ];
 
         const NEWS = 0;
@@ -24,7 +24,7 @@
         const PLACE_CATEGORY = 6;
         const PLACE = 7;
         const SPONSOR = 8;
-        const ORGANIZER = 9;
+        const ORGANIZATION = 9;
 
         const IDS_DB = [
             self::NEWS => 'IdNews',
@@ -36,7 +36,7 @@
             self::PLACE_CATEGORY => 'IdCategory',
             self::PLACE => 'IdPlace',
             self::SPONSOR => 'IdSponsor',
-            self::ORGANIZER => 'IdOrganizer'
+            self::ORGANIZATION => 'IdOrganization'
         ];
 
         const DB_TABLES_NAMES = [
@@ -49,7 +49,7 @@
             self::PLACE_CATEGORY => 'categories_places',
             self::PLACE => 'places',
             self::SPONSOR => 'sponsors',
-            self::ORGANIZER => 'organizers',
+            self::ORGANIZATION => 'organizations',
         ];
 
         const DB_TABLES_CAPTIONS_NAMES = [
@@ -70,7 +70,7 @@
             self::PLACE_CATEGORY => 'categories_places',
             self::PLACE => 'places',
             self::SPONSOR => 'sponsors',
-            self::ORGANIZER => 'organizers',
+            self::ORGANIZATION => 'organizations',
         ];
     }
 

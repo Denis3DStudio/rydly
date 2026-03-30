@@ -177,8 +177,8 @@
         ],
         "IdCategoryType": 3
     },
-    "Category_Organizer": {
-        "Routes": "/category_organizer/",
+    "Category_Organization": {
+        "Routes": "/category_organization/",
         "Auth": true,
         "FullLoader": true,
         "Title": "Categorie Organizzatori",
@@ -194,9 +194,9 @@
         ],
         "IdCategoryType": 4
     },
-    "Category_OrganizerDetail": {
+    "Category_OrganizationDetail": {
         "FullLoader": true,
-        "Routes": "/category_organizer/(IdCategory)",
+        "Routes": "/category_organization/(IdCategory)",
         "Auth": true,
         "Title": "Categoria Organizzatori dettaglio",
         "Js": [
@@ -432,26 +432,26 @@
             "/sponsor/manage.php"
         ]
     },
-    "Organizer": {
-        "Routes": "/organizer/",
+    "Organization": {
+        "Routes": "/organization/",
         "Auth": true,
-        "Title": "Organizzatori",
+        "Title": "Organization",
         "Components": [
             "k-table"
         ],
         "Js": [
-            "/organizer/js/index.js",
-            "/organizer/js/common.js"
+            "/organization/js/index.js",
+            "/organization/js/common.js"
         ],
         "Pages": [
-            "/organizer/index.php"
+            "/organization/index.php"
         ]
     },
-    "OrganizerDetail": {
-        "Routes": "/organizer/(IdOrganizer)/",
+    "OrganizationDetail": {
+        "Routes": "/organization/(IdOrganization)/",
         "Auth": true,
         "FullLoader": true,
-        "Title": "Organizer Detail",
+        "Title": "Organization Detail",
         "Components": [
             "k-table",
             "summernote",
@@ -461,11 +461,11 @@
             "g-maps"
         ],
         "Js": [
-            "/organizer/js/manage.js",
-            "/organizer/js/common.js"
+            "/organization/js/manage.js",
+            "/organization/js/common.js"
         ],
         "Pages": [
-            "/organizer/manage.php"
+            "/organization/manage.php"
         ]
     },
     "Place": {

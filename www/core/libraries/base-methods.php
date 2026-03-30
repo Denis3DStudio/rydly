@@ -136,6 +136,20 @@
                 // Return default image
                 return "/assets/backend/img/img-default.png";
             }
+
+            #region Permission
+
+                public function checkIfLoggedCan($idOrganization) {
+
+                    // Check if the user is logged
+                    if (Base_Functions::IsNullOrEmpty($this->Logged))
+                        return false;
+
+                    // Check if the user has the permission
+                    return Base_Permissions::Check($this->Logged->IdAccount, $idOrganization, $permission);
+                }
+
+            #endregion
             
         #endregion
 

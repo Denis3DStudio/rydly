@@ -3,45 +3,45 @@
     class Base_Account {
 
         const ALL = [
-            self::ORGANIZER, 
-            self::ORGANIZER_ADMIN, 
+            self::ORGANIZATION, 
+            self::ORGANIZATION_ADMIN, 
             self::SUPERADMIN
         ];
 
         const USER_THAT_CAN_MANAGE = [
-            self::ORGANIZER_ADMIN, 
+            self::ORGANIZATION_ADMIN, 
             self::SUPERADMIN
         ];
 
-        const ROLES_WITH_ORGANIZER = [
-            self::ORGANIZER, 
-            self::ORGANIZER_ADMIN
+        const ROLES_WITH_ORGANIZATION = [
+            self::ORGANIZATION, 
+            self::ORGANIZATION_ADMIN
         ];
 
         const ROLES_CAN_SEE = [
-            self::ORGANIZER => [
-                self::ORGANIZER
+            self::ORGANIZATION => [
+                self::ORGANIZATION
             ],
-            self::ORGANIZER_ADMIN => [
-                self::ORGANIZER, 
-                self::ORGANIZER_ADMIN
+            self::ORGANIZATION_ADMIN => [
+                self::ORGANIZATION, 
+                self::ORGANIZATION_ADMIN
             ],
             self::SUPERADMIN => self::ALL
         ];
 
-        const ORGANIZER = 2;
-        const ORGANIZER_ADMIN = 3;
+        const ORGANIZATION = 2;
+        const ORGANIZATION_ADMIN = 3;
         const SUPERADMIN = 4;
 
         const NAMES = [
-            self::ORGANIZER => "Organizzatore",
-            self::ORGANIZER_ADMIN => "Amministratore Organizzatore",
+            self::ORGANIZATION => "Organizzatore",
+            self::ORGANIZATION_ADMIN => "Amministratore Organizzatore",
             self::SUPERADMIN => "Super Amministratore"
         ];
 
         const COLORS = [
-            self::ORGANIZER => "info",
-            self::ORGANIZER_ADMIN => "warning",
+            self::ORGANIZATION => "info",
+            self::ORGANIZATION_ADMIN => "warning",
             self::SUPERADMIN => "danger"
         ];
     }

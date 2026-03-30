@@ -1,5 +1,8 @@
 {
     "Get": {
         "IdCoupon": true
+    },
+    "All": {
+        "IdSponsor": false
     }
 }

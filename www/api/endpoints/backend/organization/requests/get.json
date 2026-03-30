@@ -1,6 +1,6 @@
 {
     "Get": {
-        "IdOrganizer": true,
+        "IdOrganization": true,
         "IsValid": {
             "Default": 0
         }
@@ -9,9 +9,9 @@
         "IdsCategories": false
     },
     "Contents": {
-        "IdOrganizer": true
+        "IdOrganization": true
     },
     "News": {
-        "IdOrganizer": true
+        "IdOrganization": true
     }
 }

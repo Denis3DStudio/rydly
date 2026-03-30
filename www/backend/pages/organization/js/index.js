@@ -1,6 +1,6 @@
 $(document).ready(function () {
     getLanguages();
-    // Get the categories organizers
+    // Get the categories organizations
     getCategories(renderTable);
 });
 
@@ -11,7 +11,7 @@ function getCategories(callback = null) {
     get_call(
         BACKEND.CATEGORY.ALL,
         {
-            IdType: ENUM.BASE_CATEGORY_TYPE.ORGANIZER
+            IdType: ENUM.BASE_CATEGORY_TYPE.ORGANIZATION
         },
         function (categories) {
 
@@ -30,9 +30,9 @@ $(document).on("change", "#categorySelect", renderTable);
 
 function renderTable() {
     console.log($('#categorySelect').val());
-    kT = new KTable("#dtOrganizers", {
+    kT = new KTable("#dtOrganizations", {
         ajax: {
-            url: BACKEND.ORGANIZER.ALL,
+            url: BACKEND.ORGANIZATION.ALL,
             data: {
                 IdsCategories: $('#categorySelect').val()
             }
@@ -80,10 +80,10 @@ function renderTable() {
                 searchable: false,
                 render: function (data) {
                     return `
-                        <a class="btn btn-secondary" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/organizer/${data.IdOrganizer}">
+                        <a class="btn btn-secondary" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/organization/${data.IdOrganization}">
                             <i class="fa fa-fw fa-edit"></i>
                         </a>
-                        <button type="button" class="btn btn-link text-danger" onclick="simpleDelete(${ENUM.BASE_SIMPLE_DELETE.ORGANIZER}, ${data.IdOrganizer})">
+                        <button type="button" class="btn btn-link text-danger" onclick="simpleDelete(${ENUM.BASE_SIMPLE_DELETE.ORGANIZATION}, ${data.IdOrganization})">
                             <i class="fa fa-fw fa-trash"></i>
                         </button>
                     `
@@ -102,19 +102,19 @@ function renderTable() {
 }
 
 // Post
-function createOrganizer() {
+function createOrganization() {
 
     showLoader();
 
     post_call(
-        BACKEND.ORGANIZER.INDEX,
+        BACKEND.ORGANIZATION.INDEX,
         null,
-        function (idOrganizer) {
+        function (idOrganization) {
 
             hideLoader();
 
             // Open the news detail page
-            location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/organizer/${idOrganizer}`;
+            location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/organization/${idOrganization}`;
 
         },
         function () {

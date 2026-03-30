@@ -43,6 +43,8 @@ class KTable {
     //#region Main
 
     constructor(identifier, options = null) {
+        options = options ?? {};
+
         // Set
         this.#setIdentifier(identifier);
         this.#setOptions(options);
@@ -132,6 +134,10 @@ class KTable {
         if (identifier == null || identifier == "")
             this.#kError.error = "Identifier is required";
 
+        // Normalize plain ids to CSS selectors
+        else if (document.querySelector(identifier) == null && document.querySelector(`#${identifier}`) != null)
+            identifier = `#${identifier}`;
+
         // Check if found table in page
         else if (
             document.querySelector(identifier) == null &&
@@ -144,6 +150,9 @@ class KTable {
 
         // Set identifier
         this.#identifier = identifier;
+
+        // Stop here if identifier is invalid
+        if (this.#identifier == null) return;
 
         // Generate hash from identifier in oneline
         this.#containerIdentifier = this.#hashString(this.#identifier);
@@ -329,6 +338,9 @@ class KTable {
                     for (let j = 0; j < columns.length; j++) {
                         let column = columns[j];
 
+                        // Ensure column definition exists even without thead
+                        if (this.#options.columns[j] == null) this.#options.columns[j] = {};
+
                         // Get value
                         let value = column.innerHTML;
 
@@ -509,8 +521,8 @@ class KTableRender {
         this.#columnsDefs = options.columns;
         this.#search = options.search;
         this.#pagination = options.pagination;
-        this.#originalPerPage = options.pagination.perPage;
-        this.#paging = options.pagination.slices || [];
+        this.#originalPerPage = options.pagination !== false ? options.pagination.perPage : 0;
+        this.#paging = options.pagination !== false ? (options.pagination.slices || []) : [];
         this.#sort = options.sort;
         this.#activeColumnVisibility = options.activeColumnVisibility;
         this.#selectable = options.selectable;
@@ -1518,9 +1530,8 @@ class KTableRender {
     #rButtons() {
         if (this.kError.valid == false) return;
 
-        // Check if buttons are set
-        if (this.#buttons == null) return;
-        console.log(this.#buttons);
+        // Start from an empty container when custom buttons are not provided
+        if (this.#buttons == null) this.#buttons = "";
 
         // Check if export is active
         if (this.#export.length > 0) {
@@ -1530,7 +1541,6 @@ class KTableRender {
             // Check if contains "CSV"
             if (this.#export.indexOf("CSV") > -1)
                 button_templates.push(this.#TEMPLATES.EXPORT.CSV.TEMPLATE);
-            console.log(this.#export.indexOf("CSV") > -1);
 
             // Check if contains "XLS"
             if (this.#export.indexOf("XLS") > -1)
@@ -1549,13 +1559,16 @@ class KTableRender {
             }
 
             // Init buttons events
-            $(document).on("click", this.#TEMPLATES.EXPORT.CSV.SELECTOR, () => {
+            $(document).off("click", this.#TEMPLATES.EXPORT.CSV.SELECTOR).on("click", this.#TEMPLATES.EXPORT.CSV.SELECTOR, () => {
                 this.kData.exportCSV();
             });
-            $(document).on("click", this.#TEMPLATES.EXPORT.EXCEL.SELECTOR, () => {
+            $(document).off("click", this.#TEMPLATES.EXPORT.EXCEL.SELECTOR).on("click", this.#TEMPLATES.EXPORT.EXCEL.SELECTOR, () => {
                 this.kData.exportExcel();
             });
         }
+
+        // Check if buttons are set
+        if (typeof this.#buttons != "string" || this.#buttons.trim() == "") return;
 
         // Delete all in this.#TEMPLATES.BUTTONS.PARENT except .action-column-visibility
         document.querySelectorAll(`${this.#parentSelector(this.#TEMPLATES.BUTTONS.PARENT)} > :not(.action-column-visibility)`).forEach((element) => {
@@ -2232,7 +2245,7 @@ class KTableData {
             // Set selected
             row.selected = selected;
 
-            this.#setCurrentData(callback(row.object));
+            this.#setCurrentData(() => callback(row.object));
 
         }
     }

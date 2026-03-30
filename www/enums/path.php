@@ -18,7 +18,11 @@
         
         const HOMEPAGE_BANNER = "/contents/homepage/banners/";
         const HOMEPAGE_BANNER_IMAGES = "/contents/homepage/banners/(*)/images/";
-        
+
+        const ORGANIZATION = "/contents/organizations/";
+        const ORGANIZATION_ATTACHMENTS = "/contents/organizations/(*)/attachments/";
+        const ORGANIZATION_IMAGES = "/contents/organizations/(*)/images/";
+
         const NAMES = [
             "NEWS" => self::NEWS,
             "NEWS_ATTACHMENTS" => self::NEWS_ATTACHMENTS,

@@ -114,10 +114,10 @@ class Base_Cache_Manager {
             // // Set the cache
             self::setCache(Base_Cache_Names::SPONSORS_ALL, []);
         }
-        public static function setOrganizerAllCache() {
+        public static function setOrganizationAllCache() {
 
             // // Set the cache
-            self::setCache(Base_Cache_Names::ORGANIZERS_ALL, []);
+            self::setCache(Base_Cache_Names::ORGANIZATION_ALL, []);
         }
 
     #endregion
@@ -201,13 +201,13 @@ class Base_Cache_Names {
     const PLACES_ALL = "PLACES_ALL";
     const PLACES_CATEGORIES_ALL = "CATEGORIES_PLACES_ALL";
     const SPONSORS_ALL = "SPONSORS_ALL";
-    const ORGANIZERS_ALL = "ORGANIZERS_ALL";
+    const ORGANIZATION_ALL = "ORGANIZATION_ALL";
 
     const SETTER = [
         self::PLACES_ALL => "setPlacesAllCache",
         self::PLACES_CATEGORIES_ALL => "setPlacesCategoriesAll",
         self::SPONSORS_ALL => "setSponsorsAllCache",
-        self::ORGANIZERS_ALL => "setOrganizersAllCache",
+        self::ORGANIZATION_ALL => "setOrganizationAllCache",
     ];
 
     // Set the expiration date

@@ -6,7 +6,7 @@ var global = {
 $(document).ready(function () {
 
     setDates();
-    getProducts();
+    getCustomers();
 });
 
 //#region dates
@@ -31,7 +31,7 @@ function checkDates() {
 
     // Check start date min
     if (startDate < $('[name="StartDate"]').attr("min")) {
-        validity= false;
+        validity = false;
 
         addErrorClass('[name="StartDate"]');
 
@@ -41,7 +41,7 @@ function checkDates() {
 
     // Check end date
     if (endDate < $('[name="EndDate"]').attr("min")) {
-        validity= false;
+        validity = false;
 
         addErrorClass('[name="EndDate"]');
 
@@ -49,9 +49,9 @@ function checkDates() {
     } else
         removeErrorClass('[name="EndDate"]');
 
-     // Check if the end date is less than the start date
-     if (endDate < startDate) {
-        validity= false;
+    // Check if the end date is less than the start date
+    if (endDate < startDate) {
+        validity = false;
 
         addErrorClass('[name="EndDate"]');
 
@@ -87,7 +87,7 @@ function changeType() {
 
     // Check if the type selected is free shipping
     if (type == ENUM.BASE_COUPON_TYPE.FREE_SHIPPING) {
-    
+
         // Add the disabled attribute to the input
         $('[name="Value"]').attr("disabled", true);
         // Set the value of the input to 0
@@ -155,7 +155,13 @@ function saveCoupon() {
             data,
             function (data) {
 
-                // redirect to manage page
+                // Build the params for the redirect
+                if ("f" in Url.Query) {
+                    window.close();
+                    return;
+                }
+
+                // Redirect to main page
                 location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/coupon?st=ok&m=Buono sconto salvato con successo!`;
             }
         );
@@ -163,23 +169,8 @@ function saveCoupon() {
 
 }
 
-//#region Other
+//#region Customers
 
-// Get 
-function getProducts() {
-
-    get_call(
-        BACKEND.PRODUCT.ALL,
-        null,
-        function (response) {
-
-            // Build the picker
-            buildPicker(response, "[name='IdsProducts']", "IdProduct", "Title");
-
-            getCustomers();
-        }
-    );
-}
 // Get 
 function getCustomers() {
 

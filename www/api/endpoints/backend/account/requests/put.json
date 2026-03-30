@@ -6,6 +6,6 @@
         "Username": true,
         "Password": false,
         "IdRole": true,
-        "IdOrganizer": false
+        "IdOrganization": false
     }
 }

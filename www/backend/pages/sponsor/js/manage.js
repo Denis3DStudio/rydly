@@ -48,7 +48,7 @@ function getSponsor() {
         },
         function (response) {
             console.log(response);
-            
+
             // Set main data
             fillContentByNames("#common_container", response);
             fillContentByNames("#tabGeneral", response);
@@ -177,6 +177,96 @@ function checkMainCategory() {
 }
 
 $(document).on("change", "#Categories", checkMainCategory);
+
+//#endregion
+
+//#region Coupons
+
+
+// On Focus tab
+$(window).on("focus", function () {
+    getCoupons();
+});
+$(document).on("click", "#tabCoupons-tab", getCoupons);
+
+// Get
+function getCoupons() {
+
+    // Build the params
+    var params = {
+        IdSponsor: Url.Params.IdSponsor
+    };
+
+    // Get 
+    kT = new KTable("#dtCoupons", {
+        ajax: {
+            url: BACKEND.COUPON.ALL,
+            data: params
+        },
+        sort: {
+            1: "ASC"
+        },
+        buttons:
+            "<button class='btn btn-outline-success' onclick='createCoupon()'><i class='fa fa-fw fa-plus'></i> Aggiungi</button>"
+        ,
+        columns: [
+            {
+                title: 'Codice',
+                render: function (data) {
+                    return data.Code;
+                }
+            },
+            {
+                title: 'Valore',
+                filterable: true,
+                render: function (data) {
+                    return `${data.Value}`;
+                }
+            },
+            {
+                title: 'Tipologia',
+                filterable: true,
+                render: function (data) {
+                    return `${ENUM.BASE_COUPON_TYPE.NAMES[data.Type]}`;
+                }
+            },
+            {
+                title: 'Azioni',
+                render: function (data) {
+                    return `<a class="btn btn-outline-primary" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/coupon/${data.IdCoupon}" target="_blank">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </a>
+                            <button type="button" class="btn btn-outline-danger" onclick="simpleDelete(${data.IdCoupon}, BACKEND.COUPON.INDEX, function() { kT.refresh(); })">
+                                <i class="fa fa-fw fa-trash"></i>
+                            </button>`;
+                }
+            },
+        ],
+        events: {
+            pageChanged() {
+            },
+            completed(data) {
+
+                hideLoader();
+            }
+        },
+    });
+
+}
+
+// Post
+function createCoupon() {
+    post_call(
+        BACKEND.COUPON.INDEX,
+        {
+            IdSponsor: Url.Params.IdSponsor
+        },
+        function (idCoupon) {
+            // redirect to manage page
+            window.open(`/${ENUM.BASE_KEYS.BACKEND_PATH}/coupon/${idCoupon}?f=sponsor`);
+        }
+    );
+}
 
 //#endregion
 

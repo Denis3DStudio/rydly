@@ -4,8 +4,8 @@ $(document).ready(function () {
     if (Logged.IdRole == ENUM.BASE_ACCOUNT.USER)
         $("#role_select_container").hide();
 
-    // Get organizers for the select
-    getOrganizers(
+    // Get organizations for the select
+    getOrganizations(
         // Callback
         function () {
             getAccount();
@@ -84,47 +84,44 @@ function saveAccount() {
     return false;
 }
 
-//#region Organizer
+//#region organization
 
 $('[name="IdRole"]').change(function () {
-    console.log($(this).val());
-    console.log(ENUM.BASE_ACCOUNT.ROLES_WITH_ORGANIZER);
 
-
-    // Check if role has organizer
-    if (ENUM.BASE_ACCOUNT.ROLES_WITH_ORGANIZER.includes(parseInt($(this).val())) && Logged.IdRole == ENUM.BASE_ACCOUNT.SUPERADMIN) {
+    // Check if role has organization
+    if (ENUM.BASE_ACCOUNT.ROLES_WITH_ORGANIZATION.includes(parseInt($(this).val())) && Logged.IdRole == ENUM.BASE_ACCOUNT.SUPERADMIN) {
 
         // Show select
-        $('#organizer_select_container').show();
+        $('#organization_select_container').show();
 
         // Eneble select
-        $('[name="IdOrganizer"]').selectpicker("refresh");
+        $('[name="IdOrganization"]').selectpicker("refresh");
 
         // Add mandatory
-        $('[name="IdOrganizer"]').attr("mandatory", true);
+        $('[name="IdOrganization"]').attr("mandatory", true);
 
     } else {
 
         // Hide select
-        $('#organizer_select_container').hide();
+        $('#organization_select_container').hide();
 
         // Disable select
-        $('[name="IdOrganizer"]').val("").selectpicker("refresh");
+        $('[name="IdOrganization"]').val("").selectpicker("refresh");
 
         // Remove mandatory
-        $('[name="IdOrganizer"]').attr("mandatory", false);
+        $('[name="IdOrganization"]').attr("mandatory", false);
     }
 });
 
-function getOrganizers(callback = null) {
+function getOrganizations(callback = null) {
 
     get_call(
-        BACKEND.ORGANIZER.ALL,
+        BACKEND.ORGANIZATION.ALL,
         null,
         function (response) {
 
             // Init the picker
-            buildPicker(response, "[name='IdOrganizer']", "IdOrganizer", "Name");
+            buildPicker(response, "[name='IdOrganization']", "IdOrganization", "Name");
 
             // Check if callback is not null
             if (callback != null)

@@ -570,13 +570,21 @@
             },
             "All": {
                 "Auth": true,
-                "Method": "getAll"
+                "Method": "getAll",
+                "Request": {
+                    "Path": "get",
+                    "Class": "All"
+                }
             }
         },
         "POST": {
             "": {
                 "Auth": true,
-                "Method": "create"
+                "Method": "create",
+                "Request": {
+                    "Path": "post",
+                    "Class": "Create"
+                }
             }
         },
         "PUT": {
@@ -1044,7 +1052,7 @@
             }
         }
     },
-    "Organizer": {
+    "Organization": {
         "GET": {
             "": {
                 "Auth": true,

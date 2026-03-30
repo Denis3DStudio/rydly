@@ -1,9 +1,9 @@
 {
     "Delete": {
-        "IdOrganizer": true
+        "IdOrganization": true
     },
     "Content": {
-        "IdOrganizer": true,
+        "IdOrganization": true,
         "ContentRefId": true
     }
 }

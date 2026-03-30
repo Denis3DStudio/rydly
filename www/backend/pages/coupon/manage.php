@@ -65,7 +65,7 @@
                                 <input class="form-control" name="EndDate" type="date" mandatory />
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6">
+                        <div class="col-12 col-sm-6" style="display: none;" id="products_container">
                             <div class="form-group">
                                 <label>Prodotti</label>
                                 <select name="IdsProducts" class="selectpicker form-control" title="Tutti" multiple data-actions-box="true" data-live-search="true">

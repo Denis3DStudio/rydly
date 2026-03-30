@@ -7,7 +7,7 @@
             <button
                 type="button"
                 class="btn btn-success"
-                onclick="createOrganizer()">
+                onclick="createOrganization()">
                 <i class="fa fa-fw fa-plus"></i> Aggiungi
             </button>
         </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="col-12">
             <div class="table-responsive">
-                <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtOrganizers" width="100%" cellspacing="0"></table>
+                <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtOrganizations" width="100%" cellspacing="0"></table>
             </div>
         </div>
     </div>

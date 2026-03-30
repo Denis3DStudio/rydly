@@ -17,9 +17,9 @@ $(document).ready(function () {
     // Show General tab first
     $("#tabLang-1-tab").before($("#tabGeneral-tab"));
 
-    // Get the organizer data
+    // Get the organization data
     getCategories(function () {
-        getOrganizer();
+        getOrganization();
     });
 
     // Init google autocomplete - TODO
@@ -36,15 +36,15 @@ $(document).ready(function () {
 
 });
 
-//#region Organizer
+//#region organization
 
 // Get
-function getOrganizer() {
+function getOrganization() {
 
     get_call(
-        BACKEND.ORGANIZER.INDEX,
+        BACKEND.ORGANIZATION.INDEX,
         {
-            IdOrganizer: Url.Params.IdOrganizer
+            IdOrganization: Url.Params.IdOrganization
         },
         function (response) {
             console.log(response);
@@ -79,7 +79,7 @@ function getOrganizer() {
 }
 
 // Put
-function saveOrganizer() {
+function saveOrganization() {
 
     // Get the tabs data
     var tabs_data = checkLanguagesTabs();
@@ -89,18 +89,18 @@ function saveOrganizer() {
 
         // Build
         var params = {
-            IdOrganizer: Url.Params.IdOrganizer,
+            IdOrganization: Url.Params.IdOrganization,
             Languages: tabs_data.Languages,
             ...getContentData("#common_container", true),
             ...getContentData("#tabGeneral", true)
         };
 
         put_call(
-            BACKEND.ORGANIZER.INDEX,
+            BACKEND.ORGANIZATION.INDEX,
             params,
             function () {
 
-                window.location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/organizer?st=ok&m=Luogo salvato correttamente!`;
+                window.location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/organization?st=ok&m=Luogo salvato correttamente!`;
             }
         );
     }
@@ -119,7 +119,7 @@ function getCategories(callback = null) {
     get_call(
         BACKEND.CATEGORY.ALL,
         {
-            IdType: ENUM.BASE_CATEGORY_TYPE.ORGANIZER
+            IdType: ENUM.BASE_CATEGORY_TYPE.ORGANIZATION
         },
         function (categories) {
             // console.log(categories);

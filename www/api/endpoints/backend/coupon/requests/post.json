@@ -2,5 +2,8 @@
     "Login": {
         "Username": true,
         "Password": true
+    },
+    "Create": {
+        "IdSponsor" : false
     }
 }
