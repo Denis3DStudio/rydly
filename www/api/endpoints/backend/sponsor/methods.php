@@ -45,25 +45,28 @@
                 // Format
                 return $this->Success($this->formatSponsor($response));
             }
-            public function getAll() {
+            public function getAll($ids = []) {
 
                 // Get the request
                 $request = $this->Request;
 
                 // Build the inner join for the categories
-                $inner_join_categories = "";
-                if (property_exists($request, "IdsCategories") && !Base_Functions::IsNullOrEmpty($request->IdsCategories))
-                    $inner_join_categories = "INNER JOIN refs_categories rc ON rc.ContentRefId = s.IdSponsor AND rc.IdType = " . Base_Category_Type::SPONSOR . " AND rc.IdCategory IN (" . implode(", ", $request->IdsCategories) . ")";
+                $whereCategories = $this->buildCategoryWhere(Base_Category_Type::SPONSOR, $request->IdsCategories, "s.IdSponsor");
+
+                // Build the where Organization
+                $whereOrganization = $this->buildOrganizationWhere("s");
+
+                // Check if the IdSponsor is set
+                $idsWhere = !Base_Functions::IsNullOrEmpty($ids) ? " AND s.IdSponsor IN (" . implode(", ", $ids) . ")" : "";
 
                 // Get the sponsor
                 $sql = "SELECT s.*, st.*
                         FROM sponsors s
-                        $inner_join_categories
-                        INNER JOIN sponsors_translations st ON s.IdSponsor = st.IdSponsor AND st.IdLanguage = (SELECT MIN(st2.IdLanguage)
+                        INNER JOIN sponsors_translations st ON s.IdSponsor = st.IdSponsor $idsWhere AND st.IdLanguage = (SELECT MIN(st2.IdLanguage)
                                                                                                         FROM sponsors_translations st2
                                                                                                         WHERE st2.IdSponsor = s.IdSponsor
                                                                                                         )
-                        WHERE s.IsValid = 1 AND s.IsDeleted = 0";
+                        WHERE s.IsValid = 1 AND s.IsDeleted = 0 $whereOrganization $whereCategories";
                 $all = $this->__linq->queryDB($sql)->getResults();
 
                 // Check if is not null
@@ -77,8 +80,17 @@
             // Post
             public function create() {
 
+                // Get the request
+                $request = $this->Request ?? new stdClass();
+
+                // Check if the logged user can create a sponsor for the organization
+                if (($this->Logged->IdOrganization))
+                    $request->IdOrganization = $this->Logged->IdOrganization;
+                else
+                    $request->IdCreator = $this->Logged->IdAccount;
+
                 // Create a new row in the sponsors table
-                $idSponsor = $this->__opHelper->object($this->id)->table($this->table_name)->insertIncrement();
+                $idSponsor = $this->__opHelper->object($request)->table($this->table_name)->insert();
 
                 // Check if created
                 if(is_numeric($idSponsor) && $idSponsor > 0)
@@ -153,24 +165,28 @@
             public function delete($idSponsor) {
 
                 // Check that the sponsor exists
-                $this->get($idSponsor);
+                $sponsor = $this->get($idSponsor);
+
+                // Check if Logged user can delete the sponsor
+                if (!$this->checkIfLoggedCan($sponsor->IdOrganization))
+                    return $this->Unauthorized();
 
                 // Check if success 
-                if ($this->Success == true) {
+                if (!$this->Success)
+                    return $this->Not_Found();
 
-                    // Update the sponsor to deleted
-                    $obj = new stdClass();
-                    $obj->IdSponsor = $idSponsor;
-                    $obj->IsDeleted = 1;
+                // Update the sponsor to deleted
+                $obj = new stdClass();
+                $obj->IdSponsor = $idSponsor;
+                $obj->IsDeleted = 1;
 
-                    // Update
-                    $this->__opHelper->object($obj)->table($this->table_name)->where($this->id)->update();
+                // Update
+                $this->__opHelper->object($obj)->table($this->table_name)->where($this->id)->update();
 
-                    return $this->Success();
-                }
-
+                // Refresh cache
                 $this->refreshCache();
-                return $this->Not_Found();
+
+                return $this->Success();
             }
             
             #region Contents
@@ -364,6 +380,7 @@
                     // Build object
                     $tmp = new stdClass();
                     $tmp->IdSponsor = $sponsor->IdSponsor;
+                    $tmp->IdOrganization = $sponsor->IdOrganization;
                     $tmp->Name = $sponsor->Name;
                     $tmp->UseOnlyCoordinates = $sponsor->UseOnlyCoordinates;
                     $tmp->Phone = $sponsor->Phone;

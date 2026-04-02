@@ -49,23 +49,33 @@ function renderTable() {
                     var impersonate_disabled = '';
                     var dltBtnAction = `simpleDelete(${ENUM.BASE_SIMPLE_DELETE.ACCOUNT}, ${data.IdAccount})`;
                     var dltBtnDisabled = '';
+                    var editAccountDisabled = '';
 
                     if (data.IdAccount == Logged.IdAccount) {
                         impersonate_disabled = 'disabled';
                         dltBtnAction = ``;
                         dltBtnDisabled = 'disabled';
                     }
+                    // Check if on same Role
+                    if (data.IdRole == Logged.IdRole && !ENUM.BASE_ACCOUNT.FULL_ACCESS.includes(Logged.IdRole)) {
 
-                    var impersonate = data.IdRole != ENUM.BASE_ACCOUNT.SUPERADMIN ? "" :
+                        // Disable edit btn
+                        editAccountDisabled = 'disabled';
+
+                        // Disable delete button
+                        dltBtnDisabled = 'disabled';
+                    }
+
+                    var impersonate = Logged.IdRole != ENUM.BASE_ACCOUNT.SUPERADMIN ? "" :
                         `<button type="button" class="btn btn-outline-secondary" onclick="impersonateAccount(${data.IdAccount})" data-bs-toggle="tooltip" data-placement="top" title="Impersona" ${impersonate_disabled}>
                             <i class="fa fa-fw fa-person-walking-arrow-right"></i>
                         </button>`;
 
                     return `
                             ${impersonate}
-                            <a class="btn btn-secondary" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/account/${data.IdAccount}">
+                            <button class="btn btn-secondary" onclick="window.open('/${ENUM.BASE_KEYS.BACKEND_PATH}/account/${data.IdAccount}')" ${editAccountDisabled}>
                                 <i class="fa fa-fw fa-edit"></i>
-                            </a>
+                            </button>
                             <button type="button" class="btn btn-link text-danger" onclick="${dltBtnAction}" ${dltBtnDisabled}>
                                 <i class="fa fa-fw fa-trash"></i>
                             </button>

@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row page-head">
     <div class="col-6 col-md-9 p-0">
-      <h1><i class="fa fa-fw fa-location-dot op-2"></i> Luoghi</h1>
+      <h1><i class="fa fa-fw fa-location-dot op-2"></i> Eventi</h1>
     </div>
     <div class="col-6 col-md-3 p-0 text-end">
       <button

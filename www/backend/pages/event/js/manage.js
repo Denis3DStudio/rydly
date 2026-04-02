@@ -10,6 +10,7 @@ var showFirstLanguageTab = false;
 
 $(document).ready(function () {
 
+    // Get languages tabs
     getLanguagesTabs();
 
     //#region Show the first tab only and move the languages tabs after the first one
@@ -19,8 +20,11 @@ $(document).ready(function () {
 
     //#endregion
 
-    // Get the place data
-    getPlace();
+    // Get categories
+    getCategories(function () {
+        // Get the event data
+        getEvent();
+    });
 
     // Init google autocomplete - TODO
     initAutocomplete();
@@ -36,15 +40,15 @@ $(document).ready(function () {
 
 });
 
-//#region Place
+//#region Event
 
 // Get
-function getPlace() {
+function getEvent() {
 
     get_call(
-        BACKEND.PLACE.INDEX,
+        BACKEND.EVENT.INDEX,
         {
-            IdPlace: Url.Params.IdPlace
+            IdEvent: Url.Params.IdEvent
         },
         function (response) {
 
@@ -64,21 +68,27 @@ function getPlace() {
 
             category_main_selected = response.MainCategory;
 
-            selects.Blogs = response.News;
             selects.Categories = response.Categories;
-            selects.Answers = response.IdSurveyQuestionAnswers;
 
-            getBlogs();
+            console.log(response);
+
+
+            // If there is a main category selected previously, set it in the select
+            checkMainCategory();
+
+            // Hide Loader
+            hideLoader();
+
         },
         function () {
-            notificationError("Errore durante il caricamento del luogo!");
+            notificationError("Errore durante il caricamento dell'evento!");
         }
     )
 
 }
 
 // Put
-function savePlace() {
+function saveEvent() {
 
     // Get the tabs data
     var tabs_data = checkLanguagesTabs();
@@ -88,7 +98,7 @@ function savePlace() {
 
         // Create the params
         var params = {
-            IdPlace: Url.Params.IdPlace,
+            IdEvent: Url.Params.IdEvent,
             Languages: tabs_data.Languages
         };
 
@@ -96,11 +106,11 @@ function savePlace() {
         var final_params = { ...params, ...getContentData("#common_container", true) };
 
         put_call(
-            BACKEND.PLACE.INDEX,
+            BACKEND.EVENT.INDEX,
             final_params,
             function () {
 
-                window.location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/place?st=ok&m=Luogo salvato correttamente!`;
+                window.location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/event?st=ok&m=Evento salvato correttamente!`;
             }
         );
     }
@@ -111,43 +121,26 @@ function savePlace() {
 
 //#endregion
 
-//#region Blogs
-
-function getBlogs() {
-
-    // Set blog
-    get_call(
-        BACKEND.PLACE.ALLNEWS,
-        null,
-        function (news) {
-
-            initSelectpicker('#newsSelect');
-            buildPicker(news, '#newsSelect', 'IdNews', 'Title', selects.Blogs, '');
-            getCategories()
-        }
-    );
-}
-//#endregion
-
 //#region Categories
 
-function getCategories() {
+function getCategories(callback = null) {
 
     // Set category
     get_call(
         BACKEND.CATEGORY.ALL,
         {
-            IdType: ENUM.BASE_CATEGORY_TYPE.PLACE
+            IdType: ENUM.BASE_CATEGORY_TYPE.EVENT
         },
         function (categories) {
 
             // Save in the global variable
             categories_list = categories;
 
-            initSelectpicker('#categorySelect');
-            buildPicker(categories, '#categorySelect', 'IdCategory', 'Title', selects.Categories, '');
+            // Build the select
+            buildPicker(categories, '#IdsCategories', 'IdCategory', 'Title');
 
-            checkMainCategory();
+            // Execute the callback if provided
+            if (callback) callback();
 
             hideLoader();
         }
@@ -159,10 +152,11 @@ function getCategories() {
 function checkMainCategory() {
 
     // Get the values selected in the category select
-    var selected_values = $("#categorySelect").val();
+    var selected_values = $("#IdsCategories").val();
     // Get also the main category select
     var main_category_select = $('#mainCategory').val() || category_main_selected; // if the select is empty get the value from the global variable (used on page load)
 
+    // Reset the global variable
     if (!isEmpty(category_main_selected))
         category_main_selected = null;
 
@@ -193,7 +187,7 @@ function checkMainCategory() {
     }
 }
 
-$(document).on("change", "#categorySelect", checkMainCategory);
+$(document).on("change", "#IdsCategories", checkMainCategory);
 
 // #region Google Autocomplete
 
@@ -212,29 +206,29 @@ function initAutocomplete() {
     });
 
     autocomplete.addListener("place_changed", () => {
-        const place = autocomplete.getPlace();
+        const event = autocomplete.getPlace();
 
-        if (!place.geometry) {
+        if (!event.geometry) {
             notificationError("Luogo/indirizzo non valido");
             return;
         }
 
-        const lat = place.geometry.location.lat();
-        const lng = place.geometry.location.lng();
+        const lat = event.geometry.location.lat();
+        const lng = event.geometry.location.lng();
         $("#Latitude").val(lat);
         $("#Longitude").val(lng);
 
         // Se vuoi mostrare nel campo l’indirizzo completo (utile per attività)
-        if (place.formatted_address) {
-            $("#Address").val(place.formatted_address);
-        } else if (place.name) {
-            $("#Address").val(place.name);
+        if (event.formatted_address) {
+            $("#Address").val(event.formatted_address);
+        } else if (event.name) {
+            $("#Address").val(event.name);
         }
 
         // Estrai la città in modo robusto (non con split!)
-        const city = getAddressComponent(place.address_components, "locality")
-            || getAddressComponent(place.address_components, "administrative_area_level_3")
-            || getAddressComponent(place.address_components, "administrative_area_level_2");
+        const city = getAddressComponent(event.address_components, "locality")
+            || getAddressComponent(event.address_components, "administrative_area_level_3")
+            || getAddressComponent(event.address_components, "administrative_area_level_2");
 
         if (city) $("#City").val(city);
     });

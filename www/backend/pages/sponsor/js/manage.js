@@ -47,7 +47,6 @@ function getSponsor() {
             IdSponsor: Url.Params.IdSponsor
         },
         function (response) {
-            console.log(response);
 
             // Set main data
             fillContentByNames("#common_container", response);
@@ -72,7 +71,7 @@ function getSponsor() {
             hideLoader();
         },
         function () {
-            notificationError("Errore durante il caricamento del luogo!");
+            notificationError("Errore durante il caricamento dello sponsor!");
         }
     )
 
@@ -100,7 +99,7 @@ function saveSponsor() {
             params,
             function () {
 
-                window.location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/sponsor?st=ok&m=Luogo salvato correttamente!`;
+                window.location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/sponsor?st=ok&m=Sponsor salvato correttamente!`;
             }
         );
     }
@@ -122,7 +121,6 @@ function getCategories(callback = null) {
             IdType: ENUM.BASE_CATEGORY_TYPE.SPONSOR
         },
         function (categories) {
-            console.log(categories);
 
             // Save in the global variable
             categories_list = categories;
@@ -236,7 +234,7 @@ function getCoupons() {
                     return `<a class="btn btn-outline-primary" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/coupon/${data.IdCoupon}" target="_blank">
                                 <i class="fa fa-fw fa-eye"></i>
                             </a>
-                            <button type="button" class="btn btn-outline-danger" onclick="simpleDelete(${data.IdCoupon}, BACKEND.COUPON.INDEX, function() { kT.refresh(); })">
+                            <button type="button" class="btn btn-outline-danger" onclick="simpleDelete(${ENUM.BASE_SIMPLE_DELETE.COUPON}, ${data.IdCoupon}, function() { getCoupons(); })">
                                 <i class="fa fa-fw fa-trash"></i>
                             </button>`;
                 }
@@ -290,7 +288,7 @@ function initAutocomplete() {
         const address = autocomplete.getPlace();
 
         if (!address.geometry) {
-            notificationError("Luogo/indirizzo non valido");
+            notificationError("uogo/indirizzo non valido");
             return;
         }
 

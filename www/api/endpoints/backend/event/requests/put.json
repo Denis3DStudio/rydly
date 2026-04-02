@@ -1,8 +1,8 @@
 {
     "Put": {
-        "IdPlace": true,
+        "IdEvent": true,
         "Name": true,
-        "Category": {
+        "IdsCategories": {
             "Mandatory": false,
             "Array": "*"
         },
@@ -17,10 +17,6 @@
         "Notes": false,
         "IsActive": true,
         "IsClaimed": true,
-        "IdSurveyQuestionAnswers": {
-            "Mandatory": false,
-            "Array": "*"
-        },
         "Languages": {
             "Mandatory": true,
             "Array": {
@@ -33,7 +29,7 @@
         }
     },
     "ContentsOrder": {
-        "IdPlace": true,
+        "IdEvent": true,
         "Extras": true,
         "Order": {
             "Mandatory": true,

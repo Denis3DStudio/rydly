@@ -334,7 +334,7 @@ function renderQuestionAnswers() {
                 }
             },
             {
-                title: 'Luoghi collegate',
+                title: 'Eventi collegate',
                 render: function (data) {
                     return data.PlacesNumber;
                 }

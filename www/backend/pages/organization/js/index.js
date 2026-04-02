@@ -29,7 +29,6 @@ function getCategories(callback = null) {
 $(document).on("change", "#categorySelect", renderTable);
 
 function renderTable() {
-    console.log($('#categorySelect').val());
     kT = new KTable("#dtOrganizations", {
         ajax: {
             url: BACKEND.ORGANIZATION.ALL,

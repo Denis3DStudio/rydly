@@ -1,8 +1,0 @@
-{
-    "WriteRequest": {
-        "Name": true,
-        "Surname": true,
-        "Email": true,
-        "Message": true
-    }
-}

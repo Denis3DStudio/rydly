@@ -1,18 +1,18 @@
 {
     "Link": {
-        "IdPlace": true,
+        "IdEvent": true,
         "IdLanguage": true,
         "Link": true
     },
     "Attachments": {
-        "IdPlace": true,
+        "IdEvent": true,
         "IdLanguage": true
     },
     "Images": {
-        "IdPlace": true
+        "IdEvent": true
     },
     "TravelerPath": {
-        "IdPlace": true,
+        "IdEvent": true,
         "IdSurveyQuestionAnswer": true
     }
 }

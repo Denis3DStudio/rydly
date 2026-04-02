@@ -51,7 +51,7 @@
             "/account/js/index.js"
         ],
         "Pages": [
-            "/account/index.html"
+            "/account/index.php"
         ]
     },
     "Account": {
@@ -208,11 +208,11 @@
         ],
         "IdCategoryType": 4
     },
-    "Category_Place": {
-        "Routes": "/category_place/",
+    "Category_Event": {
+        "Routes": "/category_event/",
         "Auth": true,
         "FullLoader": true,
-        "Title": "Categorie Locali",
+        "Title": "Categorie Eventi",
         "Components": [
             "k-table"
         ],
@@ -225,11 +225,11 @@
         ],
         "IdCategoryType": 2
     },
-    "Category_PlaceDetail": {
+    "Category_EventDetail": {
         "FullLoader": true,
-        "Routes": "/category_place/(IdCategory)",
+        "Routes": "/category_event/(IdCategory)",
         "Auth": true,
-        "Title": "Categoria Locali dettaglio",
+        "Title": "Categoria Eventi dettaglio",
         "Js": [
             "/category/js/manage.js",
             "/category/js/common.js"
@@ -330,6 +330,9 @@
         ],
         "Pages": [
             "/translation/index.php"
+        ],
+        "Roles": [
+            4
         ]
     },
     "Translation": {
@@ -345,6 +348,9 @@
         ],
         "Pages": [
             "/translation/manage.php"
+        ],
+        "Roles": [
+            4
         ]
     },
     "Coupon": {
@@ -445,6 +451,10 @@
         ],
         "Pages": [
             "/organization/index.php"
+        ],
+        "Roles": [
+            4,
+            1
         ]
     },
     "OrganizationDetail": {
@@ -468,26 +478,26 @@
             "/organization/manage.php"
         ]
     },
-    "Place": {
-        "Routes": "/place/",
+    "Event": {
+        "Routes": "/event/",
         "Auth": true,
         "FullLoader": true,
-        "Title": "Luoghi",
+        "Title": "Eventi",
         "Components": [
             "k-table"
         ],
         "Js": [
-            "/place/js/index.js"
+            "/event/js/index.js"
         ],
         "Pages": [
-            "/place/index.php"
+            "/event/index.php"
         ]
     },
-    "PlaceDetail": {
-        "Routes": "/place/(IdPlace)",
+    "EventDetail": {
+        "Routes": "/event/(IdEvent)",
         "Auth": true,
         "Loader": true,
-        "Title": "Gestione Luoghi",
+        "Title": "Gestione Evento",
         "Components": [
             "k-table",
             "summernote",
@@ -497,10 +507,10 @@
             "g-maps"
         ],
         "Js": [
-            "/place/js/manage.js"
+            "/event/js/manage.js"
         ],
         "Pages": [
-            "/place/manage.php"
+            "/event/manage.php"
         ]
     },
     "Emails": {

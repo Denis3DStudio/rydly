@@ -66,6 +66,9 @@
                 // Add the IdType filter if it's not null
                 $where .= !Base_Functions::IsNullOrEmpty($idType) ? " AND t.IdType = $idType" : "";
 
+                // Add to the where the Organization filter if the user is not super admin
+                $where .= $this->buildOrganizationWhere("t");
+
                 // Create the ids filter if $ids is not null
                 $inner = "";
                 if ($reorderByRef)
@@ -97,7 +100,7 @@
 
                 // Check that $all is not null
                 if (Base_Functions::IsNullOrEmpty($categories))
-                    return $this->Success([]);
+                    return $this->Success($reorderByRef ? new stdClass() : []);
 
                 // Get all the translations for the categories
                 $translations = $this->__linq->reorder($this->__linq->fromDB($this->table_translations_name)->whereDB("IdCategory IN (" . implode(", ", array_column($categories, $this->id)) . ")")->getResults(), "IdCategory");
@@ -172,35 +175,40 @@
             // Post
             public function create() {
 
+                // Get the request
+                $request = $this->Request ?? new stdClass();
+
+                // Add IdOrganization
+                $request->IdOrganization = $this->Logged->IdOrganization ?? null;
+
                 // Create the new row
-                $id = $this->__opHelper->object($this->id)->table($this->table_name)->insertIncrement();
+                $id = $this->__opHelper->object($request)->table($this->table_name)->insert();
 
                 // Check if the id is valid
-                if (Base_Functions::IsNullOrEmpty($id))
-                    return $this->Internal_Server_Error(null, "Qualcosa è andato storto!");
+                if (Base_Functions::IsNullOrEmpty($id) || $id === 0)
+                    return $this->Not_Found(null, "Qualcosa è andato storto!");
 
-                // Get the request
-                $request = $this->Request;
-
-                // Add the id to the request
-                $request->{$this->id} = $id;
-
-                // Update the new row with the id
-                $this->__opHelper->object($request)->table($this->table_name)->where($this->id)->update();
-
+                // Return the new id
                 return $this->Success($id);
             }
     
             // Put
             public function update() {
 
-                $this->get($this->Request->{$this->id});
+                // Get the category
+                $category = $this->get($this->Request->{$this->id});
 
+                // Check if the category exists
                 if (!$this->Success)
-                    return;
+                    return $this->Not_Found(null, "Categoria non trovata!");
+
+                // Check if Logged user has permissions to update the category
+                if (!$this->checkIfLoggedCan($category->General ? ($category->General->IdOrganization ?? null) : null))
+                    return $this->Unauthorized(null, "Non hai i permessi per modificare questa categoria!");
 
                 // Get the request
                 $request = $this->Request;
+
                 // Get the translations
                 $translations = $request->Languages;
 
@@ -272,10 +280,16 @@
             // Delete 
             public function delete($idCategory) {
 
-                $this->get($idCategory);
+                // Get the category
+                $category = $this->get($idCategory);
 
+                // Check if the category exists
                 if (!$this->Success)
-                    return;
+                    return $this->Not_Found(null, "Categoria non trovata!");
+
+                // Check if Logged user has permissions to delete the category
+                if (!$this->checkIfLoggedCan($category->General ? ($category->General->IdOrganization ?? null) : null))
+                    return $this->Unauthorized(null, "Non hai i permessi per eliminare questa categoria!");
 
                 // Create the obj to delete
                 $obj = new stdClass();

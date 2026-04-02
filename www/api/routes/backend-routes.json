@@ -840,7 +840,7 @@
             }
         }
     },
-    "Place": {
+    "Event": {
         "GET": {
             "": {
                 "Auth": true,
@@ -873,10 +873,6 @@
                     "Path": "get",
                     "Class": "News"
                 }
-            },
-            "AllNews": {
-                "Auth": true,
-                "Method": "getAllNews"
             }
         },
         "POST": {
@@ -979,10 +975,6 @@
                     "Path": "get",
                     "Class": "News"
                 }
-            },
-            "AllNews": {
-                "Auth": true,
-                "Method": "getAllNews"
             }
         },
         "POST": {

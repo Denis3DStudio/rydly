@@ -1,6 +1,6 @@
 $(document).ready(function () {
     getLanguages();
-    // Get the categories places
+    // Get the categories events
     getCategories(renderTable);
 });
 
@@ -11,7 +11,7 @@ function getCategories(callback = null) {
     get_call(
         BACKEND.CATEGORY.ALL,
         {
-            IdType: ENUM.BASE_CATEGORY_TYPE.PLACE
+            IdType: ENUM.BASE_CATEGORY_TYPE.EVENT
         },
         function (categories) {
 
@@ -30,15 +30,25 @@ function getCategories(callback = null) {
 $(document).on("change", "#categorySelect", renderTable);
 
 function renderTable() {
-    console.log($('#categorySelect').val());
     kT = new KTable("#dtPlace", {
         ajax: {
-            url: BACKEND.PLACE.ALL,
+            url: BACKEND.EVENT.ALL,
             data: {
                 IdsCategories: $('#categorySelect').val()
             }
         },
         columns: [
+            {
+                title: 'Organizzatore',
+                visible: !ENUM.BASE_ACCOUNT.ROLES_WITH_ORGANIZATION.includes(Logged.IdRole), // Hide if the user has a role with organization or belongs to an organization
+                filterable: true,
+                render: function (data) {
+                    if(!data.Organization)
+                        return '-';
+
+                    return `<a class="underline" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/organization/${data.Organization.IdOrganization}" target="_blank">${data.Organization.Name}</a>`;
+                }
+            },
             {
                 title: 'Nome',
                 render: function (data) {
@@ -47,14 +57,26 @@ function renderTable() {
             },
             {
                 title: 'Categoria Principale',
+                filterable: true,
                 render: function (data) {
-                    return data.MainCategory;
+                    // Check if the main category property exists
+                    if (!data.MainCategory)
+                        return '-';
+
+                    return `<a class="underline" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/category/${data.MainCategory.IdCategory}" target="_blank">${data.MainCategory.Title}</a>`;
                 }
             },
             {
                 title: 'Categorie',
+                filterable: true,
                 render: function (data) {
-                    return data.Categories;
+                    // Check if the categories property exists and is an array
+                    if (!data.Categories)
+                        return '-';
+
+                    return data.Categories.map(function (category) {
+                        return `<a class="underline" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/category/${category.IdCategory}" target="_blank">${category.Title}</a>`;
+                    }).join(' - ');
                 }
             },
             {
@@ -81,10 +103,10 @@ function renderTable() {
                 searchable: false,
                 render: function (data) {
                     return `
-                        <a class="btn btn-secondary" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/place/${data.IdPlace}">
+                        <a class="btn btn-secondary" href="/${ENUM.BASE_KEYS.BACKEND_PATH}/event/${data.IdEvent}">
                             <i class="fa fa-fw fa-edit"></i>
                         </a>
-                        <button type="button" class="btn btn-link text-danger" onclick="simpleDelete(${ENUM.BASE_SIMPLE_DELETE.PLACE}, ${data.IdPlace})">
+                        <button type="button" class="btn btn-link text-danger" onclick="simpleDelete(${ENUM.BASE_SIMPLE_DELETE.EVENT}, ${data.IdEvent})">
                             <i class="fa fa-fw fa-trash"></i>
                         </button>
                     `
@@ -108,14 +130,14 @@ function createPlace() {
     showLoader();
 
     post_call(
-        BACKEND.PLACE.INDEX,
+        BACKEND.EVENT.INDEX,
         null,
-        function (idPlace) {
+        function (idEvent) {
 
             hideLoader();
 
             // Open the news detail page
-            location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/place/${idPlace}`;
+            location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/event/${idEvent}`;
 
         },
         function () {

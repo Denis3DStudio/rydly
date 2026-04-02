@@ -124,7 +124,7 @@
                         <div class="col-12">
                             <hr class="mt-0">
                             <div class="form-group">
-                                <label>Luoghi</label>
+                                <label>Eventi</label>
                                 <select class="selectpicker form-control" name="IdsPlaces" data-title="Seleziona..." data-width="100%" data-live-search="true" multiple>
                                 </select>
                             </div>

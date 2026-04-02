@@ -24,6 +24,7 @@ use stdClass;
             // Get
             public function get($idAccount, $isValid = 0) {
 
+                // Init
                 $where = "";
 
                 // Check if only valid or not
@@ -33,6 +34,11 @@ use stdClass;
                 // Get the account
                 $account = $this->__linq->fromDB("accounts")->whereDB("IdAccount = $idAccount AND IsDeleted = 0 $where")->getFirstOrDefault();
 
+                // Check if Logged can see the account
+                if(!$this->checkIfLoggedCan($account->IdOrganization) || !$this->canUpdate($account->IdRole, $account->IdAccount))
+                    return $this->Unauthorized(null, "You don't have permission to see this account");
+
+                // Check if found
                 if(Base_Functions::IsNullOrEmpty($account))
                     return $this->Not_Found(null, "Account not found");
 
@@ -49,6 +55,10 @@ use stdClass;
 
                 // Add filter for roles
                 $where .= " AND IdRole IN (" . implode(",", Base_Account::ROLES_CAN_SEE[$this->Logged->IdRole]) . ")";
+
+                // Add filter for organization
+                if(in_array($this->Logged->IdRole, Base_Account::ROLES_WITH_ORGANIZATION))
+                    $where .= $this->buildOrganizationWhere();
 
                 // Get accounts
                 $accounts = $this->__linq->fromDB("accounts")->whereDB($where)->getResults();
@@ -92,13 +102,13 @@ use stdClass;
                     return $this->Internal_Server_Error(null, "Account not created");
 
                 // Check if created by an user with organization role and assign the same organization to the new account
-                if(in_array($this->Logged->IdRole, Base_Account::ROLES_WITH_ORGANIZATION))
+                if(!in_array($this->Logged->IdRole, Base_Account::ROLES_WITH_ORGANIZATION))
                     return $this->Success($idAccount);
 
                 // Update with default values
                 $obj = new stdClass();
                 $obj->IdAccount = $idAccount;
-                $obj->IdOrganization = $this->Logged->IdOrganization;
+                $obj->IdOrganization = $this->Logged->IdOrganization ?? null;
 
                 // Update
                 $this->__opHelper->object($obj)->table("accounts")->where("IdAccount")->update();
@@ -120,19 +130,29 @@ use stdClass;
                 return $this->login(null, null, $idAccount);
             }
 
-
             // Put
             public function update() {
+
+                // Get request
                 $obj = $this->Request;
 
                 // Check if account exists
-                $this->get($obj->IdAccount);
+                $account = $this->get($obj->IdAccount);
 
-                if($this->Success == false)
-                    return;
+                // Check if found
+                if(!$this->Success)
+                    return $this->Not_Found(null, "Account not found");
+
+                // Check if Logged can update the account
+                if(!$this->checkIfLoggedCan($account->IdOrganization) || !$this->canUpdate($account->IdRole, $account->IdAccount))
+                    return $this->Unauthorized(null, "You don't have permission to update this account");
 
                 // Add IsValid 
                 $obj->IsValid = 1;
+
+                // Check if Logged is from Organization
+                if(in_array($this->Logged->IdRole, Base_Account::ROLES_WITH_ORGANIZATION))
+                    $obj->IdOrganization = $this->Logged->IdOrganization;
 
                 // Check password
                 if(Base_Functions::IsNullOrEmpty($obj->Password))
@@ -218,12 +238,12 @@ use stdClass;
                     $tmp->Type = class_exists("Base_Customer_Type") ? \Base_Customer_Type::LOGGED : 2;
                     $tmp->IdLanguage = Base_Languages::ITALIAN;
                     
+                    // Add organization
+                    $tmp->IdOrganization = $account->IdOrganization;
+
                     // Add sensitive data only for the single account
                     if(!$isAll) {
                         
-                        // Add organization
-                        $tmp->IdOrganization = $account->IdOrganization;
-
                         // Add IsValid
                         $tmp->IsValid = $account->IsValid;
 
@@ -244,6 +264,23 @@ use stdClass;
 
                 // Return only one if not array
                 return $this->Success($isAll ? $response : $response[0]);
+            }
+            private function canUpdate($idRole, $idAccount = null) {
+
+                // Check if Logged has full access
+                if((in_array($this->Logged->IdRole, Base_Account::FULL_ACCESS)))
+                    return true;
+
+                // Check if account is the same of the logged user
+                if($idAccount && $this->Logged->IdAccount == $idAccount)
+                    return true;
+
+                // Check if same role
+                if($this->Logged->IdRole == $idRole)
+                    return false;
+
+                // Check if the account is from the same role of the logged user
+                return true;
             }
 
         #endregion

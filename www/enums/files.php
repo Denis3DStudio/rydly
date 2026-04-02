@@ -10,7 +10,7 @@
             self::PROJECT_SINGLE,
             self::EMAIL,
             self::PLACE_CATEGORY,
-            self::PLACE,
+            self::EVENT,
             self::SPONSOR,
             self::ORGANIZATION
         ];
@@ -22,7 +22,7 @@
         const PROJECT_SINGLE = 4;
         const EMAIL = 5;
         const PLACE_CATEGORY = 6;
-        const PLACE = 7;
+        const EVENT = 7;
         const SPONSOR = 8;
         const ORGANIZATION = 9;
 
@@ -34,7 +34,7 @@
             self::PROJECT_SINGLE => 'IdProject',
             self::EMAIL => 'IdEmail',
             self::PLACE_CATEGORY => 'IdCategory',
-            self::PLACE => 'IdPlace',
+            self::EVENT => 'IdEvent',
             self::SPONSOR => 'IdSponsor',
             self::ORGANIZATION => 'IdOrganization'
         ];
@@ -47,7 +47,7 @@
             self::PROJECT_SINGLE => 'projects_singles',
             self::EMAIL => 'emails',
             self::PLACE_CATEGORY => 'categories_places',
-            self::PLACE => 'places',
+            self::EVENT => 'events',
             self::SPONSOR => 'sponsors',
             self::ORGANIZATION => 'organizations',
         ];
@@ -68,7 +68,7 @@
             self::PROJECT_SINGLE => 'projects',
             self::EMAIL => 'emails',
             self::PLACE_CATEGORY => 'categories_places',
-            self::PLACE => 'places',
+            self::EVENT => 'events',
             self::SPONSOR => 'sponsors',
             self::ORGANIZATION => 'organizations',
         ];

@@ -145,12 +145,62 @@
                     if (Base_Functions::IsNullOrEmpty($this->Logged))
                         return false;
 
+                    // Check if the user is super admin
+                    if ($this->Logged->IdRole == Base_Account::SUPERADMIN)
+                        return true;
+
+                    // Get the permission for the organization
+                    $loggedIdOrganization = property_exists($this->Logged, "IdOrganization") ? $this->Logged->IdOrganization : null;
+
                     // Check if the user has the permission
-                    return Base_Permissions::Check($this->Logged->IdAccount, $idOrganization, $permission);
+                    return !Base_Functions::IsNullOrEmpty($loggedIdOrganization) && $loggedIdOrganization == $idOrganization;
+                }
+                public function buildOrganizationWhere($tableAlias = null) {
+
+                    // Check if the user is logged
+                    if (Base_Functions::IsNullOrEmpty($this->Logged))
+                        return " AND 1 = 0";
+
+                    // Check if the user is super admin
+                    if (in_array($this->Logged->IdRole, Base_Account::FULL_ACCESS))
+                        return '';
+
+                    // Build the where condition
+                    $alias = !Base_Functions::IsNullOrEmpty($tableAlias) ? $tableAlias . "." : "";
+                    $where = " AND (" . $alias . "IdOrganization = " . $this->Logged->IdOrganization . ")";
+
+                    return $where;
                 }
 
             #endregion
-            
+
+            #region Categories
+
+                public function buildCategoryWhere($idType, $idsCategories, $contentComparison) {
+
+                    // Check if the categories filter is not empty
+                    if (Base_Functions::IsNullOrEmpty($idsCategories))
+                        return "";
+
+                    // Convert in int
+                    $idsCategories = array_map('intval', $idsCategories);
+
+                    // Sort the array ASC
+                    sort($idsCategories);
+
+                    // Convert in string
+                    $idsCategories = implode(",", $idsCategories);
+
+                    // Build the where condition
+                    $where = " AND (SELECT GROUP_CONCAT(rf.IdCategory ORDER BY rf.IdCategory)
+                                            FROM refs_categories rf
+                                            WHERE rf.ContentRefId = $contentComparison AND rf.IdType = $idType AND rf.IdCategory IN($idsCategories)) = '$idsCategories'";
+
+                    return $where;
+                }
+
+            #endregion
+
         #endregion
 
         #region Private Methods

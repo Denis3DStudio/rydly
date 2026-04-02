@@ -47,7 +47,6 @@ function getOrganization() {
             IdOrganization: Url.Params.IdOrganization
         },
         function (response) {
-            console.log(response);
 
             // Set main data
             fillContentByNames("#common_container", response);
@@ -71,10 +70,17 @@ function getOrganization() {
 
             hideLoader();
         },
-        function () {
-            notificationError("Errore durante il caricamento del luogo!");
+        function (response, message, code) {
+            // Show error message
+            notificationError(message ?? "Errore durante il caricamento dell'organizzazione!");
+            console.log(code);
+            
+            // If the error is 401, redirect to the list page
+            if (code === 401)
+                window.location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/organization/${Logged.IdOrganization}`;
+
         }
-    )
+    );
 
 }
 
@@ -95,12 +101,17 @@ function saveOrganization() {
             ...getContentData("#tabGeneral", true)
         };
 
+        // Call API
         put_call(
             BACKEND.ORGANIZATION.INDEX,
             params,
             function () {
 
-                window.location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/organization?st=ok&m=Luogo salvato correttamente!`;
+                // Redirect to list
+                var redirect_to_list = !ENUM.BASE_ACCOUNT.ROLES_WITH_ORGANIZATION.includes(Logged.IdRole);
+
+                // Check if Logged user is an organization member, if yes redirect to the organization detail page, otherwise stay on the list page
+                window.location.href = `/${ENUM.BASE_KEYS.BACKEND_PATH}/organization/${redirect_to_list ? '' : Url.Params.IdOrganization}?st=ok&m=Organizzazione salvata con successo!`;
             }
         );
     }
@@ -122,7 +133,6 @@ function getCategories(callback = null) {
             IdType: ENUM.BASE_CATEGORY_TYPE.ORGANIZATION
         },
         function (categories) {
-            // console.log(categories);
 
             // Save in the global variable
             categories_list = categories;

@@ -24,13 +24,10 @@
 
                 // Get the coupon (Not deleted or paused)
                 $coupon = $this->__linq->fromDB("coupons")->whereDB("IdCoupon = $idCoupon AND IsDeleted = 0")->getFirstOrDefault();
-                
-                $coupon->IdsProducts = array_column($this->__linq->fromDB("coupons_products")->whereDB("IdCoupon = $idCoupon")->selectDB("IdProduct")->getResults(), "IdProduct");
-                $coupon->IdsCustomers = array_column($this->__linq->fromDB("coupons_customers")->whereDB("IdCoupon = $idCoupon")->selectDB("IdCustomer")->getResults(), "IdCustomer");
 
                 // Check if the coupon exists
                 if (!Base_Functions::IsNullOrEmpty($coupon))
-                    return $this->Success($coupon);
+                    return $this->Success($this->format($coupon));
 
                 return $this->Not_Found();
             }
@@ -176,23 +173,78 @@
             public function delete($idCoupon) {
 
                 // Check if the coupon exists
-                $this->get($idCoupon, true);
+                $coupon = $this->get($idCoupon, true);
+
+                // Check if the logged user is the owner of the coupon
+                if (!$this->checkIfLoggedCan($coupon->IdOrganization))
+                    return $this->Unauthorized();
 
                 // Check if is success
-                if (!$this->Success) {
+                if (!$this->Success)
+                    return $this->Not_Found();
 
-                    // Create the obj to update
-                    $obj = new stdClass();
-                    $obj->IdCoupon = $idCoupon;
-                    $obj->IsDeleted = 1;
+                // Create the obj to update
+                $obj = new stdClass();
+                $obj->IdCoupon = $idCoupon;
+                $obj->IsDeleted = 1;
 
-                    // Delete the coupon
-                    $this->__opHelper->object($obj)->table("coupons")->where("IdCoupon")->update();
+                // Delete the coupon
+                $this->__opHelper->object($obj)->table("coupons")->where("IdCoupon")->update();
 
-                    return $this->Success();
+                return $this->Success();
+            }
+
+        #endregion
+
+        #region private Methods
+
+            private function format($coupons) {
+
+                // Check if the coupons is not null
+                if (Base_Functions::IsNullOrEmpty($coupons))
+                    return null;
+
+                // Check if array
+                $isAll = is_array($coupons);
+
+                // If not array, convert to array
+                if (!$isAll)
+                    $coupons = [$coupons];
+
+                // Get all the ids of sponsors
+                $ids_sponsors = array_filter(array_unique(array_column($coupons, "IdSponsor")));
+
+                // Get all the sponsors
+                $sponsors = $ids_sponsors 
+                                ? $this->__linq->reorder($this->sponsor->getAll($ids_sponsors), "IdSponsor") 
+                                : new stdClass();  
+
+                // Init the result
+                $result = [];
+
+                // Cycle the coupons
+                foreach ($coupons as $coupon) {
+
+                    // Init
+                    $tmp = new stdClass();
+                    $tmp->IdCoupon = $coupon->IdCoupon;
+                    $tmp->IdOrganization = property_exists($sponsors, $coupon->IdSponsor) ? $sponsors->{$coupon->IdSponsor}->IdOrganization : null;
+                    $tmp->Code = $coupon->Code;
+                    $tmp->Type = $coupon->Type;
+                    $tmp->Value = $coupon->Value;
+                    $tmp->Enabled = $coupon->Enabled;
+                    $tmp->IsValid = $coupon->IsValid;
+                    $tmp->IdSponsor = $coupon->IdSponsor;
+
+                    // Get the sponsor
+                    $tmp->Sponsor = property_exists($sponsors, $coupon->IdSponsor) ? $sponsors->{$coupon->IdSponsor} : null;
+
+                    // Add the tmp to the result
+                    $result[] = $tmp;
                 }
 
-                return $this->Not_Found();
+                // Return the result
+                return $isAll ? $result : $result[0];
             }
 
         #endregion

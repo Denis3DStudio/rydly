@@ -20,10 +20,10 @@ class Base_Cache_Manager {
 
                 // Get all the images of the places, for each place, get the first image
                 $sql = "SELECT pi.IdPlace, pi.FullPath
-                        FROM places_images pi
+                        FROM events_images pi
                         JOIN (
                             SELECT IdPlace, MIN(OrderNumber) AS min_order
-                            FROM places_images
+                            FROM events_images
                             GROUP BY IdPlace
                         ) m
                         ON pi.IdPlace = m.IdPlace

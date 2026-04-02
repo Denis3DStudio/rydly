@@ -25,7 +25,6 @@ function getAccount() {
 
             // Check if is new or not
             if (response.IsValid == 0) {
-
                 $('[name="Password"]').attr("mandatory", true);
                 $('#RepeatPassword').attr("mandatory", true);
             }
@@ -34,11 +33,12 @@ function getAccount() {
             if (Logged.IdAccount == Url.Params.IdAccount)
                 $('#deleteBtnContainer').remove();
 
+            // Check if role can see Role
+            if (Logged.IdRole != ENUM.BASE_ACCOUNT.ORGANIZATION)
+                $('#role_select_container').show();
+
             // Set main data
             fillContentByNames("", response);
-
-            // Reload role
-            initSelectpicker("[name='IdRole']");
 
             hideLoader();
         }
@@ -114,6 +114,17 @@ $('[name="IdRole"]').change(function () {
 });
 
 function getOrganizations(callback = null) {
+
+    // Check if Logged has full access
+    if (!(ENUM.BASE_ACCOUNT.FULL_ACCESS.includes(Logged.IdRole))) {
+
+        // Callback
+        if (callback != null)
+            callback();
+
+        // Return
+        return;
+    }
 
     get_call(
         BACKEND.ORGANIZATION.ALL,

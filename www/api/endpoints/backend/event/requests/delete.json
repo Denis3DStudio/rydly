@@ -1,9 +1,9 @@
 {
     "Delete": {
-        "IdPlace": true
+        "IdEvent": true
     },
     "Content": {
-        "IdPlace": true,
+        "IdEvent": true,
         "ContentRefId": true
     }
 }

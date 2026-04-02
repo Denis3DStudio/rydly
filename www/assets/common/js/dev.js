@@ -238,7 +238,7 @@ function ajax_call_callback(response, callback, failureCallback, err = null) {
 
         // Everything is fine, call callback
         if (typeof callback === 'function')
-            callback(response.Response, response.Message);
+            callback(response.Response, response.Message, response.Code);
         else
             notificationError(response.Message);
     }

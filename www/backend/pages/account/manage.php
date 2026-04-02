@@ -73,18 +73,17 @@
             <div class="card mb-3 shadow">
                 <div class="card-body" id="role_select_container">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-12" id="role_select_container" style="display: none;">
                             <div class="form-group">
                                 <label>Ruolo</label>
                                 <select class="selectpicker" name="IdRole" data-title="Seleziona..." data-width="100%" mandatory trigger_change>
-                                    <?php 
-                                        foreach (Base_Account::ALL as $account) {
-                                            if ($account != Base_Account::SUPERADMIN || $this->Logged->IdRole == Base_Account::SUPERADMIN) {
+                                    <?php
+                                    // Show only the roles that the logged user can create
+                                    foreach (Base_Account::ROLE_THAT_CAN_CREATE[$this->Logged->IdRole] as $account) {
                                     ?>
                                         <option value="<?= $account ?>"><?= Base_Account::NAMES[$account] ?></option>
-                                    <?php 
-                                            }
-                                        }
+                                    <?php
+                                    }
                                     ?>
                                 </select>
                             </div>

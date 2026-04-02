@@ -110,9 +110,9 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Luoghi</label>
+                        <label>Eventi</label>
                         <select id="placesSelect" name="Place" class="selectpicker" data-width="100%"
-                            data-live-search="true" data-size="8" title="Seleziona luoghi..."
+                            data-live-search="true" data-size="8" title="Seleziona Eventi..."
                             multiple></select>
                     </div>
                 </div>

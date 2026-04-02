@@ -32,6 +32,10 @@
             // Get
             public function get($idOrganization, $isValid = 0) {
 
+                // Check if Logged can see the organization
+                if(!$this->checkIfLoggedCan($idOrganization))
+                    return $this->Unauthorized(null, "You don't have permission to see this organization");
+
                 // Set the value of the where
                 $where = ($isValid == 1) ? "AND IsValid = 1" : "";
 
@@ -45,25 +49,21 @@
                 // Format
                 return $this->Success($this->formatOrganization($response));
             }
-            public function getAll() {
+            public function getAll($idsOrganizations = []) {
 
                 // Get the request
                 $request = $this->Request;
 
                 // Build the inner join for the categories
-                $inner_join_categories = "";
-                if (property_exists($request, "IdsCategories") && !Base_Functions::IsNullOrEmpty($request->IdsCategories))
-                    $inner_join_categories = "INNER JOIN refs_categories rc ON rc.ContentRefId = s.IdOrganization AND rc.IdType = " . Base_Category_Type::OR . " AND rc.IdCategory IN (" . implode(", ", $request->IdsCategories) . ")";
+                $inner_join_categories = $this->buildCategoryWhere(Base_Category_Type::ORGANIZATION, $request->IdsCategories ?? [], "o.IdOrganization");
+
+                // Add the where for the ids organizations
+                $idsWhere = !Base_Functions::IsNullOrEmpty($idsOrganizations) ? " AND o.IdOrganization IN (" . implode(", ", $idsOrganizations) . ")" : "";
 
                 // Get the organization
-                $sql = "SELECT s.*, st.*
-                        FROM organizations s
-                        $inner_join_categories
-                        INNER JOIN organizations_translations st ON s.IdOrganization = st.IdOrganization AND st.IdLanguage = (SELECT MIN(st2.IdLanguage)
-                                                                                                        FROM organizations_translations st2
-                                                                                                        WHERE st2.IdOrganization = s.IdOrganization
-                                                                                                        )
-                        WHERE s.IsValid = 1 AND s.IsDeleted = 0";
+                $sql = "SELECT o.*
+                        FROM organizations o
+                        WHERE o.IsValid = 1 AND o.IsDeleted = 0 $idsWhere $inner_join_categories";
                 $all = $this->__linq->queryDB($sql)->getResults();
 
                 // Check if is not null
@@ -413,9 +413,11 @@
                         $tmp->MainCategory = !empty($main_category) ? $main_category->IdCategory : (count($tmp->Categories) > 0 ? $tmp->Categories[0] : null);
                     }
 
+                    // Push to response
                     $response[] = $tmp;
                 }
                 
+                // Return only one if is not an array
                 return $isAll ? $response : $response[0];
             } 
             

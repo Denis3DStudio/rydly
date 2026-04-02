@@ -1,6 +1,6 @@
 {
     "Get": {
-        "IdPlace": true,
+        "IdEvent": true,
         "IsValid": {
             "Default": 0
         }
@@ -9,9 +9,9 @@
         "IdsCategories": false
     },
     "Contents": {
-        "IdPlace": true
+        "IdEvent": true
     },
     "News": {
-        "IdPlace": true
+        "IdEvent": true
     }
 }

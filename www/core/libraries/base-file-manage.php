@@ -597,8 +597,8 @@ class Base_File {
 			foreach ($data as $row) {
 					
 				// Build the where
-				$where = Base_Files_Types::DB_IDS_TYPES[$row->FileExtension ?? $type] . " = " . $row->IdFile . " AND " . Base_Files::IDS_DB[$macro] . " = $idRow";
-				
+				$where = Base_Files_Types::DB_IDS_TYPES[!Base_Functions::IsNullOrEmpty($row->FileExtension) && in_array($row->FileExtension, Base_Files_Types::EXTENSIONS) ? $row->FileExtension : $type] . " = " . $row->IdFile . " AND " . Base_Files::IDS_DB[$macro] . " = $idRow";
+
 				// Update the order number
 				$sql = "UPDATE " . self::buildDbName($macro, $row->Custom ?? $type) . " SET OrderNumber = $row->OrderNumber WHERE $where";
 				$linq->queryDB($sql)->getResults();

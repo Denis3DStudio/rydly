@@ -90,16 +90,16 @@
 
             <li class="nav-item">
                 <a class="nav-link nav-link-collapse collapsed" data-bs-toggle="collapse" href="#c-place" data-parent="#sidebarMenu">
-                    <i class="fa fa-fw fa-location-dot"></i> <span class="nav-link-text">Luoghi</span>
+                    <i class="fa fa-fw fa-location-dot"></i> <span class="nav-link-text">Eventi</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="c-place">
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/place/">
+                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/event/">
                             <span class="nav-link-text">Elenco</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/category_place/">
+                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/category_event/">
                             <span class="nav-link-text">Categorie</span>
                         </a>
                     </li>
@@ -122,12 +122,12 @@
 
             <li class="nav-item">
                 <a class="nav-link nav-link-collapse collapsed" data-bs-toggle="collapse" href="#c-organization" data-parent="#sidebarMenu">
-                    <i class="fa fa-fw fa-user-tie"></i> <span class="nav-link-text">Organizzatori</span>
+                    <i class="fa fa-fw fa-user-tie"></i> <span class="nav-link-text">Organizzator<?= Base_Account::isOrganizationMember($this->Logged->IdRole) ? "e" : "i" ?></span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="c-organization">
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/organization/">
-                            <span class="nav-link-text">Elenco</span>
+                        <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/organization/<?= Base_Account::isOrganizationMember($this->Logged->IdRole) ? $this->Logged->IdOrganization : '' ?>">
+                            <span class="nav-link-text"><?= Base_Account::isOrganizationMember($this->Logged->IdRole) ? "Dettaglio" : "Elenco" ?></span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -139,20 +139,20 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/account/<?= (!in_array($this->Logged->IdRole, Base_Account::USER_THAT_CAN_MANAGE)) ? $this->Logged->IdAccount : '' ?>">
-                    <i class="fa fa-fw fa-user-circle"></i> <span class="nav-link-text"><?= (!in_array($this->Logged->IdRole, Base_Account::USER_THAT_CAN_MANAGE)) ? "Utente" : 'Utenti' ?></span>
+                <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/account/<?= (!in_array($this->Logged->IdRole, Base_Account::ADMINS)) ? $this->Logged->IdAccount : '' ?>">
+                    <i class="fa fa-fw fa-user-circle"></i> <span class="nav-link-text"><?= (!in_array($this->Logged->IdRole, Base_Account::ADMINS)) ? "Utente" : 'Utenti' ?></span>
                 </a>
             </li>
 
-            <li class="nav-item nav-title">DEV</li>
+            <li class="nav-item nav-title" data-role="4">DEV</li>
 
-            <li class="nav-item">
+            <li class="nav-item" data-role="4">
                 <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/translation/">
                     <i class="fa fa-fw fa-language"></i> <span class="nav-link-text">Traduzioni</span>
                 </a>
             </li>
 
-            <li class="nav-item" style="display: none;">
+            <li class="nav-item" data-role="4">
                 <a class="nav-link collapsed" href="<?= ACTIVE_PATH ?>/email/">
                     <i class="fa fa-fw fa-road"></i> <span class="nav-link-text">Coda Email</span>
                 </a>

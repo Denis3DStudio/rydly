@@ -3,11 +3,17 @@
         <div class="col-6 col-md-9 p-0">
             <h1><i class="fa fa-fw fa-user-circle op-2"></i> Utenti</h1>
         </div>
-        <div class="col-6 col-md-3 p-0 text-end">
-            <button type="button" class="btn btn-success" onclick="createAccount()">
-                <i class="fa fa-fw fa-plus"></i> Aggiungi
-            </button>
-        </div>
+        <?php
+        if (!Base_Functions::IsNullOrEmpty(Base_Account::ROLE_THAT_CAN_CREATE[$this->Logged->IdRole])) {
+        ?>
+            <div class="col-6 col-md-3 p-0 text-end">
+                <button type="button" class="btn btn-success" onclick="createAccount()">
+                    <i class="fa fa-fw fa-plus"></i> Aggiungi
+                </button>
+            </div>
+        <?php
+        }
+        ?>
     </div>
 
     <div class="row">

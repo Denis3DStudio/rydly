@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row page-head">
         <div class="col-6 p-0">
-            <h1><i class="fa fa-fw fa-location-dot op-2"></i> Gestione Luogo</h1>
+            <h1><i class="fa fa-fw fa-location-dot op-2"></i> Gestione Evento</h1>
         </div>
         <?php
         // Check if the deepl key is set
@@ -46,7 +46,7 @@
                                         <div class="row">
                                             <div class="col-lg-4">
                                                 <div class="form-group">
-                                                    <label for="Name">Nome luogo</label>
+                                                    <label for="Name">Nome Evento</label>
                                                     <input type="text" class="form-control" id="Name" name="Name" mandatory>
                                                 </div>
                                             </div>
@@ -111,7 +111,7 @@
                                                     <div class="form-group">
                                                         <label>Contenuto</label>
                                                         <div class="form-inline">
-                                                            <input class="form-control custom-render" type="file" name="Images[]" accept="image/*" multiple fileUpload fileUploadType="<?= Base_Files_Upload_Type::ON_CHANGE ?>" fileMacro="<?= Base_Files::PLACE ?>" fileType="<?= Base_Files_Types::IMAGE ?>" onclick="uploadManager('Images[]')" callback="getFilesManager('dtContents', <?= Base_Files::PLACE ?>, <?= Base_Files_Types::IMAGE ?>)" />
+                                                            <input class="form-control custom-render" type="file" name="Images[]" accept="image/*" multiple fileUpload fileUploadType="<?= Base_Files_Upload_Type::ON_CHANGE ?>" fileMacro="<?= Base_Files::EVENT ?>" fileType="<?= Base_Files_Types::IMAGE ?>" onclick="uploadManager('Images[]')" callback="getFilesManager('dtContents', <?= Base_Files::EVENT ?>, <?= Base_Files_Types::IMAGE ?>)" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -127,9 +127,9 @@
                                                 </label>
                                                 <div class="table-responsive">
                                                     <table class="table k-table k-table-hover k-table-responsive-cards has--actions" id="dtContents" style="width: 100%;"
-                                                        fileMacro="<?= Base_Files::PLACE ?>"
+                                                        fileMacro="<?= Base_Files::EVENT ?>"
                                                         fileType="<?= Base_Files_Types::IMAGE ?>"
-                                                        callback="getFilesManager('dtContents', <?= Base_Files::PLACE ?>, <?= Base_Files_Types::IMAGE ?>)">
+                                                        callback="getFilesManager('dtContents', <?= Base_Files::EVENT ?>, <?= Base_Files_Types::IMAGE ?>)">
                                                     </table>
 
                                                 </div>
@@ -149,19 +149,13 @@
             <div class="card mb-3 shadow">
                 <div class="card-body" id="common_container">
                     <div class="form-group">
-                        <label for="categorySelect">Categorie</label>
-                        <select id="categorySelect" name="Category" class="selectpicker" data-width="100%" multiple data-live-search="true" data-size="8" title="Seleziona..." mandatory></select>
+                        <label for="IdsCategories">Categorie</label>
+                        <select id="IdsCategories" name="IdsCategories" class="selectpicker" data-width="100%" multiple data-live-search="true" data-size="8" title="Seleziona..." mandatory trigger_change></select>
                     </div>
 
                     <div class="form-group" id="main_category_container" style="display: none;">
                         <label for="mainCategory">Categoria Principale</label>
                         <select id="mainCategory" name="MainCategory" class="selectpicker" data-width="100%" data-live-search="true" data-size="8" title="Seleziona..."></select>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="newsSelect">Blog associati</label>
-                        <select id="newsSelect" name="IdNews" class="selectpicker" data-width="100%" multiple data-live-search="true" data-size="8" title="Seleziona..."></select>
                     </div>
 
                     <div class="row">
@@ -188,26 +182,17 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="travelerPathSelect">Traveler Path</label>
-                                <select id="travelerPathSelect" name="IdSurveyQuestionAnswers" class="selectpicker" data-width="100%" multiple data-live-search="true" data-size="8" title="Seleziona..."></select>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
                 <div class="card-footer">
                     <div class="row align-items-center">
                         <div class="col-6">
-                            <button type="button" class="btn btn-sm btn-link text-danger" onclick="simpleDelete(<?= Base_Simple_Delete::PLACE ?>)">
+                            <button type="button" class="btn btn-sm btn-link text-danger" onclick="simpleDelete(<?= Base_Simple_Delete::EVENT ?>)">
                                 <i class="fas fa-trash"></i> Elimina
                             </button>
                         </div>
                         <div class="col-6 text-end">
-                            <button type="button" class="btn btn-success" onclick="savePlace()">
+                            <button type="button" class="btn btn-success" onclick="saveEvent()">
                                 <i class="fas fa-fw fa-save"></i> Salva
                             </button>
                         </div>
